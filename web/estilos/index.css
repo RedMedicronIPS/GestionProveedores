@@ -1,0 +1,177 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3/04/2025, 02:47:52 PM
+    Author     : IPS OBRERO
+*/
+
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+    background: transparent; /* no imagen de fondo */
+}
+
+
+.container{
+    height: 100%;
+    align-content: center;
+}
+
+.card{
+    height: 370px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.social_icon span{
+    font-size: 60px;
+    margin-left: 10px;
+    color: #0066cc;
+}
+
+.social_icon span:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.card-header h4{
+    color: white;
+}
+
+.social_icon{
+    position: absolute;
+    right: 20px;
+    top: -45px;
+}
+
+.input-group-prepend span{
+    width: 50px;
+    background-color: #0099ff;
+    color: black;
+    border:0 !important;
+}
+
+input:focus{
+    outline: 0 0 0 0  !important;
+    box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+    color: white;
+}
+
+.remember input
+{
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.login_btn{
+    color: white;
+    background-color: #0099ff;
+    width: 100px;
+}
+
+.login_btn:hover{
+    color: white;
+    background-color: #66cc00;
+}
+
+.links{
+    color: white;
+}
+
+.links a{
+    margin-left: 4px;
+}
+.card {
+    display: flex;
+    flex-direction: row;  /* Asegura que los paneles estén en fila */
+    width: 800px;  
+    max-width: 90%; 
+    height: 500px;  
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.8); 
+    backdrop-filter: blur(10px);
+}
+
+.left-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+
+.left-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.right-panel {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Centra el formulario */
+}
+
+.card-body {
+    width: 100%; /* Asegura que el formulario ocupe todo el ancho */
+}
+
+form {
+    width: 100%; /* Asegura que los elementos del form ocupen el espacio */
+}
+
+.input-group {
+    width: 100%;
+}
+
+.card-footer {
+    text-align: center;
+    width: 100%;
+}
+
+.card-header {
+    display: flex;
+    align-items: center; /* Alinea verticalmente */
+    justify-content: flex-start; /* Alinea a la izquierda */
+    position: relative;
+}
+
+.card-header h4 {
+    margin: 0;
+    margin-right: 25px; /* Espacio entre el texto y el logo */
+    font-size: 1.5rem; /* Ajusta tamaño si es necesario */
+}
+
+.small-logo {
+    width: 120px;
+    height: auto;
+}
+
+
+.login_btn {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}

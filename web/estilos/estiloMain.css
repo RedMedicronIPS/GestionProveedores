@@ -1,0 +1,528 @@
+/* ================== GLOBAL ================== */
+* {
+    font-family: 'Segoe UI', 'Work Sans', sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #F4F6FA;
+    color: #1A1A1A;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.wrapper {
+    min-height: 180%;
+    position: relative;
+}
+
+/* ================== MAIN CONTENT ================== */
+.navbar-nav.center-icons {
+    display: flex;
+    align-items: center;
+    gap: 10rem;
+}
+
+.navbar-nav.right-icons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-nav .nav-link i {
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link img {
+    width: 35px;
+    height: 35px;
+    border: 2px solid green;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.main-content {
+    padding: 10px !important;
+    margin-left: 250px !important;
+    width: calc(100% - 250px);
+}
+
+.content {
+    flex: 1;
+    padding: 10px;
+    background-color: #F4F6FA;
+    overflow-y: auto;
+}
+
+/* ================== NAVBAR ================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #0A1E3F;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    z-index: 1001;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+    font-size: 1.6em;
+    font-weight: 600;
+    background: linear-gradient(to right, #00D1FF, #00FFE5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 5px #00D1FF55;
+}
+
+.navbar-user img.user-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* ================== MENÚ ================== */
+.grid-icon {
+    font-size: 20px;
+}
+.custom-menu ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.submenu-title {
+    font-weight: bold;
+    color: #0A1E3F;
+    margin-top: 10px;
+    display: block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background-color: #f8f9fc;
+    transition: background 0.3s;
+}
+
+.submenu-title:hover {
+    background-color: #e9f5ff;
+}
+.submenu li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin: 5px 0;
+    background: #ffffff;
+    border-radius: 6px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+.submenu {
+    display: none;
+}
+
+.submenu.show {
+    display: block;
+}
+
+.submenu li a:hover {
+    background: linear-gradient(to right, #00D1FF, #00FFE5);
+    color: #0A1E3F;
+    transform: translateX(4px);
+}
+.submenu-title {
+    text-decoration: none !important;
+}
+a.submenu-title {
+    text-decoration: none;
+    color: #0A1E3F;
+    font-weight: bold;
+}
+
+.custom-menu {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.custom-menu input[type="text"] {
+    border-radius: 8px;
+    font-size: 14px;
+}
+.custom-menu ul li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #1A1A1A;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.custom-menu ul li a:hover {
+    background: linear-gradient(to right, #00D1FF, #00FFE5);
+    color: #0A1E3F;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 209, 255, 0.2);
+}
+.custom-menu ul li a i {
+    font-size: 16px;
+    color: #0A1E3F;
+    min-width: 20px;
+}
+.custom-menu {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+/* ================== FOOTER ================== */
+footer.footer {
+    height: 60px;
+    background: linear-gradient(to right, #0A1E3F, #0C2E4F);
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    margin-left: 280px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ================== BOTÓN & CARD ================== */
+/* ================== BOTÓN & CARD ================== */
+.btn-pro {
+    background: linear-gradient(to right, #00D1FF, #00FFE5);
+    color: #0A1E3F;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1em;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 209, 255, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-pro:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 255, 230, 0.4);
+}
+
+.card-pro {
+    background: linear-gradient(135deg, #122640, #0F1F33);
+    color: #E6F1FF;
+    border-radius: 20px;
+    padding: 25px;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-pro:hover {
+    transform: translateY(-5px);
+}
+
+.card-icon {
+    font-size: 2em;
+    color: #00D1FF;
+    margin-bottom: 10px;
+}
+
+/* Componentes específicos de la card */
+.card-header {
+    background: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 25px;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+}
+
+.card-body {
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.card-footer {
+    background: rgba(0, 0, 0, 0.1);  /* Fondo similar al de la card-header */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);  /* El borde superior visible */
+    padding: 15px 25px;  /* El mismo padding para consistencia */
+    border-bottom-left-radius: 20px !important;  /* Redondeo solo en las esquinas inferiores */
+    border-bottom-right-radius: 20px !important;
+    margin-top: 0;  /* Evita cualquier margen adicional arriba */
+}
+
+
+.card {
+    box-shadow: none !important;
+}
+/* ================== RESPONSIVE ================== */
+@media (max-width: 768px) {
+    .content, .footer {
+        margin-left: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .navbar {
+        padding: 0 15px;
+    }
+
+    .navbar-user img.user-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .card-pro {
+        padding: 15px;
+    }
+
+    .btn-pro {
+        font-size: 0.9em;
+        padding: 8px 15px;
+    }
+}
+/* ================== DARK MODE GLOBAL ================== */
+html.dark-mode, html.dark-mode body {
+    background-color: #0D1520 !important;
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .main-content,
+html.dark-mode .content {
+    background-color: #0D1520 !important;
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .footer {
+    background: #0A1A2F !important;
+    color: #E0F7FF !important;
+}
+
+/* Card Pro */
+html.dark-mode .card-pro {
+    background: linear-gradient(135deg, #0A1A2F, #08121F) !important;
+    color: #E0F7FF !important;
+}
+
+/* Card Sections */
+html.dark-mode .card-header,
+html.dark-mode .card-body,
+html.dark-mode .card-footer {
+    background-color: #0A1A2F !important;
+    border-color: #1F2F3F !important;
+}
+
+/* Botones */
+html.dark-mode .btn-pro {
+    background: linear-gradient(to right, #003B5B, #004F4F) !important;
+    color: #00FFE5 !important;
+    box-shadow: 0 4px 12px rgba(0, 255, 230, 0.2) !important;
+}
+
+/* Inputs y formularios */
+html.dark-mode input,
+html.dark-mode select,
+html.dark-mode textarea {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    border: 1px solid #3C4F61 !important;
+}
+
+html.dark-mode input::placeholder,
+html.dark-mode textarea::placeholder {
+    color: #98B8CC !important;
+}
+
+/* Navbar */
+html.dark-mode .navbar {
+    background-color: #0A1E3F !important;
+    color: #E0F7FF !important;
+}
+
+/* Custom Menu */
+html.dark-mode .custom-menu {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    border: 1px solid #2E3F4F !important;
+}
+
+html.dark-mode .submenu-title {
+    background-color: #243647 !important;
+    color: #00D1FF !important;
+}
+
+html.dark-mode .submenu-title:hover {
+    background-color: #1F2F3F !important;
+}
+
+html.dark-mode .custom-menu .submenu li a {
+    background-color: #243647 !important;
+    color: #E0F7FF !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+html.dark-mode .custom-menu .submenu li a:hover {
+    background: linear-gradient(to right, #003B5B, #004F4F) !important;
+    color: #00FFE5 !important;
+}
+
+/* Tablas */
+html.dark-mode table,
+html.dark-mode th,
+html.dark-mode td {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    border-color: #2E3F4F !important;
+}
+
+html.dark-mode label,
+html.dark-mode h1,
+html.dark-mode h2,
+html.dark-mode h3,
+html.dark-mode h4,
+html.dark-mode h5,
+html.dark-mode h6,
+html.dark-mode p,
+html.dark-mode span,
+html.dark-mode strong,
+html.dark-mode b,
+html.dark-mode small {
+    color: #E0F7FF !important;
+}
+html.dark-mode select,
+html.dark-mode option {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    border: 1px solid #3C4F61 !important;
+}
+/* ================== Modo oscuro para jQuery UI Autocomplete ================== */
+html.dark-mode .ui-autocomplete {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    border: 1px solid #3C4F61 !important;
+    z-index: 10000 !important; /* asegúrate de que esté por encima de otros elementos */
+}
+
+html.dark-mode .ui-menu-item-wrapper {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .ui-menu-item-wrapper:hover {
+    background-color: #003B5B !important;
+    color: #00FFE5 !important;
+}
+/* ================== DARK MODE PARA LISTAS DESPLEGABLES ================== */
+/* Select estándar */
+html.dark-mode select {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    border: 1px solid #3C4F61 !important;
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+html.dark-mode select:focus {
+    outline: none;
+    border-color: #00D1FF !important;
+    box-shadow: 0 0 0 2px rgba(0, 209, 255, 0.2) !important;
+}
+
+/* Opciones del select */
+html.dark-mode option {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    padding: 8px 12px;
+}
+
+html.dark-mode option:hover,
+html.dark-mode option:focus,
+html.dark-mode option:checked {
+    background-color: #003B5B !important;
+    color: #00FFE5 !important;
+}
+
+/* Dropdowns personalizados (como Bootstrap) */
+html.dark-mode .dropdown-menu {
+    background-color: #1A2A3A !important;
+    border: 1px solid #3C4F61 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark-mode .dropdown-item {
+    color: #E0F7FF !important;
+    background-color: transparent !important;
+}
+
+html.dark-mode .dropdown-item:hover,
+html.dark-mode .dropdown-item:focus {
+    background-color: #003B5B !important;
+    color: #00FFE5 !important;
+}
+
+html.dark-mode .dropdown-divider {
+    border-top: 1px solid #3C4F61 !important;
+}
+
+/* Select2 (si lo usas) */
+html.dark-mode .select2-container--default .select2-selection--single {
+    background-color: #1A2A3A !important;
+    border: 1px solid #3C4F61 !important;
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .select2-container--default .select2-selection__rendered {
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .select2-container--default .select2-dropdown {
+    background-color: #1A2A3A !important;
+    border: 1px solid #3C4F61 !important;
+}
+
+html.dark-mode .select2-container--default .select2-results__option--highlighted {
+    background-color: #003B5B !important;
+    color: #00FFE5 !important;
+}
+
+/* Bootstrap multiselect (si lo usas) */
+html.dark-mode .multiselect {
+    background-color: #1A2A3A !important;
+    border: 1px solid #3C4F61 !important;
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .multiselect-dropdown {
+    background-color: #1A2A3A !important;
+    border: 1px solid #3C4F61 !important;
+}
+
+html.dark-mode .multiselect-option:hover {
+    background-color: #003B5B !important;
+    color: #00FFE5 !important;
+}

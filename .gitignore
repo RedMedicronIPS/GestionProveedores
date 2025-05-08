@@ -1,0 +1,49 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Maven
+target/
+!target/classes/
+!target/test-classes/
+
+# Gradle
+.gradle/
+build/
+
+# Eclipse IDE
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# NetBeans IDE
+nbproject/private/
+
+# JDK specific
+*.jre/
+*.jdk/
+*.jvm/
+
+# VS Code
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Eclipse Core
+*.launch
+*.settings/
+
+# JetBrains specific
+.idea/
+*.iml
+out/
+recursos/fondomedicron.mp4

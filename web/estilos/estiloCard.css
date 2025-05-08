@@ -1,0 +1,103 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14/04/2025, 08:38:13 AM
+    Author     : IPS OBRERO
+*/
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10/04/2025, 10:02:58 AM
+    Author     : IPS OBRERO
+*/
+
+.container-wrapper {
+    margin-top: 0px;
+}
+
+.container-card {
+    width: 100%;
+}
+.card {
+  margin-top: 60px; /* Ajusta según necesidad */
+}
+
+
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom right, #ffffff, #f4f6f9);
+    height: fit-content;
+}
+
+.card-header {
+    background-color: #f7f7f7;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 10px !important;;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    padding: 10px !important;; 
+    background-color: #e2f4ff;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.card-footer {
+    background-color: #f7f7f7;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    padding: 10px !important;
+}
+
+.form-label,
+.col-form-label-sm {
+    font-weight: 500;
+    color: #333;
+}
+
+input.form-control,
+select.form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: none;
+}
+
+input.form-control:focus,
+select.form-control:focus {
+    border-color: #42a5f5;
+    box-shadow: 0 0 0 0.1rem rgba(66, 165, 245, 0.25);
+}
+
+#sugerencias {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ced4da;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    background-color: white;
+}
+.btn {
+    background-color: #0A1E3F;
+    color: white;
+    transition: background-color 0.7s ease;
+    border: none; 
+    box-shadow: none; 
+}
+
+
+.btn:hover {
+    background-color: #2bb2ff; 
+    color: white;
+}
