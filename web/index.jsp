@@ -20,6 +20,7 @@
         response.sendRedirect("main.jsp?CONTENIDO=inicio.jsp");
         return;
     }
+    //cometario de prueba
 %>
 
 <!DOCTYPE html>
