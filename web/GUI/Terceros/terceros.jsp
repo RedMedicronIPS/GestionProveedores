@@ -63,11 +63,11 @@
             lista += "<td>" + tro.getTercero_departamento() + "</td>";
             lista += "<td>" + tro.getTercero_ciudad() + "</td>";
             lista += "<td>" + tro.getTercero_ciiu() + "</td>";
-            lista += "<td>" + tro.getTercero_empleado() + "</td>";
-            lista += "<td>" + tro.getTercero_proveedor() + "</td>";
-            lista += "<td>" + tro.getTercero_accionista_asociado() + "</td>";
+            lista += "<td>" + tro.getTerceroEmpleado() + "</td>";
+            lista += "<td>" + tro.getTerceroProveedor() + "</td>";
+            lista += "<td>" + tro.getTerceroAccionistaAsociado() + "</td>";
             lista += "<td>" + tro.getTercero_tipo() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_facturar() + "</td>";
+            lista += "<td>" + tro.getTerceroFacturar() + "</td>";
             lista += "<td><a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId() + "' title='Modificar'><img src='recursos/update.png' class='icon'></a><a href='javascript:eliminar(" + tro.getId() + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>";
 
             lista += "</tr>";
@@ -162,16 +162,15 @@
                                                 <div class="row g-2">
                                                     <div class="col-md-4">
                                                         <label class="form-label small text-secondary">Empleado:</label>
-                                                        <div class="d-flex">
-                                                            <!-- Ejemplo para Empleado (repetir patrón para los otros campos) -->
+                                                        <div class="d-flex">                                                            
                                                             <div class="form-check me-3">
                                                                 <input class="form-check-input" type="radio" name="tercero_empleado" 
-                                                                       value="true" <%= "true".equals(tercero.getTercero_empleado()) ? "checked" : ""%>>
+                                                                       value="Sí" <%= tercero.isCheckedEmpleado("Sí")%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="tercero_empleado" 
-                                                                       value="false" <%= !"true".equals(tercero.getTercero_empleado()) ? "checked" : ""%>>
+                                                                       value="No" <%= tercero.isCheckedEmpleado("No")%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
                                                         </div>
@@ -181,13 +180,16 @@
                                                         <label class="form-label small text-secondary">Proveedor:</label>
                                                         <div class="d-flex">
                                                             <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_proveedor" value="true" <%= "true".equals(tercero.getTercero_proveedor()) ? "checked" : ""%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_proveedor" 
+                                                                       value="Sí" <%= tercero.isCheckedProveedor("Sí")%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_proveedor" value="false" <%= !"true".equals(tercero.getTercero_proveedor()) ? "checked" : ""%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_proveedor" 
+                                                                       value="No" <%= tercero.isCheckedProveedor("No")%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
+
                                                         </div>
                                                     </div>
 
@@ -195,19 +197,21 @@
                                                         <label class="form-label small text-secondary">Accionista/Asociado:</label>
                                                         <div class="d-flex">
                                                             <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_accionista_asociado" value="true" <%= "true".equals(tercero.getTercero_accionista_asociado()) ? "checked" : ""%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_accionista_asociado" 
+                                                                       value="Sí" <%= tercero.isCheckedAccionista("Sí")%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_accionista_asociado" value="false" <%= !"true".equals(tercero.getTercero_accionista_asociado()) ? "checked" : ""%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_accionista_asociado" 
+                                                                       value="No" <%= tercero.isCheckedAccionista("No")%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Tipo y facturación -->
                                             <div class="col-md-12">
                                                 <div class="row g-2">
                                                     <div class="col-md-6">
@@ -228,11 +232,13 @@
                                                         <label class="form-label small text-secondary">¿Facturar?:</label>
                                                         <div class="d-flex">
                                                             <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_facturar" value="true" <%= "true".equals(tercero.getTercero_facturar()) ? "checked" : ""%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_facturar" 
+                                                                       value="Sí" <%= tercero.isCheckedFacturar("Sí")%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_facturar" value="false" <%= !"true".equals(tercero.getTercero_facturar()) ? "checked" : ""%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_facturar" 
+                                                                       value="No" <%= tercero.isCheckedFacturar("No")%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
                                                         </div>
@@ -296,7 +302,6 @@
                                             + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>");
                                     out.print("</tr>");
 
-                                    // MODAL
                                     out.print("<div class='modal fade' id='" + modalId + "' tabindex='-1'>");
                                     out.print("<div class='modal-dialog modal-lg'>");
                                     out.print("<div class='modal-content'>");
@@ -322,15 +327,15 @@
                                     out.print("<p><strong>Departamento:</strong> " + tro.getTercero_departamento() + "</p>");
                                     out.print("<p><strong>Ciudad:</strong> " + tro.getTercero_ciudad() + "</p>");
                                     out.print("<p><strong>CIIU:</strong> " + tro.getTercero_ciiu() + "</p>");
-                                    out.print("<p><strong>Empleado:</strong> " + (tro.getTercero_empleado().equals("true") ? "Sí" : "No") + "</p>");
-                                    out.print("<p><strong>Proveedor:</strong> " + (tro.getTercero_proveedor().equals("true") ? "Sí" : "No") + "</p>");
-                                    out.print("<p><strong>Accionista/Asociado:</strong> " + (tro.getTercero_accionista_asociado().equals("true") ? "Sí" : "No") + "</p>");
+                                    out.print("<p><strong>Empleado:</strong> " + tro.getTerceroEmpleado() + "</p>");
+                                    out.print("<p><strong>Proveedor:</strong> " + tro.getTerceroProveedor() + "</p>");
+                                    out.print("<p><strong>Accionista/Asociado:</strong> " + tro.getTerceroAccionistaAsociado() + "</p>");
                                     out.print("<p><strong>Tipo:</strong> " + tro.getTercero_tipo() + "</p>");
-                                    out.print("<p><strong>Facturar:</strong> " + (tro.getTercero_facturar().equals("true") ? "Sí" : "No") + "</p>");
+                                    out.print("<p><strong>Facturar:</strong> " + tro.getTerceroFacturar() + "</p>");
                                     out.print("<p><strong>Estado:</strong> " + tro.getTercero_estado() + "</p>");
                                     out.print("</div>");
 
-                                    out.print("</div></div>"); // modal-body
+                                    out.print("</div></div>");
                                     out.print("<div class='modal-footer'><button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button></div>");
                                     out.print("</div></div></div>");
                                 }
@@ -379,9 +384,8 @@
         $("#paisInput").autocomplete({
             source: paises,
             select: function (event, ui) {
-                // Al seleccionar un país, habilitar el campo de departamento
                 $("#deptoInput").prop("disabled", false);
-                cargarDepartamentos(ui.item.value); // Cargar departamentos basados en el país seleccionado
+                cargarDepartamentos(ui.item.value);
             }
         });
 
@@ -390,9 +394,8 @@
         $("#deptoInput").autocomplete({
             source: deptos,
             select: function (event, ui) {
-                // Al seleccionar un departamento, habilitar el campo de ciudad
                 $("#ciuInput").prop("disabled", false);
-                cargarCiudades(ui.item.value); // Cargar ciudades basadas en el departamento seleccionado
+                cargarCiudades(ui.item.value);
             }
         });
 
@@ -402,7 +405,6 @@
             source: ciudades
         });
 
-        // Deshabilitar los campos inicialmente
         $("#deptoInput").prop("disabled", true);
         $("#ciuInput").prop("disabled", true);
 // Habilitar campos si ya tienen valor (modo edición) o si estamos en modo actualización
@@ -421,7 +423,6 @@
             const otroCiudad = document.getElementById("otroCiudad");
 
             if (pais) {
-                // Habilitar campo de departamentos
                 $("#deptoInput").prop("disabled", false);
                 selectDepartamento.classList.remove("d-none");
 
@@ -438,7 +439,6 @@
                     otroCiudad.classList.remove("d-none");
                 }
             } else {
-                // Si no hay país seleccionado, deshabilitar los campos
                 $("#deptoInput").prop("disabled", true);
                 $("#ciuInput").prop("disabled", true);
                 selectDepartamento.classList.add("d-none");
@@ -454,7 +454,6 @@
                 otroDepartamento.classList.remove("d-none");
             } else {
                 otroDepartamento.classList.add("d-none");
-                // Habilitar el campo de ciudades una vez se seleccione un departamento
                 $("#ciuInput").prop("disabled", false);
                 cargarCiudades(departamento);
             }
@@ -490,12 +489,36 @@
                 $("#selectDepartamento").html(departamentos);
             });
         }
+        
         function eliminar(id) {
-            if (confirm("¿Realmente desea eliminar el registro?")) {
-                // Redireccionar directamente
-                window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
-                        '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
-            }
+            const dialog = $('<div>')
+                    .html('<div class="dialog-content"><i class="fas fa-exclamation-triangle warning-icon"></i><p>¿Realmente desea eliminar este registro?</p></div>');
+
+            $(dialog).dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                dialogClass: "confirm-dialog no-title",
+                open: function () {
+                    
+                    $('.ui-dialog-titlebar', this.parentNode).remove();
+                },
+                buttons: {
+                    "Eliminar": function () {
+                        $(this).dialog("close");
+                        
+                        const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
+                        $('body').append(loading);
+
+                        window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
+                                '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
+                    },
+                    "Cancelar": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
         }
     </script>
 </body>

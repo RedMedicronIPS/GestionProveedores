@@ -214,7 +214,7 @@ footer.footer {
 }
 
 /* ================== BOTÓN & CARD ================== */
-/* ================== BOTÓN & CARD ================== */
+
 .btn-pro {
     background: linear-gradient(to right, #00D1FF, #00FFE5);
     color: #0A1E3F;
@@ -253,7 +253,7 @@ footer.footer {
     margin-bottom: 10px;
 }
 
-/* Componentes específicos de la card */
+
 .card-header {
     background: rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -268,12 +268,12 @@ footer.footer {
 }
 
 .card-footer {
-    background: rgba(0, 0, 0, 0.1);  /* Fondo similar al de la card-header */
-    border-top: 1px solid rgba(255, 255, 255, 0.1);  /* El borde superior visible */
-    padding: 15px 25px;  /* El mismo padding para consistencia */
-    border-bottom-left-radius: 20px !important;  /* Redondeo solo en las esquinas inferiores */
+    background: rgba(0, 0, 0, 0.1);  
+    border-top: 1px solid rgba(255, 255, 255, 0.1);  
+    padding: 15px 25px;  
+    border-bottom-left-radius: 20px !important;  
     border-bottom-right-radius: 20px !important;
-    margin-top: 0;  /* Evita cualquier margen adicional arriba */
+    margin-top: 0; 
 }
 
 
@@ -323,13 +323,13 @@ html.dark-mode .footer {
     color: #E0F7FF !important;
 }
 
-/* Card Pro */
+
 html.dark-mode .card-pro {
     background: linear-gradient(135deg, #0A1A2F, #08121F) !important;
     color: #E0F7FF !important;
 }
 
-/* Card Sections */
+
 html.dark-mode .card-header,
 html.dark-mode .card-body,
 html.dark-mode .card-footer {
@@ -337,14 +337,14 @@ html.dark-mode .card-footer {
     border-color: #1F2F3F !important;
 }
 
-/* Botones */
+
 html.dark-mode .btn-pro {
     background: linear-gradient(to right, #003B5B, #004F4F) !important;
     color: #00FFE5 !important;
     box-shadow: 0 4px 12px rgba(0, 255, 230, 0.2) !important;
 }
 
-/* Inputs y formularios */
+
 html.dark-mode input,
 html.dark-mode select,
 html.dark-mode textarea {
@@ -358,13 +358,13 @@ html.dark-mode textarea::placeholder {
     color: #98B8CC !important;
 }
 
-/* Navbar */
+
 html.dark-mode .navbar {
     background-color: #0A1E3F !important;
     color: #E0F7FF !important;
 }
 
-/* Custom Menu */
+
 html.dark-mode .custom-menu {
     background-color: #1A2A3A !important;
     color: #E0F7FF !important;
@@ -391,7 +391,7 @@ html.dark-mode .custom-menu .submenu li a:hover {
     color: #00FFE5 !important;
 }
 
-/* Tablas */
+
 html.dark-mode table,
 html.dark-mode th,
 html.dark-mode td {
@@ -425,7 +425,7 @@ html.dark-mode .ui-autocomplete {
     background-color: #1A2A3A !important;
     color: #E0F7FF !important;
     border: 1px solid #3C4F61 !important;
-    z-index: 10000 !important; /* asegúrate de que esté por encima de otros elementos */
+    z-index: 10000 !important; 
 }
 
 html.dark-mode .ui-menu-item-wrapper {
@@ -438,7 +438,7 @@ html.dark-mode .ui-menu-item-wrapper:hover {
     color: #00FFE5 !important;
 }
 /* ================== DARK MODE PARA LISTAS DESPLEGABLES ================== */
-/* Select estándar */
+
 html.dark-mode select {
     background-color: #1A2A3A !important;
     color: #E0F7FF !important;
@@ -453,7 +453,7 @@ html.dark-mode select:focus {
     box-shadow: 0 0 0 2px rgba(0, 209, 255, 0.2) !important;
 }
 
-/* Opciones del select */
+
 html.dark-mode option {
     background-color: #1A2A3A !important;
     color: #E0F7FF !important;
@@ -467,7 +467,7 @@ html.dark-mode option:checked {
     color: #00FFE5 !important;
 }
 
-/* Dropdowns personalizados (como Bootstrap) */
+
 html.dark-mode .dropdown-menu {
     background-color: #1A2A3A !important;
     border: 1px solid #3C4F61 !important;
@@ -489,7 +489,7 @@ html.dark-mode .dropdown-divider {
     border-top: 1px solid #3C4F61 !important;
 }
 
-/* Select2 (si lo usas) */
+
 html.dark-mode .select2-container--default .select2-selection--single {
     background-color: #1A2A3A !important;
     border: 1px solid #3C4F61 !important;
@@ -510,7 +510,7 @@ html.dark-mode .select2-container--default .select2-results__option--highlighted
     color: #00FFE5 !important;
 }
 
-/* Bootstrap multiselect (si lo usas) */
+
 html.dark-mode .multiselect {
     background-color: #1A2A3A !important;
     border: 1px solid #3C4F61 !important;
@@ -525,4 +525,196 @@ html.dark-mode .multiselect-dropdown {
 html.dark-mode .multiselect-option:hover {
     background-color: #003B5B !important;
     color: #00FFE5 !important;
+}
+/* ================== ALERTAS ================== */
+.alert-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+    min-width: 280px;
+    background: white;
+    border-left: 4px solid #0A1E3F;
+    border-radius: 6px;
+    padding: 14px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    transform: translateX(150%);
+    transition: transform 0.3s ease-out;
+}
+
+.alert-message.show {
+    transform: translateX(0);
+}
+
+.alert-message .close-btn {
+    margin-left: auto;
+    cursor: pointer;
+    color: #777;
+    font-size: 1em;
+    transition: color 0.2s;
+}
+
+.alert-message .close-btn:hover {
+    color: #333;
+}
+
+/* Modo oscuro */
+html.dark-mode .alert-message {
+    background: #1A1A1A;
+    border-left-color: #0A1E3F;
+    color: #f0f0f0;
+}
+
+html.dark-mode .alert-message .close-btn {
+    color: #aaa;
+}
+
+html.dark-mode .alert-message .close-btn:hover {
+    color: #fff;
+}
+
+.alert-message i {
+    color: #0A1E3F;
+    font-size: 1.3em;
+}
+/* Estilos para el diálogo sin título */
+.confirm-dialog.no-title .ui-dialog-titlebar {
+    display: none !important;
+}
+
+.dialog-content {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.warning-icon {
+    color: #FFA726;
+    font-size: 1.5em;
+}
+
+/* Ajustar posición de los botones cuando no hay título */
+.no-title .ui-dialog-buttonpane {
+    padding-top: 0 !important;
+}
+
+/* ================== ESTILOS PARA BOTONES REDONDEADOS ================== */
+.confirm-dialog .ui-button {
+    border-radius: 20px !important;
+    padding: 5px 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* ================== MODO OSCURO ================== */
+html.dark-mode .confirm-dialog,
+html.dark-mode .confirm-dialog .ui-dialog-titlebar {
+    background: #1A1A1A !important;
+    border-color: #333 !important;
+    color: #f0f0f0 !important;
+}
+
+html.dark-mode .confirm-dialog .ui-dialog-content {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .confirm-dialog .ui-dialog-buttonpane {
+    background: #222 !important;
+    border-color: #333 !important;
+}
+
+html.dark-mode .confirm-dialog .ui-button {
+    background: #0A1E3F !important;
+    color: white !important;
+    border-radius: 20px !important;
+}
+
+html.dark-mode .confirm-dialog .ui-button:hover {
+    background: #1A2E4F !important;
+}
+
+html.dark-mode .confirm-dialog .ui-button:last-child {
+    background: #333 !important;
+    color: #f0f0f0 !important;
+    border-color: #444 !important;
+    border-radius: 20px !important;
+}
+
+html.dark-mode .confirm-dialog .ui-button:last-child:hover {
+    background: #444 !important;
+}
+
+html.dark-mode .alert-message {
+    background: #1A1A1A;
+    border-left-color: #0A1E3F;
+    color: #f0f0f0;
+}
+
+html.dark-mode .alert-message i {
+    color: #4A90E2;
+}
+
+html.dark-mode .alert-message .close-btn {
+    color: #aaa;
+}
+
+html.dark-mode .alert-message .close-btn:hover {
+    color: #fff;
+}
+.confirm-dialog .ui-button {
+    border-radius: 20px !important;
+    padding: 5px 15px !important;
+    transition: all 0.3s ease !important;
+}
+/* ================== BOTONES DEL DIÁLOGO REDONDEADOS ================== */
+.ui-dialog .ui-dialog-buttonpane .ui-button {
+    border-radius: 20px !important;
+    padding: 5px 15px !important;
+    min-width: 80px;
+    transition: all 0.3s ease !important;
+}
+
+/* Estilo para el botón principal (Eliminar/Aceptar) */
+.ui-dialog .ui-dialog-buttonpane .ui-button:first-child {
+    background: #0A1E3F !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* Estilo para el botón secundario (Cancelar) */
+.ui-dialog .ui-dialog-buttonpane .ui-button:last-child {
+    background: #f0f0f0 !important;
+    color: #333 !important;
+    border: 1px solid #ddd !important;
+}
+
+/* Hover states */
+.ui-dialog .ui-dialog-buttonpane .ui-button:first-child:hover {
+    background: #1A2E4F !important;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-button:last-child:hover {
+    background: #e0e0e0 !important;
+}
+
+/* ================== MODO OSCURO ================== */
+html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:first-child {
+    background: #0A1E3F !important;
+    color: white !important;
+}
+
+html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:last-child {
+    background: #333 !important;
+    color: #f0f0f0 !important;
+    border: 1px solid #444 !important;
+}
+
+html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:first-child:hover {
+    background: #1A2E4F !important;
+}
+
+html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:last-child:hover {
+    background: #444 !important;
 }
