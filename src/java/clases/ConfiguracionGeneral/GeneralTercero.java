@@ -1,9 +1,13 @@
 package clases.ConfiguracionGeneral;
 
 import clasesDataBase.ConectorBD;
-import java.sql.*;
-import java.util.*;
-import java.util.logging.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GeneralTercero {
 
@@ -19,17 +23,20 @@ public class GeneralTercero {
     private String tercero_departamento;
     private String tercero_ciudad;
     private String tercero_ciiu;
-    private boolean tercero_facturar = false;
-    private boolean tercero_empleado = false;
-    private boolean tercero_proveedor = false;
-    private boolean tercero_accionista_asociado = false;
+    private Boolean tercero_facturar;
+    private Boolean tercero_empleado;
+    private Boolean tercero_proveedor;
+    private Boolean tercero_accionista_asociado;
 
     private String tercero_tipo;
-    private String tercero_estado = "Activo";
-
-    public GeneralTercero() {
+    private String tercero_estado;
+ public GeneralTercero() {
+        // Inicializar como Boolean, no como String
+        this.tercero_facturar = false;
+        this.tercero_empleado = false;
+        this.tercero_proveedor = false;
+        this.tercero_accionista_asociado = false;
     }
-
     public GeneralTercero(String id) {
         String sql = "SELECT * FROM dbo.generalTercero WHERE id = ?";
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
@@ -62,161 +69,203 @@ public class GeneralTercero {
         }
     }
 
-    // Getters
+    public String isCheckedTT(String tipo) {
+        return this.tercero_tipo != null && this.tercero_tipo.equals(tipo) ? "checked" : "";
+    }
+
     public String getId() {
         return id != null ? id : "";
     }
 
     public void setId(String id) {
-        this.id = id != null ? id : "";
+        this.id = id;
     }
 
-    public String getTerceroCodigo() {
+    public String getTercero_codigo() {
         return tercero_codigo != null ? tercero_codigo : "";
     }
 
-    public void setTerceroCodigo(String tercero_codigo) {
-        this.tercero_codigo = tercero_codigo != null ? tercero_codigo : "";
+    public void setTercero_codigo(String tercero_codigo) {
+        this.tercero_codigo = tercero_codigo;
     }
 
-    public String getTerceroIdTipoIdentificacion() {
+    public String getTercero_id_tipo_identificacion() {
         return tercero_id_tipo_identificacion != null ? tercero_id_tipo_identificacion : "";
     }
 
-    public void setTerceroIdTipoIdentificacion(String tercero_id_tipo_identificacion) {
-        this.tercero_id_tipo_identificacion = tercero_id_tipo_identificacion != null ? tercero_id_tipo_identificacion : "";
+    public void setTercero_id_tipo_identificacion(String tercero_id_tipo_identificacion) {
+        this.tercero_id_tipo_identificacion = tercero_id_tipo_identificacion;
     }
 
-    public String getTerceroRazonNombres() {
+    public String getTercero_razon_nombres() {
         return tercero_razon_nombres != null ? tercero_razon_nombres : "";
     }
 
-    public void setTerceroRazonNombres(String tercero_razon_nombres) {
-        this.tercero_razon_nombres = tercero_razon_nombres != null ? tercero_razon_nombres : "";
+    public void setTercero_razon_nombres(String tercero_razon_nombres) {
+        this.tercero_razon_nombres = tercero_razon_nombres;
     }
 
-    public String getTerceroFechaNacimiento() {
+    public String getTercero_fecha_nacimiento() {
         return tercero_fecha_nacimiento != null ? tercero_fecha_nacimiento : "";
     }
 
-    public void setTerceroFechaNacimiento(String tercero_fecha_nacimiento) {
-        this.tercero_fecha_nacimiento = tercero_fecha_nacimiento != null ? tercero_fecha_nacimiento : "";
+    public void setTercero_fecha_nacimiento(String tercero_fecha_nacimiento) {
+        this.tercero_fecha_nacimiento = tercero_fecha_nacimiento;
     }
 
-    public String getTerceroDireccion() {
+    public String getTercero_direccion() {
         return tercero_direccion != null ? tercero_direccion : "";
     }
 
-    public void setTerceroDireccion(String tercero_direccion) {
-        this.tercero_direccion = tercero_direccion != null ? tercero_direccion : "";
+    public void setTercero_direccion(String tercero_direccion) {
+        this.tercero_direccion = tercero_direccion;
     }
 
-    public String getTerceroTelefono() {
+    public String getTercero_telefono() {
         return tercero_telefono != null ? tercero_telefono : "";
     }
 
-    public void setTerceroTelefono(String tercero_telefono) {
-        this.tercero_telefono = tercero_telefono != null ? tercero_telefono : "";
+    public void setTercero_telefono(String tercero_telefono) {
+        this.tercero_telefono = tercero_telefono;
     }
 
-    public String getTerceroCorreo() {
+    public String getTercero_correo() {
         return tercero_correo != null ? tercero_correo : "";
     }
 
-    public void setTerceroCorreo(String tercero_correo) {
-        this.tercero_correo = tercero_correo != null ? tercero_correo : "";
+    public void setTercero_correo(String tercero_correo) {
+        this.tercero_correo = tercero_correo;
     }
 
-    public String getTerceroPais() {
+    public String getTercero_pais() {
         return tercero_pais != null ? tercero_pais : "";
     }
 
-    public void setTerceroPais(String tercero_pais) {
-        this.tercero_pais = tercero_pais != null ? tercero_pais : "";
+    public void setTercero_pais(String tercero_pais) {
+        this.tercero_pais = tercero_pais;
     }
 
-    public String getTerceroDepartamento() {
+    public String getTercero_departamento() {
         return tercero_departamento != null ? tercero_departamento : "";
     }
 
-    public void setTerceroDepartamento(String tercero_departamento) {
-        this.tercero_departamento = tercero_departamento != null ? tercero_departamento : "";
+    public void setTercero_departamento(String tercero_departamento) {
+        this.tercero_departamento = tercero_departamento;
     }
 
-    public String getTerceroCiudad() {
+    public String getTercero_ciudad() {
         return tercero_ciudad != null ? tercero_ciudad : "";
     }
 
-    public void setTerceroCiudad(String tercero_ciudad) {
-        this.tercero_ciudad = tercero_ciudad != null ? tercero_ciudad : "";
+    public void setTercero_ciudad(String tercero_ciudad) {
+        this.tercero_ciudad = tercero_ciudad;
     }
 
-    public String getTerceroCiiu() {
+    public String getTercero_ciiu() {
         return tercero_ciiu != null ? tercero_ciiu : "";
     }
 
-    public void setTerceroCiiu(String tercero_ciiu) {
-        this.tercero_ciiu = tercero_ciiu != null ? tercero_ciiu : "";
+    public void setTercero_ciiu(String tercero_ciiu) {
+        this.tercero_ciiu = tercero_ciiu;
     }
 
-    public boolean isTerceroFacturar() {
-        return tercero_facturar;
-    }
-
-    public void setTerceroFacturar(boolean tercero_facturar) {
-        this.tercero_facturar = tercero_facturar;
-    }
-
-    public boolean isTerceroEmpleado() {
-        return tercero_empleado;
-    }
-
-    public void setTerceroEmpleado(boolean tercero_empleado) {
-        this.tercero_empleado = tercero_empleado;
-    }
-
-    public boolean isTerceroProveedor() {
-        return tercero_proveedor;
-    }
-
-    public void setTerceroProveedor(boolean tercero_proveedor) {
-        this.tercero_proveedor = tercero_proveedor;
-    }
-
-    public boolean isTerceroAccionistaAsociado() {
-        return tercero_accionista_asociado;
-    }
-
-    public void setTerceroAccionistaAsociado(boolean tercero_accionista_asociado) {
-        this.tercero_accionista_asociado = tercero_accionista_asociado;
-    }
-
-    public String getTerceroTipo() {
+    public String getTercero_tipo() {
         return tercero_tipo != null ? tercero_tipo : "";
     }
 
-    public void setTerceroTipo(String tercero_tipo) {
-        this.tercero_tipo = tercero_tipo != null ? tercero_tipo : "";
+    public void setTercero_tipo(String tercero_tipo) {
+        this.tercero_tipo = tercero_tipo;
+    }    
+
+    public String getTerceroEmpleado() {
+        return Boolean.TRUE.equals(this.tercero_empleado) ? "Sí" : "No";
     }
 
-    public String getTerceroEstado() {
-        return tercero_estado != null ? tercero_estado : "Activo";
+    public void setTercero_empleado(String tercero_empleado) {
+        this.tercero_empleado = "Sí".equals(tercero_empleado) || "true".equalsIgnoreCase(tercero_empleado);
     }
 
-    public void setTerceroEstado(String tercero_estado) {
-        this.tercero_estado = tercero_estado != null ? tercero_estado : "Activo";
+    public String isCheckedEmpleado(String valor) {
+        if (this.tercero_empleado == null) {
+            return "";
+        }
+        boolean isSi = "Sí".equals(valor);
+        return (isSi && this.tercero_empleado) || (!isSi && !this.tercero_empleado) ? "checked" : "";
     }
 
-    // Checked para tipos
-    public String isCheckedTT(String tipo) {
-        return tipo != null && tipo.equals(tercero_tipo) ? "checked" : "";
+    public String getTerceroProveedor() {
+        return Boolean.TRUE.equals(this.tercero_proveedor) ? "Sí" : "No";
+    }
+
+    public String getTerceroAccionistaAsociado() {
+        return Boolean.TRUE.equals(this.tercero_accionista_asociado) ? "Sí" : "No";
+    }
+
+    public String getTerceroFacturar() {
+        return Boolean.TRUE.equals(this.tercero_facturar) ? "Sí" : "No";
+    }
+
+    public void setTercero_proveedor(String tercero_proveedor) {
+        this.tercero_proveedor = "Sí".equals(tercero_proveedor) || "true".equalsIgnoreCase(tercero_proveedor);
+    }
+
+    public void setTercero_accionista_asociado(String tercero_accionista_asociado) {
+        this.tercero_accionista_asociado = "Sí".equals(tercero_accionista_asociado) || "true".equalsIgnoreCase(tercero_accionista_asociado);
+    }
+
+    public void setTercero_facturar(String tercero_facturar) {
+        this.tercero_facturar = "Sí".equals(tercero_facturar) || "true".equalsIgnoreCase(tercero_facturar);
+    }
+
+    public String isCheckedProveedor(String valor) {
+        if (this.tercero_proveedor == null) {
+            return "";
+        }
+        boolean isSi = "Sí".equals(valor);
+        return (isSi && this.tercero_proveedor) || (!isSi && !this.tercero_proveedor) ? "checked" : "";
+    }
+
+    public String isCheckedAccionista(String valor) {
+        if (this.tercero_accionista_asociado == null) {
+            return "";
+        }
+        boolean isSi = "Sí".equals(valor);
+        return (isSi && this.tercero_accionista_asociado) || (!isSi && !this.tercero_accionista_asociado) ? "checked" : "";
+    }
+
+    public String isCheckedFacturar(String valor) {
+        if (this.tercero_facturar == null) {
+            return "";
+        }
+        boolean isSi = "Sí".equals(valor);
+        return (isSi && this.tercero_facturar) || (!isSi && !this.tercero_facturar) ? "checked" : "";
+    }
+
+    public void setTercero_estado(String tercero_estado) {
+        this.tercero_estado = (tercero_estado == null || tercero_estado.trim().isEmpty()) ? "Activo" : tercero_estado;
+    }
+
+    public String getTercero_estado() {
+        return tercero_estado != null ? tercero_estado : "";
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralTercero{"
+                + "id='" + id + '\''
+                + ", empleado='" + tercero_empleado + '\''
+                + ", proveedor='" + tercero_proveedor + '\''
+                + ", accionista='" + tercero_accionista_asociado + '\''
+                + ", facturar='" + tercero_facturar + '\''
+                + '}';
     }
 
     public boolean create() {
         String sql = "INSERT INTO dbo.generalTercero (tercero_codigo, tercero_id_tipo_identificacion, tercero_razon_nombres, "
                 + "tercero_fecha_nacimiento, tercero_direccion, tercero_telefono, tercero_correo, tercero_pais, "
                 + "tercero_departamento, tercero_ciudad, tercero_ciiu, tercero_facturar, tercero_empleado, tercero_proveedor, "
-                + "tercero_accionista_asociado, tercero_tipo, tercero_estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "tercero_accionista_asociado, tercero_tipo, tercero_estado) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             stmt.setString(1, tercero_codigo);
@@ -239,40 +288,60 @@ public class GeneralTercero {
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
-            return false;
         } finally {
             ConectorBD.cerrarConexion();
         }
+        return false;
     }
 
     public boolean update() {
-        String sql = "UPDATE dbo.generalTercero SET tercero_codigo=?, tercero_id_tipo_identificacion=?, tercero_razon_nombres=?, "
-                + "tercero_fecha_nacimiento=?, tercero_direccion=?, tercero_telefono=?, tercero_correo=?, tercero_pais=?, "
-                + "tercero_departamento=?, tercero_ciudad=?, tercero_ciiu=?, tercero_facturar=?, tercero_empleado=?, "
-                + "tercero_proveedor=?, tercero_accionista_asociado=?, tercero_tipo=?, tercero_estado=? WHERE id=?";
+        String sql = "UPDATE dbo.generalTercero SET "
+                + "tercero_codigo=?, "
+                + "tercero_id_tipo_identificacion=?, "
+                + "tercero_razon_nombres=?, "
+                + "tercero_fecha_nacimiento=?, "
+                + "tercero_direccion=?, "
+                + "tercero_telefono=?, "
+                + "tercero_correo=?, "
+                + "tercero_pais=?, "
+                + "tercero_departamento=?, "
+                + "tercero_ciudad=?, "
+                + "tercero_ciiu=?, "
+                + "tercero_facturar=?, "
+                + "tercero_empleado=?, "
+                + "tercero_proveedor=?, "
+                + "tercero_accionista_asociado=?, "
+                + "tercero_tipo=?, "
+                + "tercero_estado=? "
+                + "WHERE id=?";
 
-        try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
-            stmt.setString(1, tercero_codigo);
-            stmt.setString(2, tercero_id_tipo_identificacion);
-            stmt.setString(3, tercero_razon_nombres);
-            stmt.setString(4, tercero_fecha_nacimiento);
-            stmt.setString(5, tercero_direccion);
-            stmt.setString(6, tercero_telefono);
-            stmt.setString(7, tercero_correo);
-            stmt.setString(8, tercero_pais);
-            stmt.setString(9, tercero_departamento);
-            stmt.setString(10, tercero_ciudad);
-            stmt.setString(11, tercero_ciiu);
-            stmt.setBoolean(12, tercero_facturar);
-            stmt.setBoolean(13, tercero_empleado);
-            stmt.setBoolean(14, tercero_proveedor);
-            stmt.setBoolean(15, tercero_accionista_asociado);
-            stmt.setString(16, tercero_tipo);
-            stmt.setString(17, tercero_estado);
-            stmt.setString(18, id);
+        try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {          
+            stmt.setString(1, this.tercero_codigo);
+            stmt.setString(2, this.tercero_id_tipo_identificacion);
+            stmt.setString(3, this.tercero_razon_nombres);
+            stmt.setString(4, this.tercero_fecha_nacimiento);
+            stmt.setString(5, this.tercero_direccion);
+            stmt.setString(6, this.tercero_telefono);
+            stmt.setString(7, this.tercero_correo);
+            stmt.setString(8, this.tercero_pais);
+            stmt.setString(9, this.tercero_departamento);
+            stmt.setString(10, this.tercero_ciudad);
+            stmt.setString(11, this.tercero_ciiu);
+            stmt.setBoolean(12, this.tercero_facturar);
+            stmt.setBoolean(13, this.tercero_empleado);
+            stmt.setBoolean(14, this.tercero_proveedor);
+            stmt.setBoolean(15, this.tercero_accionista_asociado);
+            stmt.setString(16, this.tercero_tipo);
+            stmt.setString(17, this.tercero_estado);
+            stmt.setString(18, this.id);
+
+            Logger.getLogger(GeneralTercero.class.getName()).log(Level.INFO,
+                    "Ejecutando UPDATE: " + stmt.toString());
+
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE,
+                    "Error al actualizar tercero: " + sql, e);
             return false;
         } finally {
             ConectorBD.cerrarConexion();
@@ -285,7 +354,7 @@ public class GeneralTercero {
             stmt.setString(1, id);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, "Error al eliminar tercero", e);
             return false;
         } finally {
             ConectorBD.cerrarConexion();
@@ -295,9 +364,8 @@ public class GeneralTercero {
     public static List<GeneralTercero> listInObjects(String filtro, String orden) {
         List<GeneralTercero> list = new ArrayList<>();
         String sql = "SELECT * FROM dbo.generalTercero"
-                + (filtro != null && !filtro.isBlank() ? " WHERE " + filtro : "")
-                + (orden != null && !orden.isBlank() ? " ORDER BY " + orden : "");
-
+                + (filtro != null && !filtro.trim().isEmpty() ? " WHERE " + filtro : "")
+                + (orden != null && !orden.trim().isEmpty() ? " ORDER BY " + orden : "");
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -329,5 +397,4 @@ public class GeneralTercero {
         }
         return list;
     }
-
 }

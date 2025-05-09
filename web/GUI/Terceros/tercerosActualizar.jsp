@@ -77,10 +77,10 @@
             
             // Log adicional para verificar los valores que se están actualizando
             Logger.getLogger("tercerosActualizar").log(Level.INFO, "Valores que se están actualizando:");
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Empleado (DB): " + tercero.getTercero_empleado());
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Proveedor (DB): " + tercero.getTercero_proveedor());
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Accionista (DB): " + tercero.getTercero_accionista_asociado());
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Facturar (DB): " + tercero.getTercero_facturar());
+            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Empleado (DB): " + tercero.getTerceroEmpleado());
+            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Proveedor (DB): " + tercero.getTerceroProveedor());
+            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Accionista (DB): " + tercero.getTerceroAccionistaAsociado());
+            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Facturar (DB): " + tercero.getTerceroFacturar());
         } 
         else if("Create".equals(accion)) {
             resultado = tercero.create();
