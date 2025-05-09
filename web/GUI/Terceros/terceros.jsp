@@ -285,6 +285,10 @@
                             <%
                                 List<GeneralTercero> datas = GeneralTercero.listInObjects("", "");
                                 for (GeneralTercero tro : datas) {
+                                    if (!Boolean.TRUE.equals(tro.getTercero_estado())) {
+        continue; // Saltar si no está activo
+    }
+
                                     String modalId = "modalTercero" + tro.getId();
 
                                     out.print("<tr>");
@@ -489,7 +493,7 @@
                 $("#selectDepartamento").html(departamentos);
             });
         }
-        
+
         function eliminar(id) {
             const dialog = $('<div>')
                     .html('<div class="dialog-content"><i class="fas fa-exclamation-triangle warning-icon"></i><p>¿Realmente desea eliminar este registro?</p></div>');
@@ -501,13 +505,13 @@
                 modal: true,
                 dialogClass: "confirm-dialog no-title",
                 open: function () {
-                    
+
                     $('.ui-dialog-titlebar', this.parentNode).remove();
                 },
                 buttons: {
                     "Eliminar": function () {
                         $(this).dialog("close");
-                        
+
                         const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
                         $('body').append(loading);
 
