@@ -247,7 +247,10 @@ public class GeneralCIIU {
     public void setIsPublicPrivate(String isPublicPrivate) {
         this.isPublicPrivate = isPublicPrivate;
     }
-
+ @Override
+    public String toString() {
+        return codigo + " - " + nombre;
+    }
     // Getters y setters omitidos por espacio
 
     public boolean create() {
@@ -449,16 +452,16 @@ public class GeneralCIIU {
 
         return list;
     }
-   public static String getListaEnOption(String preseleccionado) {
+   
+ public static String getListaEnOption(String preseleccionado) {
     StringBuilder lista = new StringBuilder();
 
-    List<GeneralCIIU> data = listInObjects(null, "Codigo");
+    List<GeneralCIIU> data = listInObjects(null, "codigo, nombre");
 
-    for (GeneralCIIU ciiu : data) {
-        String selected = preseleccionado != null && preseleccionado.equals(ciiu.getId()) ? " selected" : "";
-        lista.append("<option value='").append(ciiu.getId()).append("'").append(selected).append(">")
-             .append(ciiu.getCodigo()).append(" - ")
-             .append(ciiu.getNombre()).append("</option>");
+    for (GeneralCIIU ti : data) {
+        String selected = preseleccionado != null && preseleccionado.equals(ti.getId()) ? " selected" : "";
+        lista.append("<option value='").append(ti.getId()).append("'").append(selected).append(">")
+                .append(ti.getCodigo()).append(" - ").append(ti.getNombre()).append("</option>");
     }
 
     return lista.toString();

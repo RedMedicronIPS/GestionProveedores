@@ -53,7 +53,7 @@
             lista += "<tr>";
             lista += "<td>" + tro.getId() + "</td>";
             lista += "<td>" + tro.getTercero_codigo() + "</td>";
-            lista += "<td>" + tro.getTercero_id_tipo_identificacion() + "</td>";
+            lista += "<td>" + tro.getTI() + "</td>";
             lista += "<td>" + tro.getTercero_razon_nombres() + "</td>";
             lista += "<td>" + tro.getTercero_fecha_nacimiento() + "</td>"; // Cambiado aquí
             lista += "<td>" + tro.getTercero_direccion() + "</td>"; // Cambiado aquí
@@ -62,7 +62,7 @@
             lista += "<td>" + tro.getTercero_pais() + "</td>";
             lista += "<td>" + tro.getTercero_departamento() + "</td>";
             lista += "<td>" + tro.getTercero_ciudad() + "</td>";
-            lista += "<td>" + tro.getTercero_ciiu() + "</td>";
+            lista += "<td>" + tro.getCIIU() + "</td>";
             lista += "<td>" + tro.getTerceroEmpleado() + "</td>";
             lista += "<td>" + tro.getTerceroProveedor() + "</td>";
             lista += "<td>" + tro.getTerceroAccionistaAsociado() + "</td>";
@@ -107,7 +107,8 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class="form-label small text-secondary">Tipo Documento:</label>
-                                                <select class="form-control form-control-sm border-0 shadow-sm" name="tercero_id_tipo_identificacion">
+                                                <select class="form-control form-control-sm model" name="general_usu_id_tipo_identificacion">
+                                                    <option value="">Seleccione un tipo</option>
                                                     <%= GeneralTipoIdentificacion.getListaEnOption(tercero.getTercero_id_tipo_identificacion())%>
                                                 </select>
                                             </div>  
@@ -285,16 +286,16 @@
                             <%
                                 List<GeneralTercero> datas = GeneralTercero.listInObjects("", "");
                                 for (GeneralTercero tro : datas) {
-                                    if (!Boolean.TRUE.equals(tro.getTercero_estado())) {
-        continue; // Saltar si no está activo
-    }
+                                    /* if (!Boolean.TRUE.equals(tro.getTercero_estado())) {
+                                        continue; // Saltar si no está activo
+                                    }*/
 
                                     String modalId = "modalTercero" + tro.getId();
 
                                     out.print("<tr>");
                                     out.print("<td>" + tro.getId() + "</td>");
                                     out.print("<td>" + tro.getTercero_codigo() + "</td>");
-                                    out.print("<td>" + tro.getTercero_id_tipo_identificacion() + "</td>");
+                                    out.print("<td>" + tro.getTI() + "</td>");
                                     out.print("<td>" + tro.getTercero_razon_nombres() + "</td>");
                                     out.print("<td>" + tro.getTercero_telefono() + "</td>");
                                     out.print("<td>" + tro.getTercero_correo() + "</td>");
@@ -318,7 +319,7 @@
                                     out.print("<div class='col-md-6'>");
                                     out.print("<p><strong>ID:</strong> " + tro.getId() + "</p>");
                                     out.print("<p><strong>Código:</strong> " + tro.getTercero_codigo() + "</p>");
-                                    out.print("<p><strong>Tipo Identificación:</strong> " + tro.getTercero_id_tipo_identificacion() + "</p>");
+                                    out.print("<p><strong>Tipo Identificación:</strong> " + tro.getTI() + "</p>");
                                     out.print("<p><strong>Razón/Nombres:</strong> " + tro.getTercero_razon_nombres() + "</p>");
                                     out.print("<p><strong>Fecha Nacimiento:</strong> " + tro.getTercero_fecha_nacimiento() + "</p>");
                                     out.print("<p><strong>Dirección:</strong> " + tro.getTercero_direccion() + "</p>");
@@ -330,7 +331,7 @@
                                     out.print("<div class='col-md-6'>");
                                     out.print("<p><strong>Departamento:</strong> " + tro.getTercero_departamento() + "</p>");
                                     out.print("<p><strong>Ciudad:</strong> " + tro.getTercero_ciudad() + "</p>");
-                                    out.print("<p><strong>CIIU:</strong> " + tro.getTercero_ciiu() + "</p>");
+                                    out.print("<p><strong>CIIU:</strong> " + tro.getCIIU() + "</p>");
                                     out.print("<p><strong>Empleado:</strong> " + tro.getTerceroEmpleado() + "</p>");
                                     out.print("<p><strong>Proveedor:</strong> " + tro.getTerceroProveedor() + "</p>");
                                     out.print("<p><strong>Accionista/Asociado:</strong> " + tro.getTerceroAccionistaAsociado() + "</p>");
@@ -412,6 +413,12 @@
         $("#deptoInput").prop("disabled", true);
         $("#ciuInput").prop("disabled", true);
 
+        if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_pais()%>" !== "") {
+            $("#deptoInput").prop("disabled", false);
+        }
+        if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_departamento()%>" !== "") {
+            $("#ciuInput").prop("disabled", false);
+        }
         document.getElementById("selectPais").addEventListener("change", function () {
             const pais = this.value;
             const otroPais = document.getElementById("otroPais");
@@ -458,10 +465,10 @@
         });
 
         function cargarCiudades(departamento) {
-            $.get("GUI/General/getCiudades.jsp", {idDepartamento: departamento}, function (data) {
-                let ciudades = '<option value="" disabled selected hidden>Seleccione una ciudad</option>' + data;
-                ciudades += '<option value="Otro">Otro</option>';
-                $("#selectCiudad").html(ciudades);
+            $.getJSON("GUI/General/getCiudades.jsp", {idDepartamento: departamento}, function (data) {
+                $("#ciuInput").autocomplete({
+                    source: data
+                });
             });
         }
 
@@ -502,20 +509,27 @@
 
                     $('.ui-dialog-titlebar', this.parentNode).remove();
                 },
-                buttons: {
-                    "Eliminar": function () {
-                        $(this).dialog("close");
-
-                        const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
-                        $('body').append(loading);
-
-                        window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
-                                '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
+                buttons: [
+                    {
+                        text: "Eliminar",
+                        class: "btn-eliminar",
+                        click: function () {
+                            $(this).dialog("close");
+                            const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
+                            $('body').append(loading);
+                            window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
+                                    '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
+                        }
                     },
-                    "Cancelar": function () {
-                        $(this).dialog("close");
+                    {
+                        text: "Cancelar",
+                        class: "btn-cancelar",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                }
+                ]
+
             });
         }
     </script>

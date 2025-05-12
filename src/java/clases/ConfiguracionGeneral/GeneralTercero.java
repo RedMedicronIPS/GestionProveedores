@@ -32,11 +32,12 @@ public class GeneralTercero {
     private Boolean tercero_estado;
 
     public GeneralTercero() {
-        // Inicializar como Boolean, no como String
+        // Inicializar todos los booleanos como false, excepto el estado que será true (Activo)
         this.tercero_facturar = false;
         this.tercero_empleado = false;
         this.tercero_proveedor = false;
         this.tercero_accionista_asociado = false;
+        this.tercero_estado = true; // Activo por defecto
     }
 
     public GeneralTercero(String id) {
@@ -163,6 +164,21 @@ public class GeneralTercero {
         this.tercero_ciudad = tercero_ciudad;
     }
 
+    public clases.ConfiguracionGeneral.GeneralCIIU getCIIU() {
+        if (this.tercero_ciiu == null || this.tercero_ciiu.trim().isEmpty()) {
+            return new GeneralCIIU();            
+        }
+        return new GeneralCIIU(this.tercero_ciiu);
+    }
+    
+    public GeneralTipoIdentificacion getTI() {
+    if (this.tercero_id_tipo_identificacion == null || this.tercero_id_tipo_identificacion.trim().isEmpty()) {
+        return new GeneralTipoIdentificacion(); 
+    }
+    return new GeneralTipoIdentificacion(this.tercero_id_tipo_identificacion);
+}
+    
+    
     public String getTercero_ciiu() {
         return tercero_ciiu != null ? tercero_ciiu : "";
     }
@@ -244,7 +260,7 @@ public class GeneralTercero {
     }
 
     public void setTercero_estado(Boolean tercero_estado) {
-        this.tercero_estado = tercero_estado != null ? tercero_estado : true; // true por defecto (Activo)
+        this.tercero_estado = tercero_estado != null ? tercero_estado : true; 
     }
 
     public String getTercero_estadoStr() {
@@ -290,7 +306,7 @@ public class GeneralTercero {
             stmt.setBoolean(14, tercero_proveedor);
             stmt.setBoolean(15, tercero_accionista_asociado);
             stmt.setString(16, tercero_tipo);
-            stmt.setBoolean(17, tercero_estado);
+            stmt.setBoolean(17, true); // Siempre activo al crear
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
@@ -370,9 +386,14 @@ public class GeneralTercero {
 
     public static List<GeneralTercero> listInObjects(String filtro, String orden) {
         List<GeneralTercero> list = new ArrayList<>();
-        String sql = "SELECT * FROM dbo.generalTercero"
-                + (filtro != null && !filtro.trim().isEmpty() ? " WHERE " + filtro : "")
+        String whereClause = "tercero_estado = 1"; // Solo activos
+        if (filtro != null && !filtro.trim().isEmpty()) {
+            whereClause += " AND " + filtro;
+        }
+
+        String sql = "SELECT * FROM dbo.generalTercero WHERE " + whereClause
                 + (orden != null && !orden.trim().isEmpty() ? " ORDER BY " + orden : "");
+
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
