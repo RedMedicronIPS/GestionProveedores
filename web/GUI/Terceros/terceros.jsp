@@ -127,7 +127,6 @@
                                                     <%= GeneralCIIU.getListaEnOption(tercero.getTercero_ciiu())%>
                                                 </select>
                                             </div>
-
                                             <div class="col-md-12">
                                                 <div class="row g-2">
                                                     <div class="col-md-4">
@@ -135,12 +134,12 @@
                                                         <div class="d-flex">                                                            
                                                             <div class="form-check me-3">
                                                                 <input class="form-check-input" type="radio" name="tercero_empleado" 
-                                                                       value="Sí" <%= tercero.isCheckedEmpleado("Sí")%>>
+                                                                       value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroEmpleado()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="tercero_empleado" 
-                                                                       value="No" <%= tercero.isCheckedEmpleado("No")%>>
+                                                                       value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroEmpleado()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
                                                         </div>
@@ -151,15 +150,14 @@
                                                         <div class="d-flex">
                                                             <div class="form-check me-3">
                                                                 <input class="form-check-input" type="radio" name="tercero_proveedor" 
-                                                                       value="Sí" <%= tercero.isCheckedProveedor("Sí")%>>
+                                                                       value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="tercero_proveedor" 
-                                                                       value="No" <%= tercero.isCheckedProveedor("No")%>>
+                                                                       value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
-
                                                         </div>
                                                     </div>
 
@@ -168,15 +166,14 @@
                                                         <div class="d-flex">
                                                             <div class="form-check me-3">
                                                                 <input class="form-check-input" type="radio" name="tercero_accionista_asociado" 
-                                                                       value="Sí" <%= tercero.isCheckedAccionista("Sí")%>>
+                                                                       value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroAccionistaAsociado()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="tercero_accionista_asociado" 
-                                                                       value="No" <%= tercero.isCheckedAccionista("No")%>>
+                                                                       value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroAccionistaAsociado()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -188,11 +185,13 @@
                                                         <label class="form-label small text-secondary">Tipo de Tercero:</label>
                                                         <div class="d-flex">
                                                             <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Natural" <%= tercero.isCheckedTT("Persona Natural")%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_tipo" 
+                                                                       value="Persona Natural" <%= "Actualizar".equals(accion) && "Persona Natural".equals(tercero.getTercero_tipo()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">Persona Natural</label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Jurídica" <%= tercero.isCheckedTT("Persona Jurídica")%>>
+                                                                <input class="form-check-input" type="radio" name="tercero_tipo" 
+                                                                       value="Persona Jurídica" <%= "Actualizar".equals(accion) && "Persona Jurídica".equals(tercero.getTercero_tipo()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">Persona Jurídica</label>
                                                             </div>
                                                         </div>
@@ -203,12 +202,12 @@
                                                         <div class="d-flex">
                                                             <div class="form-check me-3">
                                                                 <input class="form-check-input" type="radio" name="tercero_facturar" 
-                                                                       value="Sí" <%= tercero.isCheckedFacturar("Sí")%>>
+                                                                       value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">Sí</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="tercero_facturar" 
-                                                                       value="No" <%= tercero.isCheckedFacturar("No")%>>
+                                                                       value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
                                                                 <label class="form-check-label">No</label>
                                                             </div>
                                                         </div>
