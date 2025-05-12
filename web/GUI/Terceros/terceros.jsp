@@ -46,30 +46,7 @@
             tercero = new GeneralTercero();
         }
 
-        String lista = "";
         List<GeneralTercero> data = GeneralTercero.listInObjects("", "");
-        for (GeneralTercero tro : data) {
-            lista += "<tr>";
-            lista += "<td>" + tro.getId() + "</td>";
-            lista += "<td>" + tro.getTercero_codigo() + "</td>";
-            lista += "<td>" + tro.getTI() + "</td>";
-            lista += "<td>" + tro.getTercero_razon_nombres() + "</td>";
-            lista += "<td>" + tro.getTercero_fecha_nacimiento() + "</td>";
-            lista += "<td>" + tro.getTercero_direccion() + "</td>";
-            lista += "<td>" + tro.getTercero_telefono() + "</td>";
-            lista += "<td>" + tro.getTercero_correo() + "</td>";
-            lista += "<td>" + tro.getTercero_pais() + "</td>";
-            lista += "<td>" + tro.getTercero_departamento() + "</td>";
-            lista += "<td>" + tro.getTercero_ciudad() + "</td>";
-            lista += "<td>" + tro.getCIIU() + "</td>";
-            lista += "<td>" + tro.getTerceroEmpleado() + "</td>";
-            lista += "<td>" + tro.getTerceroProveedor() + "</td>";
-            lista += "<td>" + tro.getTerceroAccionistaAsociado() + "</td>";
-            lista += "<td>" + tro.getTercero_tipo() + "</td>";
-            lista += "<td>" + tro.getTerceroFacturar() + "</td>";
-            lista += "<td><a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId() + "' title='Modificar'><img src='recursos/update.png' class='icon'></a><a href='javascript:eliminar(" + tro.getId() + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>";
-            lista += "</tr>";
-        }
     %>
 
     <body>
@@ -275,80 +252,84 @@
                         </thead>
 
                         <tbody>
-                            <%
-                                List<GeneralTercero> datas = GeneralTercero.listInObjects("", "");
-                                for (GeneralTercero tro : datas) {
+                            <% for (GeneralTercero tro : data) {
                                     String modalId = "modalTercero" + tro.getId();
-                                    out.print("<tr>");
-                                    out.print("<td>" + tro.getId() + "</td>");
-                                    out.print("<td>" + tro.getTercero_codigo() + "</td>");
-                                    out.print("<td>" + tro.getTI() + "</td>");
-                                    out.print("<td>" + tro.getTercero_razon_nombres() + "</td>");
-                                    out.print("<td>" + tro.getTercero_telefono() + "</td>");
-                                    out.print("<td>" + tro.getTercero_correo() + "</td>");
-                                    out.print("<td>" + tro.getTercero_ciudad() + "</td>");
-                                    out.print("<td>" + (tro.getTercero_estado() ? "Activo" : "Inactivo") + "</td>");
-                                    out.print("<td><button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#" + modalId
-                                            + "'>Ver registro</button> "
-                                            + "<a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId()
-                                            + "' title='Modificar'><img src='recursos/update.png' class='icon'></a> "
-                                            + "<a href='javascript:desactivar(" + tro.getId() + ")' title='Desactivar'><img src='recursos/toggle-off.png' class='icon'></a></td>");
-                                    out.print("</tr>");
-                                }
                             %>
+                            <tr>
+                                <td><%= tro.getId()%></td>
+                                <td><%= tro.getTercero_codigo()%></td>
+                                <td><%= tro.getTI()%></td>
+                                <td><%= tro.getTercero_razon_nombres()%></td>
+                                <td><%= tro.getTercero_telefono()%></td>
+                                <td><%= tro.getTercero_correo()%></td>
+                                <td><%= tro.getTercero_ciudad()%></td>
+                                <td><%= tro.getTercero_estado() ? "Activo" : "Inactivo"%></td>
+                                <td>
+                                    <button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#<%= modalId%>'>Ver registro</button>
+                                    <a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=<%= tro.getId()%>' title='Modificar'><img src='recursos/update.png' class='icon'></a>
+                                    <a href='javascript:desactivar(<%= tro.getId()%>)' title='Desactivar'><img src='recursos/desactivar.png' class='icon'></a>
+                                </td>
+                            </tr>
+                            <% } %>
                         </tbody>
                     </table>
 
-                    <%
-                        for (GeneralTercero tro : datas) {
+                    <% for (GeneralTercero tro : data) {
                             String modalId = "modalTercero" + tro.getId();
-
-                            out.print("<div class='modal fade' id='" + modalId + "' tabindex='-1'>");
-                            out.print("<div class='modal-dialog modal-xl'>");
-                            out.print("<div class='modal-content'>");
-                            out.print("<div class='modal-header'><h5 class='modal-title w-100 text-center'>Detalles del Tercero</h5>");
-                            out.print("<button type='button' class='btn-close' data-bs-dismiss='modal'></button></div>");
-                            out.print("<div class='modal-body'><div class='table-responsive'>");
-                            out.print("<table class='table tabla-detalle-tercero'>");
-                            out.print("<thead>");
-                            out.print("<tr>");
-                            out.print("<th>ID</th><th>Código</th><th>Tipo de documento</th><th>Razón social o nombres</th>");
-                            out.print("<th>Fecha de nacimiento</th><th>Dirección</th><th>Teléfono</th><th colspan='2'>Correo</th>");
-                            out.print("</tr>");
-                            out.print("</thead>");
-                            out.print("<tbody>");
-                            out.print("<tr>");
-                            out.print("<td>" + tro.getId() + "</td>");
-                            out.print("<td>" + tro.getTercero_codigo() + "</td>");
-                            out.print("<td>" + tro.getTI() + "</td>");
-                            out.print("<td>" + tro.getTercero_razon_nombres() + "</td>");
-                            out.print("<td>" + tro.getTercero_fecha_nacimiento() + "</td>");
-                            out.print("<td>" + tro.getTercero_direccion() + "</td>");
-                            out.print("<td>" + tro.getTercero_telefono() + "</td>");
-                            out.print("<td colspan='2'>" + tro.getTercero_correo() + "</td>");
-                            out.print("</tr>");
-                            out.print("<tr>");
-                            out.print("<th>País</th><th>Departamento</th><th>Ciudad</th><th>CIIU</th>");
-                            out.print("<th>¿Empleado?</th><th>¿Proveedor?</th><th>¿Accionista/Asociado?</th><th>Tipo de persona</th><th>¿Obligado a facturar?</th>");
-                            out.print("</tr>");
-                            out.print("<tr>");
-                            out.print("<td>" + tro.getTercero_pais() + "</td>");
-                            out.print("<td>" + tro.getTercero_departamento() + "</td>");
-                            out.print("<td>" + tro.getTercero_ciudad() + "</td>");
-                            out.print("<td>" + tro.getCIIU() + "</td>");
-                            out.print("<td>" + tro.getTerceroEmpleado() + "</td>");
-                            out.print("<td>" + tro.getTerceroProveedor() + "</td>");
-                            out.print("<td>" + tro.getTerceroAccionistaAsociado() + "</td>");
-                            out.print("<td>" + tro.getTercero_tipo() + "</td>");
-                            out.print("<td>" + tro.getTerceroFacturar() + "</td>");
-                            out.print("</tr>");
-                            out.print("</tbody>");
-                            out.print("</table>");
-                            out.print("</div></div>");
-                            out.print("<div class='modal-footer'><button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button></div>");
-                            out.print("</div></div></div>");
-                        }
                     %>
+                    <div class='modal fade' id='<%= modalId%>' tabindex='-1'>
+                        <div class='modal-dialog modal-xl'>
+                            <div class='modal-content'>
+                                <div class='modal-header'>
+                                    <h5 class='modal-title w-100 text-center'>Detalles del Tercero</h5>
+                                    <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+                                </div>
+                                <div class='modal-body'>
+                                    <div class='table-responsive'>
+                                        <table class='table tabla-detalle-tercero'>
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th><th>Código</th><th>Tipo de documento</th><th>Razón social o nombres</th>
+                                                    <th>Fecha de nacimiento</th><th>Dirección</th><th>Teléfono</th><th colspan='2'>Correo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><%= tro.getId()%></td>
+                                                    <td><%= tro.getTercero_codigo()%></td>
+                                                    <td><%= tro.getTI()%></td>
+                                                    <td><%= tro.getTercero_razon_nombres()%></td>
+                                                    <td><%= tro.getTercero_fecha_nacimiento()%></td>
+                                                    <td><%= tro.getTercero_direccion()%></td>
+                                                    <td><%= tro.getTercero_telefono()%></td>
+                                                    <td colspan='2'><%= tro.getTercero_correo()%></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>País</th><th>Departamento</th><th>Ciudad</th><th>CIIU</th>
+                                                    <th>¿Empleado?</th><th>¿Proveedor?</th><th>¿Accionista/Asociado?</th><th>Tipo de persona</th><th>¿Obligado a facturar?</th>
+                                                </tr>
+                                                <tr>
+                                                    <td><%= tro.getTercero_pais()%></td>
+                                                    <td><%= tro.getTercero_departamento()%></td>
+                                                    <td><%= tro.getTercero_ciudad()%></td>
+                                                    <td><%= tro.getCIIU()%></td>
+                                                    <td><%= tro.getTerceroEmpleado()%></td>
+                                                    <td><%= tro.getTerceroProveedor()%></td>
+                                                    <td><%= tro.getTerceroAccionistaAsociado()%></td>
+                                                    <td><%= tro.getTercero_tipo()%></td>
+                                                    <td><%= tro.getTerceroFacturar()%></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class='modal-footer'>
+                                    <button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }%>
                 </div>
             </div>
         </div>
@@ -367,11 +348,11 @@
                 "info": true,
                 "lengthMenu": [5, 10, 25, 50, 100],
                 "language": {
-                    "lengthMenu": "Mostrar MENU registros por página",
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
                     "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando página PAGE de PAGES",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
                     "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrado de MAX registros totales)",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
                     "search": "Buscar:",
                     "paginate": {
                         "first": "&#171;",
@@ -383,7 +364,6 @@
             });
             $('#tablaterceros').on('error.dt', function (e, settings, techNote, message) {
                 console.error('Error en DataTable:', message);
-                // Recargar la página completa manteniendo los parámetros
                 window.location.href = window.location.href;
             });
         });
