@@ -38,13 +38,7 @@ public class GeneralTipoUsuario {
 
     public String obtenerMenuOpcionesRolUsuario(int idRol) {
         StringBuilder menuRoles = new StringBuilder();
-
-        // Inicio del menú
         menuRoles.append("<ul class='menu'>");
-
-        // Enlace al dashboard con espacio entre el icono y el texto
-        
-
         String sqlMenu = "SELECT gm.id, gm.menu_nombre "
                 + "FROM generalMenu gm "
                 + "INNER JOIN generalMenuOpcion gmo ON gmo.id_generales_menu = gm.id "
@@ -68,13 +62,9 @@ public class GeneralTipoUsuario {
                 while (rsMenu.next()) {
                     int idMenu = rsMenu.getInt("id");
                     String nombreMenu = rsMenu.getString("menu_nombre");
-
-                    // Agregar menú principal con espacio entre el icono y el nombre
                     menuRoles.append("<a href='#' class='toggle-menu submenu-title'><i class='bi bi-folder'></i>&nbsp;&nbsp;")
                             .append(nombreMenu)
                             .append(" <i class='bi bi-chevron-down float-end'></i></a>");
-
-                    // Obtener submenús
                     try (PreparedStatement stmtSubMenu = conexion.prepareStatement(sqlSubMenu)) {
                         stmtSubMenu.setInt(1, idRol);
                         stmtSubMenu.setInt(2, idMenu);
@@ -86,8 +76,6 @@ public class GeneralTipoUsuario {
                                 String nombreOpcion = rsSubMenu.getString("opcion_nombre");
                                 String opcionDestino = rsSubMenu.getString("opcion_destino");
                                 String opcionIcono = rsSubMenu.getString("opcion_icono");
-
-                                // Agregar submenú con ESPACIO después del ícono
                                 menuRoles.append("<li><a href='main.jsp?CONTENIDO=")
                                         .append(opcionDestino)
                                         .append("' class='dropdown-item'><i class='")
@@ -95,9 +83,7 @@ public class GeneralTipoUsuario {
                                         .append("'></i>&nbsp;&nbsp;")
                                         .append(nombreOpcion)
                                         .append("</a></li>");
-
                             }
-
                             menuRoles.append("</div>");
                         }
                     }
@@ -108,9 +94,7 @@ public class GeneralTipoUsuario {
             e.printStackTrace();
             return "<p>Error al generar el menú.</p>";
         }
-
         menuRoles.append("</ul>");
-
         return menuRoles.toString();
     }
 

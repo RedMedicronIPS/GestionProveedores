@@ -276,7 +276,6 @@ footer.footer {
     margin-top: 0; 
 }
 
-
 .card {
     box-shadow: none !important;
 }
@@ -535,7 +534,7 @@ html.dark-mode .multiselect-option:hover {
     min-width: 280px;
     background: white;
     border-left: 4px solid #0A1E3F;
-    border-radius: 6px;
+    border-radius: 20px;
     padding: 14px 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -548,38 +547,12 @@ html.dark-mode .multiselect-option:hover {
     transform: translateX(0);
 }
 
-.alert-message .close-btn {
-    margin-left: auto;
-    cursor: pointer;
-    color: #777;
-    font-size: 1em;
-    transition: color 0.2s;
-}
-
-.alert-message .close-btn:hover {
-    color: #333;
-}
-
-/* Modo oscuro */
-html.dark-mode .alert-message {
-    background: #1A1A1A;
-    border-left-color: #0A1E3F;
-    color: #f0f0f0;
-}
-
-html.dark-mode .alert-message .close-btn {
-    color: #aaa;
-}
-
-html.dark-mode .alert-message .close-btn:hover {
-    color: #fff;
-}
-
 .alert-message i {
     color: #0A1E3F;
     font-size: 1.3em;
 }
-/* Estilos para el diálogo sin título */
+
+/* ================== DIÁLOGO DE CONFIRMACIÓN ================== */
 .confirm-dialog.no-title .ui-dialog-titlebar {
     display: none !important;
 }
@@ -596,125 +569,127 @@ html.dark-mode .alert-message .close-btn:hover {
     font-size: 1.5em;
 }
 
-/* Ajustar posición de los botones cuando no hay título */
-.no-title .ui-dialog-buttonpane {
-    padding-top: 0 !important;
-}
-
-/* ================== ESTILOS PARA BOTONES REDONDEADOS ================== */
-.confirm-dialog .ui-button {
+.ui-dialog {
     border-radius: 20px !important;
-    padding: 5px 15px !important;
-    transition: all 0.3s ease !important;
+    overflow: hidden !important;
 }
 
-/* ================== MODO OSCURO ================== */
-html.dark-mode .confirm-dialog,
-html.dark-mode .confirm-dialog .ui-dialog-titlebar {
-    background: #1A1A1A !important;
-    border-color: #333 !important;
-    color: #f0f0f0 !important;
+/* ================== PANEL DE BOTONES ================== */
+.ui-dialog-buttonpane {
+    background: white !important;
+    border-top: 1px solid #e0e0e0 !important;
+    padding: 15px 20px !important;
+    margin: 0 !important;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
-html.dark-mode .confirm-dialog .ui-dialog-content {
-    color: #e0e0e0 !important;
-}
-
-html.dark-mode .confirm-dialog .ui-dialog-buttonpane {
-    background: #222 !important;
-    border-color: #333 !important;
-}
-
-html.dark-mode .confirm-dialog .ui-button {
-    background: #0A1E3F !important;
-    color: white !important;
-    border-radius: 20px !important;
-}
-
-html.dark-mode .confirm-dialog .ui-button:hover {
-    background: #1A2E4F !important;
-}
-
-html.dark-mode .confirm-dialog .ui-button:last-child {
-    background: #333 !important;
-    color: #f0f0f0 !important;
-    border-color: #444 !important;
-    border-radius: 20px !important;
-}
-
-html.dark-mode .confirm-dialog .ui-button:last-child:hover {
-    background: #444 !important;
-}
-
-html.dark-mode .alert-message {
-    background: #1A1A1A;
-    border-left-color: #0A1E3F;
-    color: #f0f0f0;
-}
-
-html.dark-mode .alert-message i {
-    color: #4A90E2;
-}
-
-html.dark-mode .alert-message .close-btn {
-    color: #aaa;
-}
-
-html.dark-mode .alert-message .close-btn:hover {
-    color: #fff;
-}
-.confirm-dialog .ui-button {
-    border-radius: 20px !important;
-    padding: 5px 15px !important;
-    transition: all 0.3s ease !important;
-}
-/* ================== BOTONES DEL DIÁLOGO REDONDEADOS ================== */
-.ui-dialog .ui-dialog-buttonpane .ui-button {
-    border-radius: 20px !important;
-    padding: 5px 15px !important;
-    min-width: 80px;
-    transition: all 0.3s ease !important;
-}
-
-/* Estilo para el botón principal (Eliminar/Aceptar) */
-.ui-dialog .ui-dialog-buttonpane .ui-button:first-child {
-    background: #0A1E3F !important;
+/* ================== ESTILOS DE BOTONES (no afectados por modo oscuro) ================== */
+.ui-dialog-buttonpane .btn-eliminar {
+    background: #2196F3 !important;
     color: white !important;
     border: none !important;
+    border-radius: 20px !important;
+    padding: 8px 20px !important;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* Estilo para el botón secundario (Cancelar) */
-.ui-dialog .ui-dialog-buttonpane .ui-button:last-child {
-    background: #f0f0f0 !important;
-    color: #333 !important;
-    border: 1px solid #ddd !important;
+.ui-dialog-buttonpane .btn-eliminar:hover {
+    background: #1976D2 !important;
 }
 
-/* Hover states */
-.ui-dialog .ui-dialog-buttonpane .ui-button:first-child:hover {
-    background: #1A2E4F !important;
+.ui-dialog-buttonpane .btn-cancelar {
+    background: #E57373 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 20px !important;
+    padding: 8px 20px !important;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.ui-dialog .ui-dialog-buttonpane .ui-button:last-child:hover {
-    background: #e0e0e0 !important;
+.ui-dialog-buttonpane .btn-cancelar:hover {
+    background: #C62828 !important;
 }
 
 /* ================== MODO OSCURO ================== */
-html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:first-child {
-    background: #0A1E3F !important;
-    color: white !important;
+html.dark-mode {    
+    .alert-message {
+        background: #1A1A1A;
+        border-left-color: #0A1E3F;
+        color: #f0f0f0;
+    }
+
+    .alert-message i {
+        color: #4A90E2;
+    }
+
+    .confirm-dialog,
+    .confirm-dialog .ui-dialog-titlebar,
+    .ui-dialog-buttonpane { 
+        background: #1A1A1A !important;
+        border-color: #333 !important;
+    }
+
+    .confirm-dialog .ui-dialog-content {
+        color: #e0e0e0 !important;
+    }
+
+    .ui-dialog-buttonpane {
+        border-top: 1px solid #333 !important;
+    }
+}
+/* ================== MODAL EN MODO OSCURO ================== */
+html.dark-mode .modal-content {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+    border: 1px solid #2E3F4F !important;
 }
 
-html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:last-child {
-    background: #333 !important;
-    color: #f0f0f0 !important;
-    border: 1px solid #444 !important;
+html.dark-mode .modal-header {
+    border-bottom: 1px solid #2E3F4F !important;
+    background-color: #0A1A2F !important;
 }
 
-html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:first-child:hover {
-    background: #1A2E4F !important;
+html.dark-mode .modal-footer {
+    border-top: 1px solid #2E3F4F !important;
+    background-color: #0A1A2F !important;
 }
 
-html.dark-mode .ui-dialog .ui-dialog-buttonpane .ui-button:last-child:hover {
-    background: #444 !important;
+html.dark-mode .modal-title {
+    color: #00D1FF !important;
+}
+
+html.dark-mode .btn-close {
+    filter: invert(1) brightness(2);
+}
+
+html.dark-mode .btn-secondary {
+    background-color: #003B5B !important;
+    border-color: #004F4F !important;
+    color: #00FFE5 !important;
+}
+
+html.dark-mode .btn-secondary:hover {
+    background-color: #004F4F !important;
+}
+
+html.dark-mode .modal-body p strong {
+    color: #00D1FF !important;
+}
+
+html.dark-mode .modal-body p {
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .modal-body table {
+    background-color: #1A2A3A !important;
+    color: #E0F7FF !important;
+}
+
+html.dark-mode .modal-body th,
+html.dark-mode .modal-body td {
+    border-color: #2E3F4F !important;
 }

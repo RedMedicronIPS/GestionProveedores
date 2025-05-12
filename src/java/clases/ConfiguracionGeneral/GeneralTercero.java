@@ -32,11 +32,11 @@ public class GeneralTercero {
     private Boolean tercero_estado;
 
     public GeneralTercero() {
-        // Inicializar como Boolean, no como String
         this.tercero_facturar = false;
         this.tercero_empleado = false;
         this.tercero_proveedor = false;
         this.tercero_accionista_asociado = false;
+        this.tercero_estado = true;
 
     }
 
@@ -165,6 +165,20 @@ public class GeneralTercero {
         this.tercero_ciudad = tercero_ciudad;
     }
 
+    public clases.ConfiguracionGeneral.GeneralCIIU getCIIU() {
+        if (this.tercero_ciiu == null || this.tercero_ciiu.trim().isEmpty()) {
+            return new GeneralCIIU();
+        }
+        return new GeneralCIIU(this.tercero_ciiu);
+    }
+
+    public GeneralTipoIdentificacion getTI() {
+        if (this.tercero_id_tipo_identificacion == null || this.tercero_id_tipo_identificacion.trim().isEmpty()) {
+            return new GeneralTipoIdentificacion();
+        }
+        return new GeneralTipoIdentificacion(this.tercero_id_tipo_identificacion);
+    }
+
     public String getTercero_ciiu() {
         return tercero_ciiu != null ? tercero_ciiu : "";
     }
@@ -248,7 +262,7 @@ public class GeneralTercero {
     }
 
     public void setTercero_estado(Boolean tercero_estado) {
-        this.tercero_estado = tercero_estado != null ? tercero_estado : true; // true por defecto (Activo)
+        this.tercero_estado = tercero_estado != null ? tercero_estado : true;
     }
 
     public String getTercero_estadoStr() {
@@ -272,6 +286,7 @@ public class GeneralTercero {
     }
 
     public boolean create() {
+
         String sql = "INSERT INTO dbo.generalTercero (tercero_codigo, tercero_id_tipo_identificacion, tercero_razon_nombres, "
                 + "tercero_fecha_nacimiento, tercero_direccion, tercero_telefono, tercero_correo, tercero_pais, "
                 + "tercero_departamento, tercero_ciudad, tercero_ciiu, tercero_facturar, tercero_empleado, tercero_proveedor, "
@@ -295,7 +310,7 @@ public class GeneralTercero {
             stmt.setString(14, tercero_proveedor);
             stmt.setString(15, tercero_accionista_asociado);
             stmt.setString(16, tercero_tipo);
-            stmt.setBoolean(17, tercero_estado);
+            stmt.setBoolean(17, true);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
@@ -344,7 +359,6 @@ public class GeneralTercero {
             stmt.setBoolean(15, this.tercero_accionista_asociado);
             stmt.setString(16, this.tercero_tipo);
             stmt.setBoolean(17, this.tercero_estado);
-            stmt.setString(18, this.id); // Este parámetro aho
             stmt.setString(18, this.id);
 
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.INFO,
@@ -361,23 +375,25 @@ public class GeneralTercero {
         }
     }
 
-    public boolean delete() {
-        String sql = "DELETE FROM dbo.generalTercero WHERE id = ?";
+    public boolean desactivar() {
+        String sql = "UPDATE dbo.generalTercero SET tercero_estado = 0 WHERE id = ?";
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             stmt.setString(1, id);
-            return stmt.executeUpdate() > 0;
+            int result = stmt.executeUpdate();
+            return result > 0;
         } catch (SQLException e) {
-            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, "Error al eliminar tercero", e);
+            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, "Error al desactivar tercero ID: " + id, e);
             return false;
-        } finally {
-            ConectorBD.cerrarConexion();
         }
     }
 
     public static List<GeneralTercero> listInObjects(String filtro, String orden) {
         List<GeneralTercero> list = new ArrayList<>();
-        String sql = "SELECT * FROM dbo.generalTercero"
-                + (filtro != null && !filtro.trim().isEmpty() ? " WHERE " + filtro : "")
+        String whereClause = "tercero_estado = 1";
+        if (filtro != null && !filtro.trim().isEmpty()) {
+            whereClause += " AND " + filtro;
+        }
+        String sql = "SELECT * FROM dbo.generalTercero WHERE " + whereClause
                 + (orden != null && !orden.trim().isEmpty() ? " ORDER BY " + orden : "");
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
