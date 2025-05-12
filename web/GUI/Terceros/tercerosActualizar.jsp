@@ -52,8 +52,7 @@
         // Resto de campos
         tercero.setTercero_ciiu(request.getParameter("tercero_ciiu"));
 
-        // Campos booleanos (radio buttons) - Solución definitiva
-        // Asignamos directamente los valores "true"/"false" recibidos del formulario
+        // Campos booleanos (radio buttons)
         tercero.setTercero_empleado(request.getParameter("tercero_empleado"));
         tercero.setTercero_proveedor(request.getParameter("tercero_proveedor"));
         tercero.setTercero_accionista_asociado(request.getParameter("tercero_accionista_asociado"));
@@ -61,15 +60,15 @@
 
         // Campos adicionales
         tercero.setTercero_tipo(request.getParameter("tercero_tipo"));
-        String estadoParam = request.getParameter("tercero_estado");
-        tercero.setTercero_estado("1".equalsIgnoreCase(estadoParam));
-
-        // Log para depuración - Verificamos los valores recibidos
-        Logger.getLogger("tercerosActualizar").log(Level.INFO, "Valores recibidos de radio buttons:");
-        Logger.getLogger("tercerosActualizar").log(Level.INFO, "Empleado: " + request.getParameter("tercero_empleado"));
-        Logger.getLogger("tercerosActualizar").log(Level.INFO, "Proveedor: " + request.getParameter("tercero_proveedor"));
-        Logger.getLogger("tercerosActualizar").log(Level.INFO, "Accionista: " + request.getParameter("tercero_accionista_asociado"));
-        Logger.getLogger("tercerosActualizar").log(Level.INFO, "Facturar: " + request.getParameter("tercero_facturar"));
+        
+        // CORRECCIÓN: Mantener el estado actual si es una actualización
+        if ("Actualizar".equals(accion)) {
+            // No cambiamos el estado, lo mantenemos como estaba
+            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Manteniendo estado actual del tercero");
+        } else {
+            // Para creación, establecer como activo por defecto
+            tercero.setTercero_estado(true);
+        }
     }
 
     // Ejecutar acción
@@ -81,13 +80,6 @@
             Logger.getLogger("tercerosActualizar").log(Level.INFO, "Iniciando actualización para ID: " + id);
             resultado = tercero.update();
             mensaje = resultado ? "Tercero actualizado correctamente" : "Error al actualizar tercero";
-
-            // Log adicional para verificar los valores que se están actualizando
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Valores que se están actualizando:");
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Empleado (DB): " + tercero.getTerceroEmpleado());
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Proveedor (DB): " + tercero.getTerceroProveedor());
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Accionista (DB): " + tercero.getTerceroAccionistaAsociado());
-            Logger.getLogger("tercerosActualizar").log(Level.INFO, "Facturar (DB): " + tercero.getTerceroFacturar());
         } else if ("Create".equals(accion)) {
             resultado = tercero.create();
             mensaje = resultado ? "Tercero creado correctamente" : "Error al crear tercero";

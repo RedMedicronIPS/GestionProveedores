@@ -166,19 +166,18 @@ public class GeneralTercero {
 
     public clases.ConfiguracionGeneral.GeneralCIIU getCIIU() {
         if (this.tercero_ciiu == null || this.tercero_ciiu.trim().isEmpty()) {
-            return new GeneralCIIU();            
+            return new GeneralCIIU();
         }
         return new GeneralCIIU(this.tercero_ciiu);
     }
-    
+
     public GeneralTipoIdentificacion getTI() {
-    if (this.tercero_id_tipo_identificacion == null || this.tercero_id_tipo_identificacion.trim().isEmpty()) {
-        return new GeneralTipoIdentificacion(); 
+        if (this.tercero_id_tipo_identificacion == null || this.tercero_id_tipo_identificacion.trim().isEmpty()) {
+            return new GeneralTipoIdentificacion();
+        }
+        return new GeneralTipoIdentificacion(this.tercero_id_tipo_identificacion);
     }
-    return new GeneralTipoIdentificacion(this.tercero_id_tipo_identificacion);
-}
-    
-    
+
     public String getTercero_ciiu() {
         return tercero_ciiu != null ? tercero_ciiu : "";
     }
@@ -260,7 +259,7 @@ public class GeneralTercero {
     }
 
     public void setTercero_estado(Boolean tercero_estado) {
-        this.tercero_estado = tercero_estado != null ? tercero_estado : true; 
+        this.tercero_estado = tercero_estado != null ? tercero_estado : true;
     }
 
     public String getTercero_estadoStr() {
@@ -283,6 +282,7 @@ public class GeneralTercero {
     }
 
     public boolean create() {
+
         String sql = "INSERT INTO dbo.generalTercero (tercero_codigo, tercero_id_tipo_identificacion, tercero_razon_nombres, "
                 + "tercero_fecha_nacimiento, tercero_direccion, tercero_telefono, tercero_correo, tercero_pais, "
                 + "tercero_departamento, tercero_ciudad, tercero_ciiu, tercero_facturar, tercero_empleado, tercero_proveedor, "
@@ -306,7 +306,7 @@ public class GeneralTercero {
             stmt.setBoolean(14, tercero_proveedor);
             stmt.setBoolean(15, tercero_accionista_asociado);
             stmt.setString(16, tercero_tipo);
-            stmt.setBoolean(17, true); // Siempre activo al crear
+            stmt.setBoolean(17, true);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
@@ -355,7 +355,6 @@ public class GeneralTercero {
             stmt.setBoolean(15, this.tercero_accionista_asociado);
             stmt.setString(16, this.tercero_tipo);
             stmt.setBoolean(17, this.tercero_estado);
-            stmt.setString(18, this.id); // Este parámetro aho
             stmt.setString(18, this.id);
 
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.INFO,

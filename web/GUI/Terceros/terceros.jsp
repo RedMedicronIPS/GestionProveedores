@@ -92,6 +92,7 @@
                             <form id="form" method="post" action="${pageContext.request.contextPath}/GUI/Terceros/tercerosActualizar.jsp" onsubmit="return validarFormulario()" autocomplete="off">
                                 <input type="hidden" name="id" value="<%= tercero.getId() != null ? tercero.getId() : ""%>">
                                 <input type="hidden" name="accion" value="<%= accion != null && accion.equals("Actualizar") ? "Actualizar" : "Create"%>">
+                                <input type="hidden" name="tercero_estado" value="true">
 
                                 <div class="row">
                                     <!-- Columna izquierda (Formulario) -->
@@ -107,7 +108,7 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class="form-label small text-secondary">Tipo Documento:</label>
-                                                <select class="form-control form-control-sm model" name="general_usu_id_tipo_identificacion">
+                                                <select class="form-control form-control-sm model" name="tercero_id_tipo_identificacion">
                                                     <option value="">Seleccione un tipo</option>
                                                     <%= GeneralTipoIdentificacion.getListaEnOption(tercero.getTercero_id_tipo_identificacion())%>
                                                 </select>
@@ -142,7 +143,7 @@
                                                 <input type="text" id="deptoInput" name="tercero_departamento" class="form-control form-control-sm border-0 shadow-sm" placeholder="Escribe un depto" autocomplete="off" value="<%=tercero.getTercero_departamento()%>">
                                             </div>
                                             <div class="col-md-3">
-                                                <label class="form-label small text-secondary">Ciudad: </label>
+                                                <label class="form-label small text-secondary">Municipio: </label>
                                                 <input type="text" id="ciuInput" name="tercero_ciudad" class="form-control form-control-sm border-0 shadow-sm" placeholder="Escribe una ciudad" autocomplete="off" value="<%=tercero.getTercero_ciudad()%>">
                                             </div>
                                         </div>
@@ -273,8 +274,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Código</th>
-                                <th>Tipo Doc</th>
-                                <th>Nombre/Razón</th>
+                                <th>Tipo de documento</th>
+                                <th>Razon social o nombres</th>
                                 <th>Teléfono</th>
                                 <th>Correo</th>
                                 <th>Ciudad</th>
@@ -286,10 +287,6 @@
                             <%
                                 List<GeneralTercero> datas = GeneralTercero.listInObjects("", "");
                                 for (GeneralTercero tro : datas) {
-                                    /* if (!Boolean.TRUE.equals(tro.getTercero_estado())) {
-                                        continue; // Saltar si no está activo
-                                    }*/
-
                                     String modalId = "modalTercero" + tro.getId();
 
                                     out.print("<tr>");
@@ -302,52 +299,84 @@
                                     out.print("<td>" + tro.getTercero_ciudad() + "</td>");
 
                                     out.print("<td><button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#" + modalId
-                                            + "'>Ver registro</button> <a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId()
-                                            + "' title='Modificar'><img src='recursos/update.png' class='icon'></a> <a href='javascript:eliminar(" + tro.getId()
-                                            + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>");
+                                            + "'>Ver registro</button> "
+                                            + "<a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId()
+                                            + "' title='Modificar'><img src='recursos/update.png' class='icon'></a> "
+                                            + "<a href='javascript:eliminar(" + tro.getId() + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>");
                                     out.print("</tr>");
-
-                                    out.print("<div class='modal fade' id='" + modalId + "' tabindex='-1'>");
-                                    out.print("<div class='modal-dialog modal-lg'>");
-                                    out.print("<div class='modal-content'>");
-
-                                    out.print("<div class='modal-header'><h5 class='modal-title'>Detalle del Tercero</h5>");
-                                    out.print("<button type='button' class='btn-close' data-bs-dismiss='modal'></button></div>");
-
-                                    out.print("<div class='modal-body'><div class='row'>");
-
-                                    out.print("<div class='col-md-6'>");
-                                    out.print("<p><strong>ID:</strong> " + tro.getId() + "</p>");
-                                    out.print("<p><strong>Código:</strong> " + tro.getTercero_codigo() + "</p>");
-                                    out.print("<p><strong>Tipo Identificación:</strong> " + tro.getTI() + "</p>");
-                                    out.print("<p><strong>Razón/Nombres:</strong> " + tro.getTercero_razon_nombres() + "</p>");
-                                    out.print("<p><strong>Fecha Nacimiento:</strong> " + tro.getTercero_fecha_nacimiento() + "</p>");
-                                    out.print("<p><strong>Dirección:</strong> " + tro.getTercero_direccion() + "</p>");
-                                    out.print("<p><strong>Teléfono:</strong> " + tro.getTercero_telefono() + "</p>");
-                                    out.print("<p><strong>Correo:</strong> " + tro.getTercero_correo() + "</p>");
-                                    out.print("<p><strong>País:</strong> " + tro.getTercero_pais() + "</p>");
-                                    out.print("</div>");
-
-                                    out.print("<div class='col-md-6'>");
-                                    out.print("<p><strong>Departamento:</strong> " + tro.getTercero_departamento() + "</p>");
-                                    out.print("<p><strong>Ciudad:</strong> " + tro.getTercero_ciudad() + "</p>");
-                                    out.print("<p><strong>CIIU:</strong> " + tro.getCIIU() + "</p>");
-                                    out.print("<p><strong>Empleado:</strong> " + tro.getTerceroEmpleado() + "</p>");
-                                    out.print("<p><strong>Proveedor:</strong> " + tro.getTerceroProveedor() + "</p>");
-                                    out.print("<p><strong>Accionista/Asociado:</strong> " + tro.getTerceroAccionistaAsociado() + "</p>");
-                                    out.print("<p><strong>Tipo:</strong> " + tro.getTercero_tipo() + "</p>");
-                                    out.print("<p><strong>Facturar:</strong> " + tro.getTerceroFacturar() + "</p>");
-                                    out.print("<p><strong>Estado:</strong> " + tro.getTercero_estado() + "</p>");
-                                    out.print("</div>");
-
-                                    out.print("</div></div>");
-                                    out.print("<div class='modal-footer'><button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button></div>");
-                                    out.print("</div></div></div>");
                                 }
                             %>
                         </tbody>
 
+
                     </table>
+
+                    <%
+                        for (GeneralTercero tro : datas) {
+                            String modalId = "modalTercero" + tro.getId();
+
+                            out.print("<div class='modal fade' id='" + modalId + "' tabindex='-1'>");
+                            out.print("<div class='modal-dialog modal-xl'>");
+                            out.print("<div class='modal-content'>");
+
+                            out.print("<div class='modal-header'><h5 class='modal-title w-100 text-center'>Detalles del Tercero</h5>");
+                            out.print("<button type='button' class='btn-close' data-bs-dismiss='modal'></button></div>");
+
+                            out.print("<div class='modal-body'><div class='table-responsive'>");
+
+                            out.print("<table class='table tabla-detalle-tercero'>");
+
+                            // Fila de encabezados 1 (8 columnas)
+                            out.print("<thead>");
+                            out.print("<tr>");
+                            out.print("<th>ID</th><th>Código</th><th>Tipo de documento</th><th>Razón social o nombres</th>");
+                            out.print("<th>Fecha de nacimiento</th><th>Dirección</th><th>Teléfono</th><th colspan='2'>Correo</th>");
+                            out.print("</tr>");
+                            out.print("</thead>");
+
+                            // Fila de datos 1 (correo ocupa 2 columnas)
+                            out.print("<tbody>");
+                            out.print("<tr>");
+                            out.print("<td>" + tro.getId() + "</td>");
+                            out.print("<td>" + tro.getTercero_codigo() + "</td>");
+                            out.print("<td>" + tro.getTI() + "</td>");
+                            out.print("<td>" + tro.getTercero_razon_nombres() + "</td>");
+                            out.print("<td>" + tro.getTercero_fecha_nacimiento() + "</td>");
+                            out.print("<td>" + tro.getTercero_direccion() + "</td>");
+                            out.print("<td>" + tro.getTercero_telefono() + "</td>");
+                            out.print("<td colspan='2'>" + tro.getTercero_correo() + "</td>");
+                            out.print("</tr>");
+
+                            // Fila de encabezados 2 (9 columnas)
+                            out.print("<tr>");
+                            out.print("<th>País</th><th>Departamento</th><th>Ciudad</th><th>CIIU</th>");
+                            out.print("<th>¿Empleado?</th><th>¿Proveedor?</th><th>¿Accionista/Asociado?</th><th>Tipo de persona</th><th>¿Obligado a facturar?</th>");
+                            out.print("</tr>");
+
+                            // Fila de datos 2
+                            out.print("<tr>");
+                            out.print("<td>" + tro.getTercero_pais() + "</td>");
+                            out.print("<td>" + tro.getTercero_departamento() + "</td>");
+                            out.print("<td>" + tro.getTercero_ciudad() + "</td>");
+                            out.print("<td>" + tro.getCIIU() + "</td>");
+                            out.print("<td>" + tro.getTerceroEmpleado() + "</td>");
+                            out.print("<td>" + tro.getTerceroProveedor() + "</td>");
+                            out.print("<td>" + tro.getTerceroAccionistaAsociado() + "</td>");
+                            out.print("<td>" + tro.getTercero_tipo() + "</td>");
+                            out.print("<td>" + tro.getTerceroFacturar() + "</td>");
+                            out.print("</tr>");
+                            out.print("</tbody>");
+
+                            out.print("</table>");
+
+                            out.print("</div></div>");
+                            out.print("<div class='modal-footer'><button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button></div>");
+                            out.print("</div></div></div>");
+                        }
+                    %>
+
+
+
                 </div>
             </div>
         </div>
