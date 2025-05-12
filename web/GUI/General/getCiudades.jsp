@@ -9,7 +9,7 @@
 
         StringBuilder json = new StringBuilder("[");
         for (int i = 0; i < ciudades.size(); i++) {
-            String ciudad = ciudades.get(i).replace("\"", "\\\""); // escapamos comillas
+            String ciudad = ciudades.get(i).replace("\"", "\\\""); 
             json.append("{\"label\":\"").append(ciudad).append("\",\"value\":\"").append(ciudad).append("\"}");
             if (i < ciudades.size() - 1) json.append(",");
         }

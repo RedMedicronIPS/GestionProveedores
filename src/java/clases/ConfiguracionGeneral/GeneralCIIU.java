@@ -33,7 +33,8 @@ public class GeneralCIIU {
     private String fechaActualizacion;
     private String isPublicPrivate;
 
-    public GeneralCIIU() {}
+    public GeneralCIIU() {
+    }
 
     public GeneralCIIU(String id) {
         GeneralCIIU data = getById(id);
@@ -247,20 +248,20 @@ public class GeneralCIIU {
     public void setIsPublicPrivate(String isPublicPrivate) {
         this.isPublicPrivate = isPublicPrivate;
     }
- @Override
+
+    @Override
     public String toString() {
         return codigo + " - " + nombre;
     }
-    // Getters y setters omitidos por espacio
 
     public boolean create() {
-        String sql = "INSERT INTO generalCIIU (Tabla, Codigo, Nombre, Descripcion, Habilitado, Aplicacion, IsStandardGEL, IsStandardMSPS, " +
-                "Extra_I, Extra_II, Extra_III, Extra_IV, Extra_V, Extra_VI, Extra_VII, Extra_VIII, Extra_IX, Extra_X, " +
-                "ValorRegistro, UsuarioResponsable, Fecha_Actualizacion, IsPublicPrivate) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO generalCIIU (Tabla, Codigo, Nombre, Descripcion, Habilitado, Aplicacion, IsStandardGEL, IsStandardMSPS, "
+                + "Extra_I, Extra_II, Extra_III, Extra_IV, Extra_V, Extra_VI, Extra_VII, Extra_VIII, Extra_IX, Extra_X, "
+                + "ValorRegistro, UsuarioResponsable, Fecha_Actualizacion, IsPublicPrivate) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conexion = ConectorBD.getConnection();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+                PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, tabla);
             ps.setString(2, codigo);
@@ -296,13 +297,13 @@ public class GeneralCIIU {
     }
 
     public boolean update() {
-        String sql = "UPDATE generalCIIU SET Tabla=?, Codigo=?, Nombre=?, Descripcion=?, Habilitado=?, Aplicacion=?, " +
-                "IsStandardGEL=?, IsStandardMSPS=?, Extra_I=?, Extra_II=?, Extra_III=?, Extra_IV=?, Extra_V=?, " +
-                "Extra_VI=?, Extra_VII=?, Extra_VIII=?, Extra_IX=?, Extra_X=?, ValorRegistro=?, UsuarioResponsable=?, " +
-                "Fecha_Actualizacion=?, IsPublicPrivate=? WHERE ID=?";
+        String sql = "UPDATE generalCIIU SET Tabla=?, Codigo=?, Nombre=?, Descripcion=?, Habilitado=?, Aplicacion=?, "
+                + "IsStandardGEL=?, IsStandardMSPS=?, Extra_I=?, Extra_II=?, Extra_III=?, Extra_IV=?, Extra_V=?, "
+                + "Extra_VI=?, Extra_VII=?, Extra_VIII=?, Extra_IX=?, Extra_X=?, ValorRegistro=?, UsuarioResponsable=?, "
+                + "Fecha_Actualizacion=?, IsPublicPrivate=? WHERE ID=?";
 
         try (Connection conexion = ConectorBD.getConnection();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+                PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, tabla);
             ps.setString(2, codigo);
@@ -342,7 +343,7 @@ public class GeneralCIIU {
         String sql = "DELETE FROM generalCIIU WHERE ID = ?";
 
         try (Connection conexion = ConectorBD.getConnection();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+                PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, id);
             return ps.executeUpdate() > 0;
@@ -359,7 +360,7 @@ public class GeneralCIIU {
         String sql = "SELECT * FROM generalCIIU WHERE ID = ?";
 
         try (Connection conexion = ConectorBD.getConnection();
-             PreparedStatement ps = conexion.prepareStatement(sql)) {
+                PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setString(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -413,8 +414,8 @@ public class GeneralCIIU {
         }
 
         try (Connection conexion = ConectorBD.getConnection();
-             PreparedStatement ps = conexion.prepareStatement(sql.toString());
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = conexion.prepareStatement(sql.toString());
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 GeneralCIIU g = new GeneralCIIU();
@@ -452,20 +453,18 @@ public class GeneralCIIU {
 
         return list;
     }
-   
- public static String getListaEnOption(String preseleccionado) {
-    StringBuilder lista = new StringBuilder();
 
-    List<GeneralCIIU> data = listInObjects(null, "codigo, nombre");
+    public static String getListaEnOption(String preseleccionado) {
+        StringBuilder lista = new StringBuilder();
 
-    for (GeneralCIIU ti : data) {
-        String selected = preseleccionado != null && preseleccionado.equals(ti.getId()) ? " selected" : "";
-        lista.append("<option value='").append(ti.getId()).append("'").append(selected).append(">")
-                .append(ti.getCodigo()).append(" - ").append(ti.getNombre()).append("</option>");
+        List<GeneralCIIU> data = listInObjects(null, "codigo, nombre");
+
+        for (GeneralCIIU ti : data) {
+            String selected = preseleccionado != null && preseleccionado.equals(ti.getId()) ? " selected" : "";
+            lista.append("<option value='").append(ti.getId()).append("'").append(selected).append(">")
+                    .append(ti.getCodigo()).append(" - ").append(ti.getNombre()).append("</option>");
+        }
+
+        return lista.toString();
     }
-
-    return lista.toString();
-}
-
-
 }

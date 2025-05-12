@@ -8,15 +8,6 @@ and open the template in the editor.
     Author     : IPS OBRERO
 */
 
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 10/04/2025, 10:02:58 AM
-    Author     : IPS OBRERO
-*/
 
 .container-wrapper {
     margin-top: 0px;
@@ -26,9 +17,8 @@ and open the template in the editor.
     width: 100%;
 }
 .card {
-    margin-top: 60px; /* Ajusta según necesidad */
+    margin-top: 60px; 
 }
-
 
 .card {
     border: none;
@@ -112,17 +102,15 @@ select.form-control:focus {
     overflow: hidden;
 }
 
-/* Bordes más finos */
 .tabla-detalle-tercero th,
 .tabla-detalle-tercero td {
-    border: 0.5px solid #999999; /* borde fino */
+    border: 0.5px solid #999999; 
     padding: 8px;
     background-color: transparent;
     color: #000;
     transition: background-color 0.2s ease;
 }
 
-/* Redondear esquinas */
 .tabla-detalle-tercero tr:first-child th:first-child {
     border-top-left-radius: 10px;
 }
@@ -136,26 +124,23 @@ select.form-control:focus {
     border-bottom-right-radius: 10px;
 }
 
-/* Hover solo a filas de datos */
 .tabla-detalle-tercero tbody tr:hover td {
-    background-color: #f2f2f2; /* gris clarito */
+    background-color: #f2f2f2; 
 }
-/* Establecer un ancho máximo personalizado para el modal */
+
 .modal-dialog {
     max-width: 90%;
     margin: 1.75rem auto;
 }
 
-/* Estilo, modal terceros */
 .tabla-detalle-tercero {
     width: 100%;
-    border-collapse: collapse; /* Elimina el espacio entre las celdas */
+    border-collapse: collapse; 
     font-size: 14px;
     border: 1px solid #999999;
     overflow: hidden;
 }
 
-/* Estilo para encabezados */
 .tabla-detalle-tercero th {
     font-weight: bold;
     background-color: #e2f4ff;
@@ -164,7 +149,6 @@ select.form-control:focus {
     text-align: left;
 }
 
-/* Estilo para celdas */
 .tabla-detalle-tercero td {
     padding: 8px;
     background-color: transparent;
@@ -172,12 +156,10 @@ select.form-control:focus {
     border: 0.5px solid #999999;
 }
 
-/* Estilo para filas al pasar el mouse */
 .tabla-detalle-tercero tbody tr:hover td {
     background-color: #f2f2f2;
 }
 
-/* Estilo para modo oscuro */
 html.dark-mode .tabla-detalle-tercero th {
     background-color: #1A2A3A !important;
     color: #00FFE5 !important;

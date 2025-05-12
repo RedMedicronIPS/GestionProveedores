@@ -16,7 +16,7 @@ html, body {
     padding: 0;
     height: 100%;
     font-family: 'Numans', sans-serif;
-    background: transparent; /* no imagen de fondo */
+    background: transparent; 
 }
 
 
@@ -64,7 +64,6 @@ html, body {
 input:focus{
     outline: 0 0 0 0  !important;
     box-shadow: 0 0 0 0 !important;
-
 }
 
 .remember{
@@ -99,7 +98,7 @@ input:focus{
 }
 .card {
     display: flex;
-    flex-direction: row;  /* Asegura que los paneles estén en fila */
+    flex-direction: row;  
     width: 800px;  
     max-width: 90%; 
     height: 500px;  
@@ -131,15 +130,15 @@ input:focus{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Centra el formulario */
+    align-items: center; 
 }
 
 .card-body {
-    width: 100%; /* Asegura que el formulario ocupe todo el ancho */
+    width: 100%; 
 }
 
 form {
-    width: 100%; /* Asegura que los elementos del form ocupen el espacio */
+    width: 100%; 
 }
 
 .input-group {
@@ -153,15 +152,15 @@ form {
 
 .card-header {
     display: flex;
-    align-items: center; /* Alinea verticalmente */
-    justify-content: flex-start; /* Alinea a la izquierda */
+    align-items: center; 
+    justify-content: flex-start; 
     position: relative;
 }
 
 .card-header h4 {
     margin: 0;
-    margin-right: 25px; /* Espacio entre el texto y el logo */
-    font-size: 1.5rem; /* Ajusta tamaño si es necesario */
+    margin-right: 25px; 
+    font-size: 1.5rem; 
 }
 
 .small-logo {

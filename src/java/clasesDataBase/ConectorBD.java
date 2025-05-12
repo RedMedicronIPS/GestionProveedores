@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 
 public class ConectorBD {
 
-
     private String servidor;
     private String puerto;
     private String usuario;
@@ -21,23 +20,20 @@ public class ConectorBD {
     private static Connection conexion;
 
     public ConectorBD() {
-        
+
         servidor = "192.168.59.207";
         puerto = "1433";
         usuario = "DbDesarrollo";
         clave = "TI.Desarrollo%*2024";
         baseDatos = "AppRedMedicronIPS_Dev";
-        
-   
+
     }
 
-    
     static {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             System.out.println("Controlador cargado correctamente.");
 
-            
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 cerrarConexion();
                 System.out.println("Aplicación cerrada. Conexión a la base de datos terminada de forma segura.");
@@ -48,7 +44,6 @@ public class ConectorBD {
         }
     }
 
-    
     public static Connection getConnection() {
         try {
             if (conexion == null || conexion.isClosed()) {
@@ -62,7 +57,6 @@ public class ConectorBD {
         return conexion;
     }
 
-    
     public Connection conectarBD() {
         Connection nuevaConexion = null;
         try {
@@ -79,7 +73,6 @@ public class ConectorBD {
         return nuevaConexion;
     }
 
-    
     public static void cerrarConexion() {
         try {
             if (conexion != null && !conexion.isClosed()) {
@@ -93,7 +86,6 @@ public class ConectorBD {
         }
     }
 
-    
     public static void consultar(String cadenaSQL) {
         try (PreparedStatement sentencia = getConnection().prepareStatement(cadenaSQL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 ResultSet resultado = sentencia.executeQuery()) {
@@ -109,7 +101,6 @@ public class ConectorBD {
         }
     }
 
-    
     public static boolean ejecutarQuery(String cadenaSQL, Object... params) {
         boolean resultado = false;
 
@@ -118,7 +109,6 @@ public class ConectorBD {
             for (int i = 0; i < params.length; i++) {
                 sentencia.setObject(i + 1, params[i]);
             }
-
             sentencia.execute();
             resultado = true;
             System.out.println("Consulta ejecutada correctamente.");
@@ -132,7 +122,6 @@ public class ConectorBD {
         return resultado;
     }
 
-    
     public static void ejecutarConsultaConParametros(String cadenaSQL, Object... params) {
         try (PreparedStatement sentencia = getConnection().prepareStatement(cadenaSQL)) {
 

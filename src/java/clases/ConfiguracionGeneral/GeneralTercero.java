@@ -32,12 +32,11 @@ public class GeneralTercero {
     private Boolean tercero_estado;
 
     public GeneralTercero() {
-        // Inicializar todos los booleanos como false, excepto el estado que será true (Activo)
         this.tercero_facturar = false;
         this.tercero_empleado = false;
         this.tercero_proveedor = false;
         this.tercero_accionista_asociado = false;
-        this.tercero_estado = true; // Activo por defecto
+        this.tercero_estado = true;
     }
 
     public GeneralTercero(String id) {
@@ -370,29 +369,26 @@ public class GeneralTercero {
         }
     }
 
-    public boolean delete() {
-        String sql = "DELETE FROM dbo.generalTercero WHERE id = ?";
+    public boolean desactivar() {
+        String sql = "UPDATE dbo.generalTercero SET tercero_estado = 0 WHERE id = ?";
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             stmt.setString(1, id);
-            return stmt.executeUpdate() > 0;
+            int result = stmt.executeUpdate();
+            return result > 0;
         } catch (SQLException e) {
-            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, "Error al eliminar tercero", e);
+            Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, "Error al desactivar tercero ID: " + id, e);
             return false;
-        } finally {
-            ConectorBD.cerrarConexion();
         }
     }
 
     public static List<GeneralTercero> listInObjects(String filtro, String orden) {
         List<GeneralTercero> list = new ArrayList<>();
-        String whereClause = "tercero_estado = 1"; // Solo activos
+        String whereClause = "tercero_estado = 1";
         if (filtro != null && !filtro.trim().isEmpty()) {
             whereClause += " AND " + filtro;
         }
-
         String sql = "SELECT * FROM dbo.generalTercero WHERE " + whereClause
                 + (orden != null && !orden.trim().isEmpty() ? " ORDER BY " + orden : "");
-
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

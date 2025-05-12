@@ -276,7 +276,6 @@ footer.footer {
     margin-top: 0; 
 }
 
-
 .card {
     box-shadow: none !important;
 }
@@ -616,8 +615,7 @@ html.dark-mode .multiselect-option:hover {
 }
 
 /* ================== MODO OSCURO ================== */
-html.dark-mode {
-    /* Alertas en modo oscuro */
+html.dark-mode {    
     .alert-message {
         background: #1A1A1A;
         border-left-color: #0A1E3F;
@@ -628,10 +626,9 @@ html.dark-mode {
         color: #4A90E2;
     }
 
-    /* Diálogo en modo oscuro */
     .confirm-dialog,
     .confirm-dialog .ui-dialog-titlebar,
-    .ui-dialog-buttonpane { /* Solo el fondo del panel, no los botones */
+    .ui-dialog-buttonpane { 
         background: #1A1A1A !important;
         border-color: #333 !important;
     }
@@ -640,7 +637,6 @@ html.dark-mode {
         color: #e0e0e0 !important;
     }
 
-    /* Borde superior del panel de botones en modo oscuro */
     .ui-dialog-buttonpane {
         border-top: 1px solid #333 !important;
     }
@@ -680,7 +676,6 @@ html.dark-mode .btn-secondary:hover {
     background-color: #004F4F !important;
 }
 
-/* Estilos para los textos dentro del modal */
 html.dark-mode .modal-body p strong {
     color: #00D1FF !important;
 }
@@ -689,7 +684,6 @@ html.dark-mode .modal-body p {
     color: #E0F7FF !important;
 }
 
-/* Estilos para la tabla dentro del modal si la hay */
 html.dark-mode .modal-body table {
     background-color: #1A2A3A !important;
     color: #E0F7FF !important;
@@ -699,4 +693,3 @@ html.dark-mode .modal-body th,
 html.dark-mode .modal-body td {
     border-color: #2E3F4F !important;
 }
-/* ================== DARK MODE PARA TABLA DETALLE TERCERO ================== */

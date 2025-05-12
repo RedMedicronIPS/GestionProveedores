@@ -22,7 +22,6 @@
     </head>
 
     <%
-
         String paisesJs = GeneralPais.getListaEnArregloJs();
         String ciuJs = GeneralCiudad.getListaEnArregloJs();
         String deptoJs = GeneralDepartamento.getListaEnArregloJs();
@@ -37,10 +36,10 @@
             out.print(clases.ConfiguracionGeneral.GeneralCiudad.getCiudadesPorDepartamentoNombre(departamento));
             return;
         }
+
         String accion = request.getParameter("accion");
         String id = request.getParameter("id");
         GeneralTercero tercero = new GeneralTercero();
-
         if ("Actualizar".equals(accion) && id != null && !id.trim().isEmpty() && id.matches("\\d+")) {
             tercero = new GeneralTercero(id);
         } else {
@@ -55,10 +54,10 @@
             lista += "<td>" + tro.getTercero_codigo() + "</td>";
             lista += "<td>" + tro.getTI() + "</td>";
             lista += "<td>" + tro.getTercero_razon_nombres() + "</td>";
-            lista += "<td>" + tro.getTercero_fecha_nacimiento() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_direccion() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_telefono() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_correo() + "</td>"; // Cambiado aquí
+            lista += "<td>" + tro.getTercero_fecha_nacimiento() + "</td>";
+            lista += "<td>" + tro.getTercero_direccion() + "</td>";
+            lista += "<td>" + tro.getTercero_telefono() + "</td>";
+            lista += "<td>" + tro.getTercero_correo() + "</td>";
             lista += "<td>" + tro.getTercero_pais() + "</td>";
             lista += "<td>" + tro.getTercero_departamento() + "</td>";
             lista += "<td>" + tro.getTercero_ciudad() + "</td>";
@@ -66,22 +65,18 @@
             lista += "<td>" + tro.getTerceroEmpleado() + "</td>";
             lista += "<td>" + tro.getTerceroProveedor() + "</td>";
             lista += "<td>" + tro.getTerceroAccionistaAsociado() + "</td>";
-            lista += "<td>" + tro.getTercero_tipo() + "</td>"; // Cambiado aquí
+            lista += "<td>" + tro.getTercero_tipo() + "</td>";
             lista += "<td>" + tro.getTerceroFacturar() + "</td>";
             lista += "<td><a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId() + "' title='Modificar'><img src='recursos/update.png' class='icon'></a><a href='javascript:eliminar(" + tro.getId() + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>";
-
             lista += "</tr>";
         }
-
-
     %>
 
     <body>
         <div class="container-wrapper">
             <div class="row g-3">
                 <div class="col-12">
-                    <div class="card border-0 rounded-4 bg-light dark:bg-dark text-dark dark:text-white" style="max-width: 100%;">
-                        <!-- Encabezado centrado -->
+                    <div class="card border-0 rounded-4 bg-light dark:bg-dark text-dark dark:text-white" style="max-width: 100%;">                      
                         <div class="card-header bg-white border-bottom d-flex justify-content-center align-items-center py-3 px-4">
                             <h6 class="mb-0 text-dark fw-semibold text-uppercase" style="letter-spacing: 1px;">
                                 <%= accion != null ? accion.toUpperCase() : ""%> TERCEROS
@@ -93,9 +88,7 @@
                                 <input type="hidden" name="id" value="<%= tercero.getId() != null ? tercero.getId() : ""%>">
                                 <input type="hidden" name="accion" value="<%= accion != null && accion.equals("Actualizar") ? "Actualizar" : "Create"%>">
                                 <input type="hidden" name="tercero_estado" value="true">
-
-                                <div class="row">
-                                    <!-- Columna izquierda (Formulario) -->
+                                <div class="row">                                    
                                     <div class="col-md-6 border-end pe-3">
                                         <div class="row g-3 align-items-end">
                                             <div class="col-sm-2">
@@ -149,7 +142,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Columna derecha -->
                                     <div class="col-md-6 ps-3">
                                         <div class="row g-3">                                                                            
                                             <div class="col-md-12">
@@ -159,7 +151,6 @@
                                                 </select>
                                             </div>
 
-                                            <!-- Roles -->
                                             <div class="col-md-12">
                                                 <div class="row g-2">
                                                     <div class="col-md-4">
@@ -267,7 +258,6 @@
         <div class="container-wrapper mt-4">
             <div class="container-card">               
                 <h6 class="mb-0 fw-bold">LISTA DE TERCEROS</h6> 
-
                 <div class="table-responsive">
                     <table id="tablaterceros" class="table table-striped table-bordered w-100">
                         <thead>
@@ -279,16 +269,16 @@
                                 <th>Teléfono</th>
                                 <th>Correo</th>
                                 <th>Ciudad</th>
-
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <%
                                 List<GeneralTercero> datas = GeneralTercero.listInObjects("", "");
                                 for (GeneralTercero tro : datas) {
                                     String modalId = "modalTercero" + tro.getId();
-
                                     out.print("<tr>");
                                     out.print("<td>" + tro.getId() + "</td>");
                                     out.print("<td>" + tro.getTercero_codigo() + "</td>");
@@ -297,18 +287,16 @@
                                     out.print("<td>" + tro.getTercero_telefono() + "</td>");
                                     out.print("<td>" + tro.getTercero_correo() + "</td>");
                                     out.print("<td>" + tro.getTercero_ciudad() + "</td>");
-
+                                    out.print("<td>" + (tro.getTercero_estado() ? "Activo" : "Inactivo") + "</td>");
                                     out.print("<td><button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#" + modalId
                                             + "'>Ver registro</button> "
                                             + "<a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId()
                                             + "' title='Modificar'><img src='recursos/update.png' class='icon'></a> "
-                                            + "<a href='javascript:eliminar(" + tro.getId() + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>");
+                                            + "<a href='javascript:desactivar(" + tro.getId() + ")' title='Desactivar'><img src='recursos/toggle-off.png' class='icon'></a></td>");
                                     out.print("</tr>");
                                 }
                             %>
                         </tbody>
-
-
                     </table>
 
                     <%
@@ -318,23 +306,16 @@
                             out.print("<div class='modal fade' id='" + modalId + "' tabindex='-1'>");
                             out.print("<div class='modal-dialog modal-xl'>");
                             out.print("<div class='modal-content'>");
-
                             out.print("<div class='modal-header'><h5 class='modal-title w-100 text-center'>Detalles del Tercero</h5>");
                             out.print("<button type='button' class='btn-close' data-bs-dismiss='modal'></button></div>");
-
                             out.print("<div class='modal-body'><div class='table-responsive'>");
-
                             out.print("<table class='table tabla-detalle-tercero'>");
-
-                            // Fila de encabezados 1 (8 columnas)
                             out.print("<thead>");
                             out.print("<tr>");
                             out.print("<th>ID</th><th>Código</th><th>Tipo de documento</th><th>Razón social o nombres</th>");
                             out.print("<th>Fecha de nacimiento</th><th>Dirección</th><th>Teléfono</th><th colspan='2'>Correo</th>");
                             out.print("</tr>");
                             out.print("</thead>");
-
-                            // Fila de datos 1 (correo ocupa 2 columnas)
                             out.print("<tbody>");
                             out.print("<tr>");
                             out.print("<td>" + tro.getId() + "</td>");
@@ -346,14 +327,10 @@
                             out.print("<td>" + tro.getTercero_telefono() + "</td>");
                             out.print("<td colspan='2'>" + tro.getTercero_correo() + "</td>");
                             out.print("</tr>");
-
-                            // Fila de encabezados 2 (9 columnas)
                             out.print("<tr>");
                             out.print("<th>País</th><th>Departamento</th><th>Ciudad</th><th>CIIU</th>");
                             out.print("<th>¿Empleado?</th><th>¿Proveedor?</th><th>¿Accionista/Asociado?</th><th>Tipo de persona</th><th>¿Obligado a facturar?</th>");
                             out.print("</tr>");
-
-                            // Fila de datos 2
                             out.print("<tr>");
                             out.print("<td>" + tro.getTercero_pais() + "</td>");
                             out.print("<td>" + tro.getTercero_departamento() + "</td>");
@@ -366,29 +343,21 @@
                             out.print("<td>" + tro.getTerceroFacturar() + "</td>");
                             out.print("</tr>");
                             out.print("</tbody>");
-
                             out.print("</table>");
-
                             out.print("</div></div>");
                             out.print("<div class='modal-footer'><button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button></div>");
                             out.print("</div></div></div>");
                         }
                     %>
-
-
-
                 </div>
             </div>
         </div>
     </center>
-
-
-
     <script>
         $(document).ready(function () {
+            $.fn.dataTable.ext.errMode = 'none';
             let alturaDisponible = window.innerHeight - 200;
-
-            $('#tablaterceros').DataTable({
+            var table = $('#tablaterceros').DataTable({
                 scrollY: alturaDisponible + 'px',
                 scrollCollapse: true,
                 scrollX: true,
@@ -412,7 +381,13 @@
                     }
                 }
             });
+            $('#tablaterceros').on('error.dt', function (e, settings, techNote, message) {
+                console.error('Error en DataTable:', message);
+                // Recargar la página completa manteniendo los parámetros
+                window.location.href = window.location.href;
+            });
         });
+
         var paises = <%= paisesJs%>;
         console.log(paises);
         $("#paisInput").autocomplete({
@@ -448,6 +423,7 @@
         if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_departamento()%>" !== "") {
             $("#ciuInput").prop("disabled", false);
         }
+
         document.getElementById("selectPais").addEventListener("change", function () {
             const pais = this.value;
             const otroPais = document.getElementById("otroPais");
@@ -459,7 +435,6 @@
             if (pais) {
                 $("#deptoInput").prop("disabled", false);
                 selectDepartamento.classList.remove("d-none");
-
                 if (pais === "Colombia") {
                     otroPais.classList.add("d-none");
                     selectCiudad.classList.remove("d-none");
@@ -511,7 +486,6 @@
                 otroCiudad.classList.add("d-none");
             }
         });
-
         window.addEventListener("DOMContentLoaded", () => {
             cargarDepartamentos();
         });
@@ -524,10 +498,9 @@
             });
         }
 
-        function eliminar(id) {
+        function desactivar(id) {
             const dialog = $('<div>')
-                    .html('<div class="dialog-content"><i class="fas fa-exclamation-triangle warning-icon"></i><p>¿Realmente desea eliminar este registro?</p></div>');
-
+                    .html('<div class="dialog-content"><i class="fas fa-exclamation-triangle warning-icon"></i><p>¿Realmente desea desactivar este tercero?</p></div>');
             $(dialog).dialog({
                 resizable: false,
                 height: "auto",
@@ -535,31 +508,38 @@
                 modal: true,
                 dialogClass: "confirm-dialog no-title",
                 open: function () {
-
                     $('.ui-dialog-titlebar', this.parentNode).remove();
                 },
                 buttons: [
                     {
-                        text: "Eliminar",
-                        class: "btn-eliminar",
+                        text: "Desactivar",
+                        class: "btn-warning",
                         click: function () {
                             $(this).dialog("close");
                             const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
                             $('body').append(loading);
-                            window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
-                                    '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
+
+                            window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Desactivar&id=' + id;
                         }
                     },
                     {
                         text: "Cancelar",
-                        class: "btn-cancelar",
+                        class: "btn-secondary",
                         click: function () {
                             $(this).dialog("close");
                         }
                     }
                 ]
-
             });
+        }
+
+        function mostrarMensaje(texto, tipo) {
+            const alertType = tipo === 'success' ? 'alert-success' : 'alert-danger';
+            const alert = $('<div class="alert ' + alertType + ' alert-dismissible fade show fixed-top mx-auto mt-3" style="max-width: 500px; z-index: 9999;">'
+                    + texto + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+            $('body').append(alert);
+            setTimeout(() => alert.alert('close'), 5000);
         }
     </script>
 </body>
