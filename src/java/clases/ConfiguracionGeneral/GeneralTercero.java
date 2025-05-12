@@ -37,6 +37,7 @@ public class GeneralTercero {
         this.tercero_proveedor = false;
         this.tercero_accionista_asociado = false;
         this.tercero_estado = true;
+
     }
 
     public GeneralTercero(String id) {
@@ -57,10 +58,10 @@ public class GeneralTercero {
                 this.tercero_departamento = rs.getString("tercero_departamento");
                 this.tercero_ciudad = rs.getString("tercero_ciudad");
                 this.tercero_ciiu = rs.getString("tercero_ciiu");
-                this.tercero_facturar = rs.getBoolean("tercero_facturar");
-                this.tercero_empleado = rs.getBoolean("tercero_empleado");
-                this.tercero_proveedor = rs.getBoolean("tercero_proveedor");
-                this.tercero_accionista_asociado = rs.getBoolean("tercero_accionista_asociado");
+                this.tercero_facturar = rs.getString("tercero_facturar");
+                this.tercero_empleado = rs.getString("tercero_empleado");
+                this.tercero_proveedor = rs.getString("tercero_proveedor");
+                this.tercero_accionista_asociado = rs.getString("tercero_accionista_asociado");
                 this.tercero_tipo = rs.getString("tercero_tipo");
                 this.tercero_estado = rs.getBoolean("tercero_estado");
             }
@@ -74,6 +75,7 @@ public class GeneralTercero {
     public String isCheckedTT(String tipo) {
         return this.tercero_tipo != null && this.tercero_tipo.equals(tipo) ? "checked" : "";
     }
+
 
     public String getId() {
         return id != null ? id : "";
@@ -215,7 +217,9 @@ public class GeneralTercero {
 
     public String getTerceroAccionistaAsociado() {
         return Boolean.TRUE.equals(this.tercero_accionista_asociado) ? "Sí" : "No";
+
     }
+// En la clase GeneralTercero, modifica los setters para los campos booleanos:
 
     public String getTerceroFacturar() {
         return Boolean.TRUE.equals(this.tercero_facturar) ? "Sí" : "No";
@@ -269,6 +273,7 @@ public class GeneralTercero {
         return tercero_estado != null ? tercero_estado : true;
     }
 
+
     @Override
     public String toString() {
         return "GeneralTercero{"
@@ -300,10 +305,10 @@ public class GeneralTercero {
             stmt.setString(9, tercero_departamento);
             stmt.setString(10, tercero_ciudad);
             stmt.setString(11, tercero_ciiu);
-            stmt.setBoolean(12, tercero_facturar);
-            stmt.setBoolean(13, tercero_empleado);
-            stmt.setBoolean(14, tercero_proveedor);
-            stmt.setBoolean(15, tercero_accionista_asociado);
+            stmt.setString(12, tercero_facturar);
+            stmt.setString(13, tercero_empleado);
+            stmt.setString(14, tercero_proveedor);
+            stmt.setString(15, tercero_accionista_asociado);
             stmt.setString(16, tercero_tipo);
             stmt.setBoolean(17, true);
             return stmt.executeUpdate() > 0;
@@ -359,6 +364,7 @@ public class GeneralTercero {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.INFO,
                     "Ejecutando UPDATE: " + stmt.toString());
 
+
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE,
@@ -405,10 +411,10 @@ public class GeneralTercero {
                 t.tercero_departamento = rs.getString("tercero_departamento");
                 t.tercero_ciudad = rs.getString("tercero_ciudad");
                 t.tercero_ciiu = rs.getString("tercero_ciiu");
-                t.tercero_facturar = rs.getBoolean("tercero_facturar");
-                t.tercero_empleado = rs.getBoolean("tercero_empleado");
-                t.tercero_proveedor = rs.getBoolean("tercero_proveedor");
-                t.tercero_accionista_asociado = rs.getBoolean("tercero_accionista_asociado");
+                t.tercero_facturar = rs.getString("tercero_facturar");
+                t.tercero_empleado = rs.getString("tercero_empleado");
+                t.tercero_proveedor = rs.getString("tercero_proveedor");
+                t.tercero_accionista_asociado = rs.getString("tercero_accionista_asociado");
                 t.tercero_tipo = rs.getString("tercero_tipo");
                 t.tercero_estado = rs.getBoolean("tercero_estado");
                 list.add(t);
@@ -421,3 +427,4 @@ public class GeneralTercero {
         return list;
     }
 }
+
