@@ -6,7 +6,7 @@
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
-
+//ar
     String accion = request.getParameter("accion");
     String id = request.getParameter("id");
     boolean isAjax = "true".equals(request.getParameter("isAjax"));
@@ -46,8 +46,6 @@
                 tercero.setTercero_codigo(request.getParameter("tercero_codigo"));
                 tercero.setTercero_id_tipo_identificacion(request.getParameter("tercero_id_tipo_identificacion"));
                 tercero.setTercero_razon_nombres(request.getParameter("tercero_razon_nombres"));
-                tercero.setTercero_razon_apellidos(request.getParameter("tercero_razon_apellidos")); // Añadir esta línea
-                tercero.setTercero_razon_social(request.getParameter("tercero_razon_social")); // Añadir esta línea
                 tercero.setTercero_fecha_nacimiento(request.getParameter("tercero_fecha_nacimiento"));
                 tercero.setTercero_direccion(request.getParameter("tercero_direccion"));
                 tercero.setTercero_telefono(request.getParameter("tercero_telefono"));
@@ -83,7 +81,7 @@
                 mensaje = success ? "Tercero actualizado correctamente" : "Error al actualizar tercero";
             } else if ("Create".equals(accion)) {
                 success = tercero.create();
-                mensaje = success ? "Tercero creado correctamente" : "Error, el tercero ya existe!";
+                mensaje = success ? "Tercero creado correctamente" : "Error, el tercero ya  existe!";
             } else if ("Delete".equals(accion)) {
                 success = tercero.desactivar();
                 mensaje = success ? "Tercero eliminado correctamente" : "Error al eliminar tercero";
@@ -122,9 +120,7 @@
         redirectParams += "&formData=1";
         redirectParams += "&tercero_codigo=" + java.net.URLEncoder.encode(request.getParameter("tercero_codigo"), "UTF-8");
         redirectParams += "&tercero_id_tipo_identificacion=" + java.net.URLEncoder.encode(request.getParameter("tercero_id_tipo_identificacion"), "UTF-8");
-        redirectParams += "&tercero_razon_nombres=" + java.net.URLEncoder.encode(request.getParameter("tercero_razon_nombres"), "UTF-8");
-        redirectParams += "&tercero_razon_apellidos=" + java.net.URLEncoder.encode(request.getParameter("tercero_razon_apellidos"), "UTF-8"); // Añadir esta línea
-        redirectParams += "&tercero_razon_social=" + java.net.URLEncoder.encode(request.getParameter("tercero_razon_social"), "UTF-8"); // Añadir esta línea
+        redirectParams += "&tercero_razon_nombres=" + java.net.URLEncoder.encode(request.getParameter("tercero_razon_nombres"), "UTF-8");        
     }
 
     String redirectURL = request.getContextPath() + "/main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp" + redirectParams;
