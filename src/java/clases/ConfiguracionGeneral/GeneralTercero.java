@@ -29,14 +29,17 @@ public class GeneralTercero {
     private Boolean tercero_accionista_asociado;
 
     private String tercero_tipo;
-    private String tercero_estado;
- public GeneralTercero() {
-        // Inicializar como Boolean, no como String
+    private Boolean tercero_estado;
+
+    public GeneralTercero() {
+        // Inicializar todos los booleanos como false, excepto el estado que será true (Activo)
         this.tercero_facturar = false;
         this.tercero_empleado = false;
         this.tercero_proveedor = false;
         this.tercero_accionista_asociado = false;
+        this.tercero_estado = true; // Activo por defecto
     }
+
     public GeneralTercero(String id) {
         String sql = "SELECT * FROM dbo.generalTercero WHERE id = ?";
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
@@ -60,7 +63,7 @@ public class GeneralTercero {
                 this.tercero_proveedor = rs.getBoolean("tercero_proveedor");
                 this.tercero_accionista_asociado = rs.getBoolean("tercero_accionista_asociado");
                 this.tercero_tipo = rs.getString("tercero_tipo");
-                this.tercero_estado = rs.getString("tercero_estado");
+                this.tercero_estado = rs.getBoolean("tercero_estado");
             }
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
@@ -175,7 +178,7 @@ public class GeneralTercero {
 
     public void setTercero_tipo(String tercero_tipo) {
         this.tercero_tipo = tercero_tipo;
-    }    
+    }
 
     public String getTerceroEmpleado() {
         return Boolean.TRUE.equals(this.tercero_empleado) ? "Sí" : "No";
@@ -241,12 +244,16 @@ public class GeneralTercero {
         return (isSi && this.tercero_facturar) || (!isSi && !this.tercero_facturar) ? "checked" : "";
     }
 
-    public void setTercero_estado(String tercero_estado) {
-        this.tercero_estado = (tercero_estado == null || tercero_estado.trim().isEmpty()) ? "Activo" : tercero_estado;
+    public void setTercero_estado(Boolean tercero_estado) {
+        this.tercero_estado = tercero_estado != null ? tercero_estado : true; // true por defecto (Activo)
     }
 
-    public String getTercero_estado() {
-        return tercero_estado != null ? tercero_estado : "";
+    public String getTercero_estadoStr() {
+        return Boolean.TRUE.equals(tercero_estado) ? "Activo" : "Inactivo";
+    }
+
+    public Boolean getTercero_estado() {
+        return tercero_estado != null ? tercero_estado : true;
     }
 
     @Override
@@ -284,7 +291,7 @@ public class GeneralTercero {
             stmt.setBoolean(14, tercero_proveedor);
             stmt.setBoolean(15, tercero_accionista_asociado);
             stmt.setString(16, tercero_tipo);
-            stmt.setString(17, tercero_estado);
+            stmt.setBoolean(17, true); // Siempre activo al crear
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE, null, e);
@@ -315,7 +322,7 @@ public class GeneralTercero {
                 + "tercero_estado=? "
                 + "WHERE id=?";
 
-        try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {          
+        try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             stmt.setString(1, this.tercero_codigo);
             stmt.setString(2, this.tercero_id_tipo_identificacion);
             stmt.setString(3, this.tercero_razon_nombres);
@@ -332,7 +339,8 @@ public class GeneralTercero {
             stmt.setBoolean(14, this.tercero_proveedor);
             stmt.setBoolean(15, this.tercero_accionista_asociado);
             stmt.setString(16, this.tercero_tipo);
-            stmt.setString(17, this.tercero_estado);
+            stmt.setBoolean(17, this.tercero_estado);
+            stmt.setString(18, this.id); // Este parámetro aho
             stmt.setString(18, this.id);
 
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.INFO,
@@ -363,9 +371,14 @@ public class GeneralTercero {
 
     public static List<GeneralTercero> listInObjects(String filtro, String orden) {
         List<GeneralTercero> list = new ArrayList<>();
-        String sql = "SELECT * FROM dbo.generalTercero"
-                + (filtro != null && !filtro.trim().isEmpty() ? " WHERE " + filtro : "")
+        String whereClause = "tercero_estado = 1"; // Solo activos
+        if (filtro != null && !filtro.trim().isEmpty()) {
+            whereClause += " AND " + filtro;
+        }
+
+        String sql = "SELECT * FROM dbo.generalTercero WHERE " + whereClause
                 + (orden != null && !orden.trim().isEmpty() ? " ORDER BY " + orden : "");
+
         try (PreparedStatement stmt = ConectorBD.getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -387,7 +400,7 @@ public class GeneralTercero {
                 t.tercero_proveedor = rs.getBoolean("tercero_proveedor");
                 t.tercero_accionista_asociado = rs.getBoolean("tercero_accionista_asociado");
                 t.tercero_tipo = rs.getString("tercero_tipo");
-                t.tercero_estado = rs.getString("tercero_estado");
+                t.tercero_estado = rs.getBoolean("tercero_estado");
                 list.add(t);
             }
         } catch (SQLException e) {

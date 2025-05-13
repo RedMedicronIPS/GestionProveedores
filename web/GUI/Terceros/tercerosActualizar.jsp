@@ -54,8 +54,8 @@
         tercero.setTercero_facturar(request.getParameter("tercero_facturar"));
         
         // Campos adicionales
-        tercero.setTercero_tipo(request.getParameter("tercero_tipo"));
-        tercero.setTercero_estado(request.getParameter("tercero_estado"));
+        String estadoParam = request.getParameter("tercero_estado");
+        tercero.setTercero_estado("1".equalsIgnoreCase(estadoParam)); 
         
         // Log para depuración - Verificamos los valores recibidos
         Logger.getLogger("tercerosActualizar").log(Level.INFO, "Valores recibidos de radio buttons:");

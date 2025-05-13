@@ -285,6 +285,10 @@
                             <%
                                 List<GeneralTercero> datas = GeneralTercero.listInObjects("", "");
                                 for (GeneralTercero tro : datas) {
+                                   /* if (!Boolean.TRUE.equals(tro.getTercero_estado())) {
+                                        continue; // Saltar si no está activo
+                                    }*/
+
                                     String modalId = "modalTercero" + tro.getId();
 
                                     out.print("<tr>");
@@ -364,11 +368,11 @@
                 "info": true,
                 "lengthMenu": [5, 10, 25, 50, 100],
                 "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "lengthMenu": "Mostrar MENU registros por página",
                     "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "info": "Mostrando página PAGE de PAGES",
                     "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "infoFiltered": "(filtrado de MAX registros totales)",
                     "search": "Buscar:",
                     "paginate": {
                         "first": "&#171;",
@@ -408,6 +412,12 @@
         $("#deptoInput").prop("disabled", true);
         $("#ciuInput").prop("disabled", true);
 
+        if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_pais()%>" !== "") {
+            $("#deptoInput").prop("disabled", false);
+        }
+        if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_departamento()%>" !== "") {
+            $("#ciuInput").prop("disabled", false);
+        }
         document.getElementById("selectPais").addEventListener("change", function () {
             const pais = this.value;
             const otroPais = document.getElementById("otroPais");
@@ -454,10 +464,10 @@
         });
 
         function cargarCiudades(departamento) {
-            $.get("GUI/General/getCiudades.jsp", {idDepartamento: departamento}, function (data) {
-                let ciudades = '<option value="" disabled selected hidden>Seleccione una ciudad</option>' + data;
-                ciudades += '<option value="Otro">Otro</option>';
-                $("#selectCiudad").html(ciudades);
+            $.getJSON("GUI/General/getCiudades.jsp", {idDepartamento: departamento}, function (data) {
+                $("#ciuInput").autocomplete({
+                    source: data
+                });
             });
         }
 
@@ -483,7 +493,7 @@
                 $("#selectDepartamento").html(departamentos);
             });
         }
-        
+
         function eliminar(id) {
             const dialog = $('<div>')
                     .html('<div class="dialog-content"><i class="fas fa-exclamation-triangle warning-icon"></i><p>¿Realmente desea eliminar este registro?</p></div>');
@@ -495,23 +505,30 @@
                 modal: true,
                 dialogClass: "confirm-dialog no-title",
                 open: function () {
-                    
+
                     $('.ui-dialog-titlebar', this.parentNode).remove();
                 },
-                buttons: {
-                    "Eliminar": function () {
-                        $(this).dialog("close");
-                        
-                        const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
-                        $('body').append(loading);
-
-                        window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
-                                '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
+                buttons: [
+                    {
+                        text: "Eliminar",
+                        class: "btn-eliminar",
+                        click: function () {
+                            $(this).dialog("close");
+                            const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
+                            $('body').append(loading);
+                            window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
+                                    '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
+                        }
                     },
-                    "Cancelar": function () {
-                        $(this).dialog("close");
+                    {
+                        text: "Cancelar",
+                        class: "btn-cancelar",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                }
+                ]
+
             });
         }
     </script>
