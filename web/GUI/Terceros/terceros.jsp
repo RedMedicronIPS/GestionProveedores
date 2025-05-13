@@ -19,10 +19,38 @@
 <html>
     <head>    
         <link rel="stylesheet" href="estilos/estiloCard.css">  
+ <style>
+    .persona-natural,
+    .persona-juridica {
+        display: none;
+    }
+</style>
+
+
+
     </head>
+    <%
+        String mensaje = request.getParameter("mensaje");
+        String error = request.getParameter("error");
+        if ("1".equals(request.getParameter("formData"))) {
+
+        }
+    %>
+    <script>
+        $(document).ready(function () {
+        <% if (mensaje != null && !mensaje.isEmpty()) {%>
+            mostrarMensaje('<%= mensaje%>', 'success');
+        <% } %>
+        <% if (error != null && !error.isEmpty()) {%>
+            mostrarMensaje('<%= error%>', 'error');
+            if ('<%= error%>'.includes('Ya existe un tercero')) {
+                $('input[name="tercero_codigo"]').focus();
+            }
+        <% } %>
+        });
+    </script>
 
     <%
-
         String paisesJs = GeneralPais.getListaEnArregloJs();
         String ciuJs = GeneralCiudad.getListaEnArregloJs();
         String deptoJs = GeneralDepartamento.getListaEnArregloJs();
@@ -37,51 +65,24 @@
             out.print(clases.ConfiguracionGeneral.GeneralCiudad.getCiudadesPorDepartamentoNombre(departamento));
             return;
         }
+
         String accion = request.getParameter("accion");
         String id = request.getParameter("id");
         GeneralTercero tercero = new GeneralTercero();
-
         if ("Actualizar".equals(accion) && id != null && !id.trim().isEmpty() && id.matches("\\d+")) {
             tercero = new GeneralTercero(id);
         } else {
             tercero = new GeneralTercero();
         }
 
-        String lista = "";
         List<GeneralTercero> data = GeneralTercero.listInObjects("", "");
-        for (GeneralTercero tro : data) {
-            lista += "<tr>";
-            lista += "<td>" + tro.getId() + "</td>";
-            lista += "<td>" + tro.getTercero_codigo() + "</td>";
-            lista += "<td>" + tro.getTercero_id_tipo_identificacion() + "</td>";
-            lista += "<td>" + tro.getTercero_razon_nombres() + "</td>";
-            lista += "<td>" + tro.getTercero_fecha_nacimiento() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_direccion() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_telefono() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_correo() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTercero_pais() + "</td>";
-            lista += "<td>" + tro.getTercero_departamento() + "</td>";
-            lista += "<td>" + tro.getTercero_ciudad() + "</td>";
-            lista += "<td>" + tro.getTercero_ciiu() + "</td>";
-            lista += "<td>" + tro.getTerceroEmpleado() + "</td>";
-            lista += "<td>" + tro.getTerceroProveedor() + "</td>";
-            lista += "<td>" + tro.getTerceroAccionistaAsociado() + "</td>";
-            lista += "<td>" + tro.getTercero_tipo() + "</td>"; // Cambiado aquí
-            lista += "<td>" + tro.getTerceroFacturar() + "</td>";
-            lista += "<td><a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId() + "' title='Modificar'><img src='recursos/update.png' class='icon'></a><a href='javascript:eliminar(" + tro.getId() + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>";
-
-            lista += "</tr>";
-        }
-
-
     %>
 
     <body>
         <div class="container-wrapper">
             <div class="row g-3">
                 <div class="col-12">
-                    <div class="card border-0 rounded-4 bg-light dark:bg-dark text-dark dark:text-white" style="max-width: 100%;">
-                        <!-- Encabezado centrado -->
+                    <div class="card border-0 rounded-4 bg-light dark:bg-dark text-dark dark:text-white" style="max-width: 100%;">                      
                         <div class="card-header bg-white border-bottom d-flex justify-content-center align-items-center py-3 px-4">
                             <h6 class="mb-0 text-dark fw-semibold text-uppercase" style="letter-spacing: 1px;">
                                 <%= accion != null ? accion.toUpperCase() : ""%> TERCEROS
@@ -92,9 +93,8 @@
                             <form id="form" method="post" action="${pageContext.request.contextPath}/GUI/Terceros/tercerosActualizar.jsp" onsubmit="return validarFormulario()" autocomplete="off">
                                 <input type="hidden" name="id" value="<%= tercero.getId() != null ? tercero.getId() : ""%>">
                                 <input type="hidden" name="accion" value="<%= accion != null && accion.equals("Actualizar") ? "Actualizar" : "Create"%>">
-
-                                <div class="row">
-                                    <!-- Columna izquierda (Formulario) -->
+                                <input type="hidden" name="tercero_estado" value="true">
+                                <div class="row">                                    
                                     <div class="col-md-6 border-end pe-3">
                                         <div class="row g-3 align-items-end">
                                             <div class="col-sm-2">
@@ -107,7 +107,8 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class="form-label small text-secondary">Tipo Documento:</label>
-                                                <select class="form-control form-control-sm border-0 shadow-sm" name="tercero_id_tipo_identificacion">
+                                                <select class="form-control form-control-sm model" name="tercero_id_tipo_identificacion">
+                                                    <option value="">Seleccione un tipo</option>
                                                     <%= GeneralTipoIdentificacion.getListaEnOption(tercero.getTercero_id_tipo_identificacion())%>
                                                 </select>
                                             </div>  
@@ -115,9 +116,20 @@
                                                 <label class="form-label small text-secondary">Fecha de Nacimiento: <span class="text-danger">*</span></label>
                                                 <input type="date" class="form-control form-control-sm border-0 shadow-sm" name="tercero_fecha_nacimiento" value="<%= tercero.getTercero_fecha_nacimiento()%>" required>
                                             </div>
-                                            <div class="col-sm-5">
-                                                <label class="form-label small text-secondary">Razón Social o Nombres: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_razon_nombres" value="<%=tercero.getTercero_razon_nombres()%>" required>
+                                            <!-- Campos Persona Natural -->
+                                            <div class="col-sm-5 persona-natural">
+                                                <label class="form-label small text-secondary">Nombres: <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_razon_nombres" value="<%=tercero.getTercero_razon_nombres()%>">
+                                            </div>
+                                            <div class="col-sm-5 persona-natural">
+                                                <label class="form-label small text-secondary">Apellidos: <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_razon_apellidos" value="<%=tercero.getTercero_razon_apellidos()%>">
+                                            </div>
+
+                                            <!-- Campo Persona Jurídica -->
+                                            <div class="col-sm-5 persona-juridica">
+                                                <label class="form-label small text-secondary">Razon social: <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_razon_social" value="<%=tercero.getTercero_razon_social()%>">
                                             </div>
                                             <div class="col-sm-5">
                                                 <label class="form-label small text-secondary">Correo electrónico: <span class="text-danger">*</span></label>
@@ -141,110 +153,69 @@
                                                 <input type="text" id="deptoInput" name="tercero_departamento" class="form-control form-control-sm border-0 shadow-sm" placeholder="Escribe un depto" autocomplete="off" value="<%=tercero.getTercero_departamento()%>">
                                             </div>
                                             <div class="col-md-3">
-                                                <label class="form-label small text-secondary">Ciudad: </label>
+                                                <label class="form-label small text-secondary">Municipio: </label>
                                                 <input type="text" id="ciuInput" name="tercero_ciudad" class="form-control form-control-sm border-0 shadow-sm" placeholder="Escribe una ciudad" autocomplete="off" value="<%=tercero.getTercero_ciudad()%>">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Columna derecha -->
                                     <div class="col-md-6 ps-3">
                                         <div class="row g-3">                                                                            
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 mb-3">
                                                 <label class="form-label small text-secondary">CIIU:</label>
                                                 <select class="form-control form-control-sm border-0 shadow-sm" name="tercero_ciiu">
                                                     <%= GeneralCIIU.getListaEnOption(tercero.getTercero_ciiu())%>
                                                 </select>
                                             </div>
 
-                                            <!-- Roles -->
-                                            <div class="col-md-12">
-                                                <div class="row g-2">
-                                                    <div class="col-md-4">
-                                                        <label class="form-label small text-secondary">Empleado:</label>
-                                                        <div class="d-flex">                                                            
-                                                            <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_empleado" 
-                                                                       value="Sí" <%= tercero.isCheckedEmpleado("Sí")%>>
-                                                                <label class="form-check-label">Sí</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_empleado" 
-                                                                       value="No" <%= tercero.isCheckedEmpleado("No")%>>
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
+                                            <div class="row align-items-end">
+                                                <div class="col text-center">
+                                                    <label class="form-label small text-secondary">Proveedor:</label>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="form-check me-3">
+                                                            <input class="form-check-input" type="radio" name="tercero_proveedor" value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
+                                                            <label class="form-check-label">Sí</label>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-md-4">
-                                                        <label class="form-label small text-secondary">Proveedor:</label>
-                                                        <div class="d-flex">
-                                                            <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_proveedor" 
-                                                                       value="Sí" <%= tercero.isCheckedProveedor("Sí")%>>
-                                                                <label class="form-check-label">Sí</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_proveedor" 
-                                                                       value="No" <%= tercero.isCheckedProveedor("No")%>>
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-4">
-                                                        <label class="form-label small text-secondary">Accionista/Asociado:</label>
-                                                        <div class="d-flex">
-                                                            <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_accionista_asociado" 
-                                                                       value="Sí" <%= tercero.isCheckedAccionista("Sí")%>>
-                                                                <label class="form-check-label">Sí</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_accionista_asociado" 
-                                                                       value="No" <%= tercero.isCheckedAccionista("No")%>>
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
-
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="tercero_proveedor" value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
+                                                            <label class="form-check-label">No</label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-12">
-                                                <div class="row g-2">
-                                                    <div class="col-md-6">
-                                                        <label class="form-label small text-secondary">Tipo de Tercero:</label>
-                                                        <div class="d-flex">
-                                                            <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Natural" <%= tercero.isCheckedTT("Persona Natural")%>>
-                                                                <label class="form-check-label">Persona Natural</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Jurídica" <%= tercero.isCheckedTT("Persona Jurídica")%>>
-                                                                <label class="form-check-label">Persona Jurídica</label>
-                                                            </div>
+
+                                                <div class="col text-center">
+                                                    <label class="form-label small text-secondary">Tipo de Tercero:</label>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="form-check me-2">
+                                                          <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Natural" checked>
+                                                            <label class="form-check-label">Persona Natural</label>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <label class="form-label small text-secondary">¿Facturar?:</label>
-                                                        <div class="d-flex">
-                                                            <div class="form-check me-3">
-                                                                <input class="form-check-input" type="radio" name="tercero_facturar" 
-                                                                       value="Sí" <%= tercero.isCheckedFacturar("Sí")%>>
-                                                                <label class="form-check-label">Sí</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tercero_facturar" 
-                                                                       value="No" <%= tercero.isCheckedFacturar("No")%>>
-                                                                <label class="form-check-label">No</label>
-                                                            </div>
+                                                        <div class="form-check">
+                                                          <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Jurídica">
+                                                            <label class="form-check-label">Persona Jurídica</label>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col text-center">
+                                                    <label class="form-label small text-secondary">¿Está obligado a facturar?:</label>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="form-check me-3">
+                                                            <input class="form-check-input" type="radio" name="tercero_facturar" value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
+                                                            <label class="form-check-label">Sí</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="tercero_facturar" value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
+                                                            <label class="form-check-label">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -265,100 +236,109 @@
         <div class="container-wrapper mt-4">
             <div class="container-card">               
                 <h6 class="mb-0 fw-bold">LISTA DE TERCEROS</h6> 
-
                 <div class="table-responsive">
                     <table id="tablaterceros" class="table table-striped table-bordered w-100">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Código</th>
-                                <th>Tipo Doc</th>
-                                <th>Nombre/Razón</th>
+                                <th>Tipo de documento</th>
+                                <th>Razon social o nombres</th>
                                 <th>Teléfono</th>
                                 <th>Correo</th>
                                 <th>Ciudad</th>
-
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
+
                         <tbody>
-                            <%
-                                List<GeneralTercero> datas = GeneralTercero.listInObjects("", "");
-                                for (GeneralTercero tro : datas) {
-                                   /* if (!Boolean.TRUE.equals(tro.getTercero_estado())) {
-                                        continue; // Saltar si no está activo
-                                    }*/
-
+                            <% for (GeneralTercero tro : data) {
                                     String modalId = "modalTercero" + tro.getId();
-
-                                    out.print("<tr>");
-                                    out.print("<td>" + tro.getId() + "</td>");
-                                    out.print("<td>" + tro.getTercero_codigo() + "</td>");
-                                    out.print("<td>" + tro.getTercero_id_tipo_identificacion() + "</td>");
-                                    out.print("<td>" + tro.getTercero_razon_nombres() + "</td>");
-                                    out.print("<td>" + tro.getTercero_telefono() + "</td>");
-                                    out.print("<td>" + tro.getTercero_correo() + "</td>");
-                                    out.print("<td>" + tro.getTercero_ciudad() + "</td>");
-
-                                    out.print("<td><button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#" + modalId
-                                            + "'>Ver registro</button> <a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=" + tro.getId()
-                                            + "' title='Modificar'><img src='recursos/update.png' class='icon'></a> <a href='javascript:eliminar(" + tro.getId()
-                                            + ")' title='Eliminar'><img src='recursos/delete.png' class='icon'></a></td>");
-                                    out.print("</tr>");
-
-                                    out.print("<div class='modal fade' id='" + modalId + "' tabindex='-1'>");
-                                    out.print("<div class='modal-dialog modal-lg'>");
-                                    out.print("<div class='modal-content'>");
-
-                                    out.print("<div class='modal-header'><h5 class='modal-title'>Detalle del Tercero</h5>");
-                                    out.print("<button type='button' class='btn-close' data-bs-dismiss='modal'></button></div>");
-
-                                    out.print("<div class='modal-body'><div class='row'>");
-
-                                    out.print("<div class='col-md-6'>");
-                                    out.print("<p><strong>ID:</strong> " + tro.getId() + "</p>");
-                                    out.print("<p><strong>Código:</strong> " + tro.getTercero_codigo() + "</p>");
-                                    out.print("<p><strong>Tipo Identificación:</strong> " + tro.getTercero_id_tipo_identificacion() + "</p>");
-                                    out.print("<p><strong>Razón/Nombres:</strong> " + tro.getTercero_razon_nombres() + "</p>");
-                                    out.print("<p><strong>Fecha Nacimiento:</strong> " + tro.getTercero_fecha_nacimiento() + "</p>");
-                                    out.print("<p><strong>Dirección:</strong> " + tro.getTercero_direccion() + "</p>");
-                                    out.print("<p><strong>Teléfono:</strong> " + tro.getTercero_telefono() + "</p>");
-                                    out.print("<p><strong>Correo:</strong> " + tro.getTercero_correo() + "</p>");
-                                    out.print("<p><strong>País:</strong> " + tro.getTercero_pais() + "</p>");
-                                    out.print("</div>");
-
-                                    out.print("<div class='col-md-6'>");
-                                    out.print("<p><strong>Departamento:</strong> " + tro.getTercero_departamento() + "</p>");
-                                    out.print("<p><strong>Ciudad:</strong> " + tro.getTercero_ciudad() + "</p>");
-                                    out.print("<p><strong>CIIU:</strong> " + tro.getTercero_ciiu() + "</p>");
-                                    out.print("<p><strong>Empleado:</strong> " + tro.getTerceroEmpleado() + "</p>");
-                                    out.print("<p><strong>Proveedor:</strong> " + tro.getTerceroProveedor() + "</p>");
-                                    out.print("<p><strong>Accionista/Asociado:</strong> " + tro.getTerceroAccionistaAsociado() + "</p>");
-                                    out.print("<p><strong>Tipo:</strong> " + tro.getTercero_tipo() + "</p>");
-                                    out.print("<p><strong>Facturar:</strong> " + tro.getTerceroFacturar() + "</p>");
-                                    out.print("<p><strong>Estado:</strong> " + tro.getTercero_estado() + "</p>");
-                                    out.print("</div>");
-
-                                    out.print("</div></div>");
-                                    out.print("<div class='modal-footer'><button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button></div>");
-                                    out.print("</div></div></div>");
-                                }
                             %>
+                            <tr>
+                                <td><%= tro.getId()%></td>
+                                <td><%= tro.getTercero_codigo()%></td>
+                                <td><%= tro.getTI()%></td>
+                                <td><%= tro.getTercero_razon_nombres()%></td>
+                                <td><%= tro.getTercero_telefono()%></td>
+                                <td><%= tro.getTercero_correo()%></td>
+                                <td><%= tro.getTercero_ciudad()%></td>
+                                <td><%= tro.getTercero_estado() ? "Activo" : "Inactivo"%></td>
+                                <td>
+                                    <button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#<%= modalId%>'>Ver registro</button>
+                                    <a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=<%= tro.getId()%>' title='Modificar'><img src='recursos/update.png' class='icon'></a>
+                                    <a href='javascript:desactivar(<%= tro.getId()%>)' title='Desactivar'><img src='recursos/desactivar.png' class='icon'></a>
+                                </td>
+                            </tr>
+                            <% } %>
                         </tbody>
-
                     </table>
+
+                    <% for (GeneralTercero tro : data) {
+                            String modalId = "modalTercero" + tro.getId();
+                    %>
+                    <div class='modal fade' id='<%= modalId%>' tabindex='-1'>
+                        <div class='modal-dialog modal-xl'>
+                            <div class='modal-content'>
+                                <div class='modal-header'>
+                                    <h5 class='modal-title w-100 text-center'>Detalles del Tercero</h5>
+                                    <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+                                </div>
+                                <div class='modal-body'>
+                                    <div class='table-responsive'>
+                                        <table class='table tabla-detalle-tercero'>
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th><th>Código</th><th>Tipo de documento</th><th>Razón social o nombres</th>
+                                                    <th>Fecha de nacimiento</th><th>Dirección</th><th>Teléfono</th><th colspan='2'>Correo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><%= tro.getId()%></td>
+                                                    <td><%= tro.getTercero_codigo()%></td>
+                                                    <td><%= tro.getTI()%></td>
+                                                    <td><%= tro.getTercero_razon_nombres()%></td>
+                                                    <td><%= tro.getTercero_fecha_nacimiento()%></td>
+                                                    <td><%= tro.getTercero_direccion()%></td>
+                                                    <td><%= tro.getTercero_telefono()%></td>
+                                                    <td colspan='2'><%= tro.getTercero_correo()%></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>País</th><th>Departamento</th><th>Ciudad</th><th>CIIU</th>
+                                                    <th>¿Proveedor?</th><th>Tipo de persona</th><th>¿Estaá obligado a facturar?</th>
+                                                </tr>
+                                                <tr>
+                                                    <td><%= tro.getTercero_pais()%></td>
+                                                    <td><%= tro.getTercero_departamento()%></td>
+                                                    <td><%= tro.getTercero_ciudad()%></td>
+                                                    <td><%= tro.getTercero_ciiu()%></td>                                           
+                                                    <td><%= tro.getTerceroProveedor()%></td>
+                                                    <td><%= tro.getTercero_tipo()%></td>
+                                                    <td><%= tro.getTerceroFacturar()%></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class='modal-footer'>
+                                    <button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }%>
                 </div>
             </div>
         </div>
     </center>
 
-
-
     <script>
         $(document).ready(function () {
+            $.fn.dataTable.ext.errMode = 'none';
             let alturaDisponible = window.innerHeight - 200;
-
-            $('#tablaterceros').DataTable({
+            var table = $('#tablaterceros').DataTable({
                 scrollY: alturaDisponible + 'px',
                 scrollCollapse: true,
                 scrollX: true,
@@ -382,7 +362,12 @@
                     }
                 }
             });
+            $('#tablaterceros').on('error.dt', function (e, settings, techNote, message) {
+                console.error('Error en DataTable:', message);
+                window.location.href = window.location.href;
+            });
         });
+
         var paises = <%= paisesJs%>;
         console.log(paises);
         $("#paisInput").autocomplete({
@@ -418,6 +403,7 @@
         if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_departamento()%>" !== "") {
             $("#ciuInput").prop("disabled", false);
         }
+
         document.getElementById("selectPais").addEventListener("change", function () {
             const pais = this.value;
             const otroPais = document.getElementById("otroPais");
@@ -429,7 +415,6 @@
             if (pais) {
                 $("#deptoInput").prop("disabled", false);
                 selectDepartamento.classList.remove("d-none");
-
                 if (pais === "Colombia") {
                     otroPais.classList.add("d-none");
                     selectCiudad.classList.remove("d-none");
@@ -481,7 +466,6 @@
                 otroCiudad.classList.add("d-none");
             }
         });
-
         window.addEventListener("DOMContentLoaded", () => {
             cargarDepartamentos();
         });
@@ -494,10 +478,9 @@
             });
         }
 
-        function eliminar(id) {
+        function desactivar(id) {
             const dialog = $('<div>')
-                    .html('<div class="dialog-content"><i class="fas fa-exclamation-triangle warning-icon"></i><p>¿Realmente desea eliminar este registro?</p></div>');
-
+                    .html('<div class="dialog-content"><i class="fas fa-exclamation-triangle warning-icon"></i><p>¿Realmente desea desactivar este tercero?</p></div>');
             $(dialog).dialog({
                 resizable: false,
                 height: "auto",
@@ -505,32 +488,66 @@
                 modal: true,
                 dialogClass: "confirm-dialog no-title",
                 open: function () {
-
                     $('.ui-dialog-titlebar', this.parentNode).remove();
                 },
                 buttons: [
                     {
-                        text: "Eliminar",
-                        class: "btn-eliminar",
+                        text: "Desactivar",
+                        class: "btn-warning",
                         click: function () {
                             $(this).dialog("close");
                             const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
                             $('body').append(loading);
-                            window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Delete&id=' + id +
-                                    '&redirect=' + encodeURIComponent('main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp');
+
+                            window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Desactivar&id=' + id;
                         }
                     },
                     {
                         text: "Cancelar",
-                        class: "btn-cancelar",
+                        class: "btn-secondary",
                         click: function () {
                             $(this).dialog("close");
                         }
                     }
                 ]
-
             });
         }
+
+        function mostrarMensaje(texto, tipo) {
+            const alertType = tipo === 'success' ? 'alert-success' : 'alert-danger';
+            const alert = $('<div class="alert ' + alertType + ' alert-dismissible fade show fixed-top mx-auto mt-3" style="max-width: 500px; z-index: 9999;">'
+                    + texto + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+            $('body').append(alert);
+            setTimeout(() => alert.alert('close'), 5000);
+        }
+  
     </script>
+    <script>
+    $(document).ready(function () {
+        function manejarTipoPersona() {
+            const tipo = $('input[name="tercero_tipo"]:checked').val();
+
+            if (tipo === 'Persona Natural') {
+                $('.persona-natural').show();
+                $('.persona-juridica').hide();
+                $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', true);
+                $('[name="tercero_razon_social"]').prop('required', false);
+            } else if (tipo === 'Persona Jurídica') {
+                $('.persona-natural').hide();
+                $('.persona-juridica').show();
+                $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', false);
+                $('[name="tercero_razon_social"]').prop('required', true);
+            }
+        }
+
+        // Ejecutar al inicio
+        manejarTipoPersona();
+
+        // Ejecutar cuando cambie el radio
+        $('input[name="tercero_tipo"]').on('change', manejarTipoPersona);
+    });
+</script>
 </body>
+
 </html>
