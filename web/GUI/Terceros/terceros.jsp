@@ -27,7 +27,6 @@
 </style>
 
 
-
     </head>
     <%
         String mensaje = request.getParameter("mensaje");

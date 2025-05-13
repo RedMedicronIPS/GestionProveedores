@@ -6,6 +6,7 @@
          version="3.1">
 
     <!-- Configuración del tiempo de sesión -->
+    
     <session-config>
         <session-timeout>60</session-timeout> <!-- En minutos -->
     </session-config>

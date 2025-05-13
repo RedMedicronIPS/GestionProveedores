@@ -6,7 +6,7 @@
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
-
+//ar
     String accion = request.getParameter("accion");
     String id = request.getParameter("id");
     boolean isAjax = "true".equals(request.getParameter("isAjax"));

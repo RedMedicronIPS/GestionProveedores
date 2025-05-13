@@ -1,5 +1,5 @@
 package clases.ConfiguracionGeneral;
-
+//ar
 import clasesDataBase.ConectorBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -365,7 +365,7 @@ public class GeneralTercero {
             return false;
         }
     }
-
+//ejemplo
     public static List<GeneralTercero> listInObjects(String filtro, String orden) {
         List<GeneralTercero> list = new ArrayList<>();
         String whereClause = "tercero_estado = 1";
