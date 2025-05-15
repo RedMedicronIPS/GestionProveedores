@@ -27,7 +27,6 @@ public class GeneralTercero {
     private String tercero_ciiu;
     private Boolean tercero_facturar;
     private Boolean tercero_proveedor;
-
     private String tercero_tipo;
     private Boolean tercero_estado;
 
@@ -58,7 +57,7 @@ public class GeneralTercero {
                 this.tercero_departamento = rs.getString("tercero_departamento");
                 this.tercero_ciudad = rs.getString("tercero_ciudad");
                 this.tercero_ciiu = rs.getString("tercero_ciiu");
-                this.tercero_facturar = rs.getBoolean("tercero_facturar");            
+                this.tercero_facturar = rs.getBoolean("tercero_facturar");
                 this.tercero_proveedor = rs.getBoolean("tercero_proveedor");
                 this.tercero_tipo = rs.getString("tercero_tipo");
                 this.tercero_estado = rs.getBoolean("tercero_estado");
@@ -73,7 +72,6 @@ public class GeneralTercero {
     public String isCheckedTT(String tipo) {
         return this.tercero_tipo != null && this.tercero_tipo.equals(tipo) ? "checked" : "";
     }
-
 
     public String getId() {
         return id != null ? id : "";
@@ -108,7 +106,7 @@ public class GeneralTercero {
     }
 
     public String getTercero_razon_apellidos() {
- return tercero_razon_apellidos != null ? tercero_razon_apellidos : "";
+        return tercero_razon_apellidos != null ? tercero_razon_apellidos : "";
     }
 
     public void setTercero_razon_apellidos(String tercero_razon_apellidos) {
@@ -116,13 +114,12 @@ public class GeneralTercero {
     }
 
     public String getTercero_razon_social() {
-         return tercero_razon_social != null ? tercero_razon_social : "";
+        return tercero_razon_social != null ? tercero_razon_social : "";
     }
 
     public void setTercero_razon_social(String tercero_razon_social) {
         this.tercero_razon_social = tercero_razon_social;
     }
-    
 
     public String getTercero_fecha_nacimiento() {
         return tercero_fecha_nacimiento != null ? tercero_fecha_nacimiento : "";
@@ -180,11 +177,12 @@ public class GeneralTercero {
         this.tercero_ciudad = tercero_ciudad;
     }
 
-    public clases.ConfiguracionGeneral.GeneralCIIU getCIIU() {
-        if (this.tercero_ciiu == null || this.tercero_ciiu.trim().isEmpty()) {
-            return new GeneralCIIU();
+    public String getCIIU() {
+        if (this.tercero_ciiu == null || this.tercero_ciiu.isEmpty()) {
+            return "";
         }
-        return new GeneralCIIU(this.tercero_ciiu);
+        GeneralCIIU ciiu = new GeneralCIIU(this.tercero_ciiu);
+        return ciiu.getCodigo() + " - " + ciiu.getNombre();
     }
 
     public GeneralTipoIdentificacion getTI() {
@@ -192,6 +190,19 @@ public class GeneralTercero {
             return new GeneralTipoIdentificacion();
         }
         return new GeneralTipoIdentificacion(this.tercero_id_tipo_identificacion);
+    }
+
+    public String getNombreTI() {
+        try {
+            GeneralTipoIdentificacion ti = getTI();
+            if (ti == null) {
+                return "No definido";
+            }
+            String nombre = ti.getGeneral_tip_ident_nombre();
+            return (nombre != null && !nombre.trim().isEmpty()) ? nombre : "No definido";
+        } catch (Exception e) {
+            return "No definido";
+        }
     }
 
     public String getTercero_ciiu() {
@@ -254,12 +265,11 @@ public class GeneralTercero {
         return tercero_estado != null ? tercero_estado : true;
     }
 
-
     @Override
     public String toString() {
         return "GeneralTercero{"
-                + "id='" + id + '\''             
-                + ", proveedor='" + tercero_proveedor + '\''             
+                + "id='" + id + '\''
+                + ", proveedor='" + tercero_proveedor + '\''
                 + ", facturar='" + tercero_facturar + '\''
                 + '}';
     }
@@ -286,7 +296,7 @@ public class GeneralTercero {
             stmt.setString(11, tercero_departamento);
             stmt.setString(12, tercero_ciudad);
             stmt.setString(13, tercero_ciiu);
-            stmt.setBoolean(14, tercero_facturar);    
+            stmt.setBoolean(14, tercero_facturar);
             stmt.setBoolean(15, tercero_proveedor);
             stmt.setString(16, tercero_tipo);
             stmt.setBoolean(17, true);
@@ -342,8 +352,6 @@ public class GeneralTercero {
 
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.INFO,
                     "Ejecutando UPDATE: " + stmt.toString());
-
-
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.SEVERE,
@@ -406,4 +414,3 @@ public class GeneralTercero {
         return list;
     }
 }
-

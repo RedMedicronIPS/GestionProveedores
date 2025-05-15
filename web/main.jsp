@@ -93,7 +93,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item text-danger" href="Interfaces/General/logout.jsp">
+                                <a class="dropdown-item text-danger" href="GUI/General/logout.jsp">
                                     <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                                 </a>
                             </li>

@@ -174,3 +174,15 @@ html.dark-mode .tabla-detalle-tercero td {
 html.dark-mode .tabla-detalle-tercero tbody tr:hover td {
     background-color: #243647 !important;
 }
+table.dataTable {
+    width: 100% !important;
+}
+
+table.dataTable th,
+table.dataTable td {
+    white-space: nowrap;
+}
+
+.dataTables_scrollHeadInner, .dataTables_scrollHeadInner table {
+    width: 100% !important;
+}
