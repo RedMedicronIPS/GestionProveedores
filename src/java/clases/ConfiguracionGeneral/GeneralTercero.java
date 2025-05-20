@@ -27,7 +27,6 @@ public class GeneralTercero {
     private String tercero_ciiu;
     private Boolean tercero_facturar;
     private Boolean tercero_proveedor;
-
     private String tercero_tipo;
     private Boolean tercero_estado;
 
@@ -108,7 +107,8 @@ public class GeneralTercero {
     }
 
     public String getTercero_razon_apellidos() {
- return tercero_razon_apellidos != null ? tercero_razon_apellidos : "";
+
+        return tercero_razon_apellidos != null ? tercero_razon_apellidos : "";
     }
 
     public void setTercero_razon_apellidos(String tercero_razon_apellidos) {
@@ -116,13 +116,13 @@ public class GeneralTercero {
     }
 
     public String getTercero_razon_social() {
-         return tercero_razon_social != null ? tercero_razon_social : "";
+        return tercero_razon_social != null ? tercero_razon_social : "";
+
     }
 
     public void setTercero_razon_social(String tercero_razon_social) {
         this.tercero_razon_social = tercero_razon_social;
     }
-    
 
     public String getTercero_fecha_nacimiento() {
         return tercero_fecha_nacimiento != null ? tercero_fecha_nacimiento : "";
@@ -185,6 +185,7 @@ public class GeneralTercero {
             return new GeneralCIIU();
         }
         return new GeneralCIIU(this.tercero_ciiu);
+
     }
 
     public GeneralTipoIdentificacion getTI() {
@@ -260,6 +261,7 @@ public class GeneralTercero {
         return "GeneralTercero{"
                 + "id='" + id + '\''             
                 + ", proveedor='" + tercero_proveedor + '\''             
+
                 + ", facturar='" + tercero_facturar + '\''
                 + '}';
     }
@@ -342,7 +344,6 @@ public class GeneralTercero {
 
             Logger.getLogger(GeneralTercero.class.getName()).log(Level.INFO,
                     "Ejecutando UPDATE: " + stmt.toString());
-
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {

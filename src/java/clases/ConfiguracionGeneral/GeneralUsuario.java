@@ -23,7 +23,7 @@ public class GeneralUsuario {
     private String general_usu_correo_electronico;
     private String general_usu_num_celular;
     private String general_usu_clave;
-    private int general_usu_rol; // CAMBIADO A int
+    private int general_usu_rol;
     private int general_usu_estado;
     private String general_usu_id_tipo_identificacion;
     private int general_usu_rol_anulacion;
@@ -337,9 +337,7 @@ public class GeneralUsuario {
         } finally {
             ConectorBD.cerrarConexion();
         }
-    }    
-    
-    
+    }
 
     public static void consultar(String cadenaSQL) {
         try (Connection conexion = getConnection(); PreparedStatement sentencia = conexion.prepareStatement(cadenaSQL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet resultado = sentencia.executeQuery()) {
@@ -401,7 +399,6 @@ public class GeneralUsuario {
             rowSql += " ORDER BY " + orden;
         }
 
-        // Reutiliza el método consultarLista que devuelve List<Map<String, Object>>
         List<Map<String, Object>> resultados = consultarLista(rowSql);
 
         for (Map<String, Object> map : resultados) {
