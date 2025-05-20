@@ -32,7 +32,24 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
         <link rel="stylesheet" type="text/css" href="estilos/index.css?v=2">
-  
+   <style>
+            #video-background {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+                z-index: -100;
+                background-size: cover;
+            }
+            
+            .content-over-video {
+                position: relative;
+                z-index: 1;
+            }
+        </style>
     </head>
     <body>
         <div class="container h-100">
@@ -70,24 +87,15 @@
                                     <button type="submit" class="btn float-right login_btn">Ingresar</button>
                                 </div>
                             </form>
-                        </div>
-                       <!-- <div class="card-footer mt-4">
-                            <div class="d-flex justify-content-center links mb-2">
-                                ¿No tienes una cuenta? <a href="#"> Registrarse</a>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <a href="#">¿Olvidaste tu contraseña?</a>
-                            </div>
-                        </div>-->
-                                                                
+                        </div>                                
                     </div>
                 </div>
             </div>
         </div>
-        <div class="video-container">
-            <video id="bgVideo" autoplay loop muted playsinline preload="auto"
-                   src="https://www.dropbox.com/scl/fi/3ojz3i59quh46gbybsh8h/fondomedicron.mp4?rlkey=6n27xf21wi3lfj5tuyx3elqt9&st=9q4fvhgi&raw=1&t=1"></video>
-        </div>
+       <video id="video-background" autoplay loop muted playsinline>
+            <source src="recursos/FONDO.mp4" type="video/mp4">
+            <img src="recursos/fallback-image.jpg" alt="Fondo alternativo">
+        </video>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const userInput = document.querySelector('input[name="general_usu_num_identificacion"]');
@@ -114,20 +122,30 @@
         </script>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const video = document.getElementById('bgVideo');
-                video.load();
-                window.addEventListener('load', function () {                
+           document.addEventListener("DOMContentLoaded", function() {
+                const video = document.getElementById('video-background');
+                if(!!document.createElement('video').canPlayType) {
+                    video.preload = "auto";
+                    video.load();
+                    video.muted = true;
+                    video.setAttribute('playsinline', '');
+                    video.setAttribute('webkit-playsinline', '');
+                    video.setAttribute('muted', 'muted');
                     const playPromise = video.play();
+                    
                     if (playPromise !== undefined) {
-                        playPromise.catch(error => {                         
-                            video.muted = true;
-                            video.play();
+                        playPromise.catch(error => {
+                            console.error("Error al reproducir el video:", error);
+                            document.body.style.backgroundImage = 'url("recursos/fallback-image.jpg")';
+                            document.body.style.backgroundSize = 'cover';
+                            document.body.style.backgroundPosition = 'center';
+                            document.body.style.backgroundRepeat = 'no-repeat';
                         });
                     }
-                });
-                video.setAttribute('playsinline', '');
-                video.setAttribute('webkit-playsinline', '');
+                } else {
+                    document.body.style.backgroundImage = 'url("recursos/fallback-image.jpg")';
+                    document.body.style.backgroundSize = 'cover';
+                }
             });
         </script>
     </body>

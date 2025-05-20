@@ -174,24 +174,19 @@ form {
     color: white;
     font-weight: bold;
 }
-
-.video-container {
+#video-background {
     position: fixed;
     right: 0;
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
-    z-index: -1;
-    background-color: #000; 
+    width: auto;
+    height: auto;
+    z-index: -100;
+    background-size: cover;
 }
 
-#bgVideo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 1; 
-    transition: none; 
+.content-over-video {
+    position: relative;
+    z-index: 1;
 }
