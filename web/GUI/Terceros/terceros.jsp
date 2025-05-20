@@ -18,18 +18,7 @@
 <!DOCTYPE html>
 <html>
     <head>    
-        <link rel="stylesheet" href="estilos/estiloCard.css">  
-<<<<<<< HEAD
-=======
- <style>
-    .persona-natural,
-    .persona-juridica {
-        display: none;
-    }
-</style>
-
-
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
+        <link rel="stylesheet" href="estilos/estiloCard.css">          
     </head>
     <%
         String mensaje = request.getParameter("mensaje");
@@ -96,68 +85,12 @@
                                 <input type="hidden" name="id" value="<%= tercero.getId() != null ? tercero.getId() : ""%>">
                                 <input type="hidden" name="accion" value="<%= accion != null && accion.equals("Actualizar") ? "Actualizar" : "Create"%>">
                                 <input type="hidden" name="tercero_estado" value="true">
-<<<<<<< HEAD
 
                                 <div class="row g-3">
                                     <div class="col-sm-1">
                                         <label class="form-label small text-secondary">ID</label>
                                         <input type="text" class="form-control form-control-sm border-0 shadow-sm" value="<%= (tercero.getId() == null || tercero.getId().isEmpty()) ? "" : tercero.getId()%>" disabled>
                                     </div>
-=======
-                                <div class="row">                                    
-                                    <div class="col-md-6 border-end pe-3">
-                                        <div class="row g-3 align-items-end">
-                                            <div class="col-sm-2">
-                                                <label class="form-label small text-secondary">ID</label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" value="<%= (tercero.getId() == null || tercero.getId().isEmpty()) ? "" : tercero.getId()%>" disabled>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <label class="form-label small text-secondary">Código (NIT/CC...): <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_codigo" value="<%=tercero.getTercero_codigo()%>" maxlength="18" required>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label class="form-label small text-secondary">Tipo Documento:</label>
-                                                <select class="form-control form-control-sm model" name="tercero_id_tipo_identificacion">
-                                                    <option value="">Seleccione un tipo</option>
-                                                    <%= GeneralTipoIdentificacion.getListaEnOption(tercero.getTercero_id_tipo_identificacion())%>
-                                                </select>
-                                            </div>  
-                                            <div class="col-sm-3">
-                                                <label class="form-label small text-secondary">Fecha de Nacimiento: <span class="text-danger">*</span></label>
-                                                <input type="date" class="form-control form-control-sm border-0 shadow-sm" name="tercero_fecha_nacimiento" value="<%= tercero.getTercero_fecha_nacimiento()%>" required>
-                                            </div>
-                                            <!-- Campos Persona Natural -->
-                                            <div class="col-sm-5 persona-natural">
-                                                <label class="form-label small text-secondary">Nombres: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_razon_nombres" value="<%=tercero.getTercero_razon_nombres()%>">
-                                            </div>
-                                            <div class="col-sm-5 persona-natural">
-                                                <label class="form-label small text-secondary">Apellidos: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_razon_apellidos" value="<%=tercero.getTercero_razon_apellidos()%>">
-                                            </div>
-
-                                            <!-- Campo Persona Jurídica -->
-                                            <div class="col-sm-5 persona-juridica">
-                                                <label class="form-label small text-secondary">Razon social: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_razon_social" value="<%=tercero.getTercero_razon_social()%>">
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <label class="form-label small text-secondary">Correo electrónico: <span class="text-danger">*</span></label>
-                                                <input type="email" class="form-control form-control-sm border-0 shadow-sm" name="tercero_correo" value="<%=tercero.getTercero_correo()%>" required>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <label class="form-label small text-secondary">Teléfono: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_telefono" value="<%=tercero.getTercero_telefono()%>" maxlength="15" required>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label small text-secondary">Dirección: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_direccion" value="<%=tercero.getTercero_direccion()%>" required>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="form-label small text-secondary">País:</label>
-                                                <input type="text" id="paisInput" name="tercero_pais" class="form-control form-control-sm border-0 shadow-sm" placeholder="Escribe un país" autocomplete="off" value="<%=tercero.getTercero_pais()%>">
-                                            </div>
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
 
                                     <div class="col text-center">
                                         <label class="form-label small text-secondary">Tipo de Tercero:</label>
@@ -238,8 +171,8 @@
                                         <div class="input-group">
                                             <input type="text" class="form-control form-control-sm border-0 shadow-sm" 
                                                    id="tercero_ciiu_input" name="tercero_ciiu_display" 
-                                                   placeholder="Seleccione la Clasificación Industrial Internacional Uniforme (CIIU)" 
-                                                   value="<%= tercero.getTercero_ciiu() != null && !tercero.getTercero_ciiu().isEmpty() ? tercero.getCIIU() : ""%>" 
+                                                   placeholder="Seleccione la Clasificación Industrial Internacional Uniforme" 
+                                                   value="<%= tercero.getCIIU() != null ? tercero.getCIIU() : ""%>" 
                                                    readonly onclick="abrirModalCIIU()">
                                             <input type="hidden" id="tercero_ciiu_id" name="tercero_ciiu" value="<%= tercero.getTercero_ciiu() != null ? tercero.getTercero_ciiu() : ""%>">
                                             <button class="btn btn-outline-secondary btn-sm" type="button" onclick="abrirModalCIIU()">
@@ -255,57 +188,9 @@
                                                 <input class="form-check-input" type="radio" name="tercero_proveedor" value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
                                                 <label class="form-check-label">Sí</label>
                                             </div>
-<<<<<<< HEAD
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="tercero_proveedor" value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
                                                 <label class="form-check-label">No</label>
-=======
-
-                                            <div class="row align-items-end">
-                                                <div class="col text-center">
-                                                    <label class="form-label small text-secondary">Proveedor:</label>
-                                                    <div class="d-flex justify-content-center">
-                                                        <div class="form-check me-3">
-                                                            <input class="form-check-input" type="radio" name="tercero_proveedor" value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
-                                                            <label class="form-check-label">Sí</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="tercero_proveedor" value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
-                                                            <label class="form-check-label">No</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col text-center">
-                                                    <label class="form-label small text-secondary">Tipo de Tercero:</label>
-                                                    <div class="d-flex justify-content-center">
-                                                        <div class="form-check me-2">
-                                                          <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Natural" checked>
-                                                            <label class="form-check-label">Persona Natural</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                          <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Jurídica">
-                                                            <label class="form-check-label">Persona Jurídica</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col text-center">
-                                                    <label class="form-label small text-secondary">¿Está obligado a facturar?:</label>
-                                                    <div class="d-flex justify-content-center">
-                                                        <div class="form-check me-3">
-                                                            <input class="form-check-input" type="radio" name="tercero_facturar" value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
-                                                            <label class="form-check-label">Sí</label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="tercero_facturar" value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
-                                                            <label class="form-check-label">No</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
                                             </div>
                                         </div>
                                     </div>
@@ -343,9 +228,7 @@
         <div class="container-wrapper mt-4">
             <div class="container-card">               
                 <h6 class="mb-0 fw-bold">LISTA DE TERCEROS</h6> 
-<<<<<<< HEAD
 
-                <!-- Pestañas -->
                 <ul class="nav nav-tabs" id="tercerosTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="naturales-tab" data-bs-toggle="tab" data-bs-target="#naturales" type="button" role="tab">Personas Naturales</button>
@@ -440,7 +323,6 @@
                         </div>
                     </div>
                 </div>
-
                 <% for (GeneralTercero tro : data) {
                         String modalId = "modalTercero" + tro.getId();
                 %>
@@ -458,14 +340,14 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Código</th>
-                                                <th>Tipo doc</th>
+                                                <th>Tipo de documento</th>
                                                     <% if ("Persona Natural".equals(tro.getTercero_tipo())) { %>
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
                                                     <% } else { %>
                                                 <th colspan="2">Razón social</th>
                                                     <% }%>
-                                                <th>F. nacimiento</th>
+                                                <th>Fecha de nacimiento</th>
                                                 <th colspan="2">Dirección</th>
                                             </tr>
                                         </thead>
@@ -506,96 +388,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-=======
-                <div class="table-responsive">
-                    <table id="tablaterceros" class="table table-striped table-bordered w-100">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Código</th>
-                                <th>Tipo de documento</th>
-                                <th>Razon social o nombres</th>
-                                <th>Teléfono</th>
-                                <th>Correo</th>
-                                <th>Ciudad</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <% for (GeneralTercero tro : data) {
-                                    String modalId = "modalTercero" + tro.getId();
-                            %>
-                            <tr>
-                                <td><%= tro.getId()%></td>
-                                <td><%= tro.getTercero_codigo()%></td>
-                                <td><%= tro.getTI()%></td>
-                                <td><%= tro.getTercero_razon_nombres()%></td>
-                                <td><%= tro.getTercero_telefono()%></td>
-                                <td><%= tro.getTercero_correo()%></td>
-                                <td><%= tro.getTercero_ciudad()%></td>
-                                <td><%= tro.getTercero_estado() ? "Activo" : "Inactivo"%></td>
-                                <td>
-                                    <button class='btn btn-sm btn-primary' data-bs-toggle='modal' data-bs-target='#<%= modalId%>'>Ver registro</button>
-                                    <a href='main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp&accion=Actualizar&id=<%= tro.getId()%>' title='Modificar'><img src='recursos/update.png' class='icon'></a>
-                                    <a href='javascript:desactivar(<%= tro.getId()%>)' title='Desactivar'><img src='recursos/desactivar.png' class='icon'></a>
-                                </td>
-                            </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
-
-                    <% for (GeneralTercero tro : data) {
-                            String modalId = "modalTercero" + tro.getId();
-                    %>
-                    <div class='modal fade' id='<%= modalId%>' tabindex='-1'>
-                        <div class='modal-dialog modal-xl'>
-                            <div class='modal-content'>
-                                <div class='modal-header'>
-                                    <h5 class='modal-title w-100 text-center'>Detalles del Tercero</h5>
-                                    <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
-                                </div>
-                                <div class='modal-body'>
-                                    <div class='table-responsive'>
-                                        <table class='table tabla-detalle-tercero'>
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th><th>Código</th><th>Tipo de documento</th><th>Razón social o nombres</th>
-                                                    <th>Fecha de nacimiento</th><th>Dirección</th><th>Teléfono</th><th colspan='2'>Correo</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><%= tro.getId()%></td>
-                                                    <td><%= tro.getTercero_codigo()%></td>
-                                                    <td><%= tro.getTI()%></td>
-                                                    <td><%= tro.getTercero_razon_nombres()%></td>
-                                                    <td><%= tro.getTercero_fecha_nacimiento()%></td>
-                                                    <td><%= tro.getTercero_direccion()%></td>
-                                                    <td><%= tro.getTercero_telefono()%></td>
-                                                    <td colspan='2'><%= tro.getTercero_correo()%></td>
-                                                </tr>
-                                                <tr>
-                                                    <th>País</th><th>Departamento</th><th>Ciudad</th><th>CIIU</th>
-                                                    <th>¿Proveedor?</th><th>Tipo de persona</th><th>¿Estaá obligado a facturar?</th>
-                                                </tr>
-                                                <tr>
-                                                    <td><%= tro.getTercero_pais()%></td>
-                                                    <td><%= tro.getTercero_departamento()%></td>
-                                                    <td><%= tro.getTercero_ciudad()%></td>
-                                                    <td><%= tro.getTercero_ciiu()%></td>                                           
-                                                    <td><%= tro.getTerceroProveedor()%></td>
-                                                    <td><%= tro.getTercero_tipo()%></td>
-                                                    <td><%= tro.getTerceroFacturar()%></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class='modal-footer'>
-                                    <button class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
                                 </div>
                             </div>
                             <div class='modal-footer'>
@@ -603,12 +395,12 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
                 </div>
                 <% } %>
             </div>
         </div>
-    </center> 
+    </center>
+
     <div class="modal fade" id="modalCIIU" tabindex="-1" aria-labelledby="modalCIIULabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -633,10 +425,8 @@
                             </thead>
                             <tbody>
                                 <%
-                                    List<GeneralCIIU> listaCIIU = GeneralCIIU.listInObjects(null, "codigo, nombre");
-                                    for (GeneralCIIU ciiu : listaCIIU) {
-                                        if (ciiu.getCodigo() != null && ciiu.getNombre() != null) {
-                                %>
+                                List<GeneralCIIU> listaCIIU = GeneralCIIU.listInObjects(null, "codigo, nombre");
+                                for (GeneralCIIU ciiu : listaCIIU) {%>
                                 <tr>
                                     <td><%= ciiu.getCodigo()%></td>
                                     <td><%= ciiu.getNombre()%></td>
@@ -647,19 +437,13 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <%
-                                        }
-                                    }
-                                %>
+                                <% }%>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-=======
-                    <% }%>
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
                 </div>
             </div>
         </div>
@@ -673,7 +457,6 @@
                 scrollY: alturaDisponible + 'px',
                 scrollCollapse: true,
                 scrollX: true,
-<<<<<<< HEAD
                 autoWidth: false,
                 columnDefs: [
                     {width: "60px", targets: 0},
@@ -702,25 +485,6 @@
                         last: "&#187;",
                         next: "&#9658;",
                         previous: "&#9668;"
-=======
-                "order": [[0, "desc"]],
-                "paging": true,
-                "searching": true,
-                "info": true,
-                "lengthMenu": [5, 10, 25, 50, 100],
-                "language": {
-                    "lengthMenu": "Mostrar MENU registros por página",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando página PAGE de PAGES",
-                    "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrado de MAX registros totales)",
-                    "search": "Buscar:",
-                    "paginate": {
-                        "first": "&#171;",
-                        "last": "&#187;",
-                        "next": "&#9658;",
-                        "previous": "&#9668;"
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
                     }
                 }
             });
@@ -920,7 +684,6 @@
             $('body').append(alert);
             setTimeout(() => alert.alert('close'), 5000);
         }
-<<<<<<< HEAD
 
         function abrirModalCIIU() {
             $('#modalCIIU').modal('show');
@@ -952,35 +715,24 @@
         }
 
         function seleccionarCIIU(id, texto) {
-            if (id && texto && !texto.includes("null")) {
-                $('#tercero_ciiu_id').val(id);
-                $('#tercero_ciiu_input').val(texto);
-                $('#modalCIIU').modal('hide');
-            } else {
-                console.error('Datos de CIIU inválidos');
-            }
+            $('#tercero_ciiu_id').val(id);
+            $('#tercero_ciiu_input').val(texto);
+            $('#modalCIIU').modal('hide');
         }
 
         function inicializarCIIU() {
-            const ciiuId = $('#tercero_ciiu_id').val();
-            if (ciiuId && ciiuId.trim() !== '') {
-                if (!$('#tercero_ciiu_input').val().trim()) {
-                    $.get('${pageContext.request.contextPath}/GUI/Terceros/getCIIU.jsp',
-                            {id: ciiuId},
-                            function (data) {
-                                if (data && data.codigo && data.nombre) {
-                                    $('#tercero_ciiu_input').val(data.codigo + ' - ' + data.nombre);
-                                } else {
-                                    $('#tercero_ciiu_input').val('');
-                                    $('#tercero_ciiu_id').val('');
-                                }
-                            }
-                    ).fail(function () {
-                        console.error('Error al cargar datos del CIIU');
+            const ciiuId = '<%= tercero.getTercero_ciiu()%>';
+            if (ciiuId) {
+                if (!$('#tercero_ciiu_input').val()) {
+                    $.get('${pageContext.request.contextPath}/GUI/Terceros/getCIIU.jsp', {id: ciiuId}, function (data) {
+                        if (data) {
+                            $('#tercero_ciiu_input').val(data.codigo + ' - ' + data.nombre);
+                        }
                     });
                 }
             }
         }
+
         $(document).ready(function () {
             inicializarCIIU();
         });
@@ -1009,29 +761,16 @@
             $('input[name="tercero_tipo"]').on('change', manejarTipoPersona);
         });
         function actualizarColumnas() {
-=======
-  
-    </script>
-    <script>
-    $(document).ready(function () {
-        function manejarTipoPersona() {
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
             const tipo = $('input[name="tercero_tipo"]:checked').val();
-
             if (tipo === 'Persona Natural') {
-                $('.persona-natural').show();
-                $('.persona-juridica').hide();
-                $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', true);
-                $('[name="tercero_razon_social"]').prop('required', false);
-            } else if (tipo === 'Persona Jurídica') {
-                $('.persona-natural').hide();
-                $('.persona-juridica').show();
-                $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', false);
-                $('[name="tercero_razon_social"]').prop('required', true);
+                $('.col-nombres, .col-apellidos').show();
+                $('.col-razon').hide();
+            } else {
+                $('.col-nombres, .col-apellidos').hide();
+                $('.col-razon').show();
             }
         }
 
-<<<<<<< HEAD
         $(document).ready(function () {
             actualizarColumnas();
             $('input[name="tercero_tipo"]').change(actualizarColumnas);
@@ -1042,19 +781,7 @@
             }
             manejarTipoPersona();
         });
-=======
-        // Ejecutar al inicio
-        manejarTipoPersona();
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
 
-        // Ejecutar cuando cambie el radio
-        $('input[name="tercero_tipo"]').on('change', manejarTipoPersona);
-    });
-</script>
+    </script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-
-</html>
->>>>>>> d9818f1afc58148e682209d54a582875dbee73c3
