@@ -242,7 +242,18 @@ public class GeneralTercero {
         boolean isSi = "Sí".equals(valor);
         return (isSi && this.tercero_facturar) || (!isSi && !this.tercero_facturar) ? "checked" : "";
     }
-
+    public String getNombreTI() {
+        try {
+            GeneralTipoIdentificacion ti = getTI();
+            if (ti == null) {
+                return "No definido";
+            }
+            String nombre = ti.getGeneral_tip_ident_nombre();
+            return (nombre != null && !nombre.trim().isEmpty()) ? nombre : "No definido";
+        } catch (Exception e) {
+            return "No definido";
+        }
+    }
     public void setTercero_estado(Boolean tercero_estado) {
         this.tercero_estado = tercero_estado != null ? tercero_estado : true;
     }

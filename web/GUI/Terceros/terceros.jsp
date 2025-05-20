@@ -18,7 +18,23 @@
 <!DOCTYPE html>
 <html>
     <head>    
-        <link rel="stylesheet" href="estilos/estiloCard.css">          
+        <link rel="stylesheet" href="estilos/estiloCard.css">  
+        <style>
+
+            table.dataTable {
+                width: 100% !important;
+            }
+
+            table.dataTable th,
+            table.dataTable td {
+                white-space: nowrap;
+            }
+
+            .dataTables_scrollHeadInner, .dataTables_scrollHeadInner table {
+                width: 100% !important;
+            }
+
+        </style>
 
     </head>
     <%
@@ -86,12 +102,12 @@
                                 <input type="hidden" name="id" value="<%= tercero.getId() != null ? tercero.getId() : ""%>">
                                 <input type="hidden" name="accion" value="<%= accion != null && accion.equals("Actualizar") ? "Actualizar" : "Create"%>">
                                 <input type="hidden" name="tercero_estado" value="true">
+
                                 <div class="row g-3">
                                     <div class="col-sm-1">
                                         <label class="form-label small text-secondary">ID</label>
                                         <input type="text" class="form-control form-control-sm border-0 shadow-sm" value="<%= (tercero.getId() == null || tercero.getId().isEmpty()) ? "" : tercero.getId()%>" disabled>
                                     </div>
-
 
                                     <div class="col text-center">
                                         <label class="form-label small text-secondary">Tipo de Tercero:</label>
@@ -101,9 +117,18 @@
                                                        <%= (tercero.getId() == null || "Persona Natural".equals(tercero.getTercero_tipo())) ? "checked" : ""%>>
                                                 <label class="form-check-label">Persona Natural</label>
                                             </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label small text-secondary">Municipio: </label>
-                                                <input type="text" id="ciuInput" name="tercero_ciudad" class="form-control form-control-sm border-0 shadow-sm" placeholder="Escribe una ciudad" autocomplete="off" value="<%=tercero.getTercero_ciudad()%>">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Jurídica" 
+                                                       <%= "Persona Jurídica".equals(tercero.getTercero_tipo()) ? "checked" : ""%>>
+                                                <label class="form-check-label">Persona Jurídica</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <label class="form-label small text-secondary">Código (NIT/CC...): <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_codigo" value="<%=tercero.getTercero_codigo()%>" maxlength="18" required>
+                                    </div>
 
                                     <div class="col-sm-2">
                                         <label class="form-label small text-secondary">Tipo Documento:</label>
@@ -173,22 +198,31 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 ps-3">
-                                        <div class="row g-3">                                                                            
-                                            <div class="col-md-12 mb-3">
-                                                <label class="form-label small text-secondary">CIIU:</label>
-                                                <select class="form-control form-control-sm border-0 shadow-sm" name="tercero_ciiu">
-                                                    <%= GeneralCIIU.getListaEnOption(tercero.getTercero_ciiu())%>
-                                                </select>
+                                    <div class="col-md-2 pe-1 text-center">
+                                        <label class="form-label small text-secondary">Proveedor:</label>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="form-check me-2">
+                                                <input class="form-check-input" type="radio" name="tercero_proveedor" value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
+                                                <label class="form-check-label">Sí</label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="tercero_proveedor" value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroProveedor()) ? "checked" : ""%>>
                                                 <label class="form-check-label">No</label>
-
                                             </div>
+                                        </div>
+                                    </div>
 
-
-
+                                    <div class="col-md-2 ps-1 text-center">
+                                        <label class="form-label small text-secondary">¿Está obligado a facturar?:</label>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="form-check me-2">
+                                                <input class="form-check-input" type="radio" name="tercero_facturar" value="Sí" <%= "Actualizar".equals(accion) && "Sí".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
+                                                <label class="form-check-label">Sí</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="tercero_facturar" value="No" <%= "Actualizar".equals(accion) && "No".equals(tercero.getTerceroFacturar()) ? "checked" : ""%>>
+                                                <label class="form-check-label">No</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +244,8 @@
     <center>
         <div class="container-wrapper mt-4">
             <div class="container-card">               
-                <h6 class="mb-0 fw-bold">LISTA DE TERCEROS</h6>
+                <h6 class="mb-0 fw-bold">LISTA DE TERCEROS</h6> 
+
                 <ul class="nav nav-tabs" id="tercerosTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="naturales-tab" data-bs-toggle="tab" data-bs-target="#naturales" type="button" role="tab">Personas Naturales</button>
@@ -434,8 +469,8 @@
         $(document).ready(function () {
             $.fn.dataTable.ext.errMode = 'none';
             let alturaDisponible = window.innerHeight - 200;
-            var table = $('#tablaterceros').DataTable({
 
+            $('#tablaNaturales').DataTable({
                 scrollY: alturaDisponible + 'px',
                 scrollCollapse: true,
                 scrollX: true,
@@ -471,17 +506,48 @@
                 }
             });
 
-
+            $('#tablaJuridicas').DataTable({
+                scrollY: alturaDisponible + 'px',
+                scrollCollapse: true,
+                scrollX: true,
+                autoWidth: false,
+                columnDefs: [
+                    {width: "60px", targets: 0},
+                    {width: "120px", targets: 1},
+                    {width: "150px", targets: 2},
+                    {width: "200px", targets: 3},
+                    {width: "120px", targets: 4},
+                    {width: "220px", targets: 5},
+                    {width: "120px", targets: 6},
+                    {width: "150px", targets: 7}
+                ],
+                order: [[0, "desc"]],
+                paging: true,
+                searching: true,
+                info: true,
+                lengthMenu: [5, 10, 25, 50, 100],
+                language: {
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron resultados",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar:",
+                    paginate: {
+                        first: "&#171;",
+                        last: "&#187;",
+                        next: "&#9658;",
+                        previous: "&#9668;"
                     }
                 }
-            });
-            $('#tablaterceros').on('error.dt', function (e, settings, techNote, message) {
-                console.error('Error en DataTable:', message);
-                window.location.href = window.location.href;
 
+            });
+
+            $('.dataTables_wrapper').on('error.dt', function (e, settings, techNote, message) {
+                console.error('Error en DataTable:', message);
+                window.location.reload();
             });
         });
-
         var paises = <%= paisesJs%>;
         console.log(paises);
         $("#paisInput").autocomplete({
@@ -736,4 +802,3 @@
     </script>
 </body>
 </html>
-
