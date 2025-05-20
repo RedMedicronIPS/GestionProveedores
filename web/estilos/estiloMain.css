@@ -586,7 +586,7 @@ html.dark-mode .multiselect-option:hover {
 }
 
 /* ================== ESTILOS DE BOTONES (no afectados por modo oscuro) ================== */
-.ui-dialog-buttonpane .btn-eliminar {
+.ui-dialog-buttonpane .btn-warning {
     background: #2196F3 !important;
     color: white !important;
     border: none !important;
@@ -596,11 +596,11 @@ html.dark-mode .multiselect-option:hover {
     cursor: pointer;
 }
 
-.ui-dialog-buttonpane .btn-eliminar:hover {
+.ui-dialog-buttonpane .btn-warning :hover {
     background: #1976D2 !important;
 }
 
-.ui-dialog-buttonpane .btn-cancelar {
+.ui-dialog-buttonpane .btn-secondary {
     background: #E57373 !important;
     color: white !important;
     border: none !important;
@@ -610,7 +610,7 @@ html.dark-mode .multiselect-option:hover {
     cursor: pointer;
 }
 
-.ui-dialog-buttonpane .btn-cancelar:hover {
+.ui-dialog-buttonpane .btn-secondary :hover {
     background: #C62828 !important;
 }
 
