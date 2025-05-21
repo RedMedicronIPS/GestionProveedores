@@ -33,7 +33,35 @@
             .dataTables_scrollHeadInner, .dataTables_scrollHeadInner table {
                 width: 100% !important;
             }
+            /* Estilo para los mensajes de validación */
+            #mensaje-codigo {
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+            }
 
+            #mensaje-codigo .fas {
+                margin-right: 0.3rem;
+            }
+
+            .text-danger {
+                color: #dc3545 !important;
+            }
+
+            .text-success {
+                color: #28a745 !important;
+            }
+
+            .text-info {
+                color: #17a2b8 !important;
+            }
+
+            .is-valid {
+                border-color: #28a745 !important;
+            }
+
+            .is-invalid {
+                border-color: #dc3545 !important;
+            }
         </style>
 
     </head>
@@ -124,10 +152,13 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-1">
-                                        <label class="form-label small text-secondary">Código (NIT/CC...): <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_codigo" value="<%=tercero.getTercero_codigo()%>" maxlength="18" required>
+                                    <div class="col-sm-2">
+                                        <label for="tercero_codigo">Código/NIT del Tercero</label>
+                                        <input type="text" class="form-control" id="tercero_codigo" name="tercero_codigo" 
+                                               value="<%= tercero.getTercero_codigo() != null ? tercero.getTercero_codigo() : (request.getParameter("tercero_codigo") != null ? request.getParameter("tercero_codigo") : "")%>"
+                                               style="height: 30px; padding: 3px 10px; margin-top: 8px;" required>
+                                        <small id="mensaje-codigo" class="form-text"></small>
+                                        <input type="hidden" id="id" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : ""%>">
                                     </div>
 
                                     <div class="col-sm-2">
@@ -160,7 +191,7 @@
                                         <input type="text" class="form-control form-control-sm border-0 shadow-sm" name="tercero_telefono" value="<%=tercero.getTercero_telefono()%>" maxlength="15" required>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <label class="form-label small text-secondary">Correo electrónico: <span class="text-danger">*</span></label>
                                         <input type="email" class="form-control form-control-sm border-0 shadow-sm" name="tercero_correo" value="<%=tercero.getTercero_correo()%>" required>
                                     </div>
@@ -197,6 +228,7 @@
                                             </button>
                                         </div>
                                     </div>
+
 
                                     <div class="col-md-2 pe-1 text-center">
                                         <label class="form-label small text-secondary">Proveedor:</label>
@@ -425,12 +457,7 @@
                     <h5 class="modal-title" id="modalCIIULabel">Seleccionar CIIU</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <input type="text" id="buscarCIIU" class="form-control form-control-sm" placeholder="Buscar por código o nombre...">
-                        </div>
-                    </div>
+                <div class="modal-body">                  
                     <div class="table-responsive">
                         <table id="tablaCIIU" class="table table-sm table-striped table-hover">
                             <thead>
@@ -442,16 +469,19 @@
                             </thead>
                             <tbody>
                                 <%
-                                List<GeneralCIIU> listaCIIU = GeneralCIIU.listInObjects(null, "codigo, nombre");
-                                for (GeneralCIIU ciiu : listaCIIU) {%>
+                                    List<GeneralCIIU> listaCIIU = GeneralCIIU.listInObjects(null, "codigo, nombre");
+                                    for (GeneralCIIU ciiu : listaCIIU) {%>
                                 <tr>
                                     <td><%= ciiu.getCodigo()%></td>
                                     <td><%= ciiu.getNombre()%></td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-primary" 
-                                                onclick="seleccionarCIIU('<%= ciiu.getId()%>', '<%= ciiu.getCodigo()%> - <%= ciiu.getNombre()%>')">
+                                        <button type="button" class="btn btn-sm btn-primary seleccionar-ciiu" 
+                                                data-id="<%= ciiu.getId()%>" 
+                                                data-text="<%= ciiu.getCodigo() + " - " + ciiu.getNombre()%>">
                                             Seleccionar
                                         </button>
+
+
                                     </td>
                                 </tr>
                                 <% }%>
@@ -468,9 +498,10 @@
     <script>
         $(document).ready(function () {
             $.fn.dataTable.ext.errMode = 'none';
-            let alturaDisponible = window.innerHeight - 200;
 
-            $('#tablaNaturales').DataTable({
+            const alturaDisponible = window.innerHeight - 200;
+
+            $('#tablaNaturales, #tablaJuridicas').DataTable({
                 scrollY: alturaDisponible + 'px',
                 scrollCollapse: true,
                 scrollX: true,
@@ -504,150 +535,198 @@
                         previous: "&#9668;"
                     }
                 }
-            });
-
-            $('#tablaJuridicas').DataTable({
-                scrollY: alturaDisponible + 'px',
-                scrollCollapse: true,
-                scrollX: true,
-                autoWidth: false,
-                columnDefs: [
-                    {width: "60px", targets: 0},
-                    {width: "120px", targets: 1},
-                    {width: "150px", targets: 2},
-                    {width: "200px", targets: 3},
-                    {width: "120px", targets: 4},
-                    {width: "220px", targets: 5},
-                    {width: "120px", targets: 6},
-                    {width: "150px", targets: 7}
-                ],
-                order: [[0, "desc"]],
-                paging: true,
-                searching: true,
-                info: true,
-                lengthMenu: [5, 10, 25, 50, 100],
-                language: {
-                    lengthMenu: "Mostrar _MENU_ registros por página",
-                    zeroRecords: "No se encontraron resultados",
-                    info: "Mostrando página _PAGE_ de _PAGES_",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros totales)",
-                    search: "Buscar:",
-                    paginate: {
-                        first: "&#171;",
-                        last: "&#187;",
-                        next: "&#9658;",
-                        previous: "&#9668;"
-                    }
-                }
-
             });
 
             $('.dataTables_wrapper').on('error.dt', function (e, settings, techNote, message) {
                 console.error('Error en DataTable:', message);
                 window.location.reload();
             });
-        });
-        var paises = <%= paisesJs%>;
-        console.log(paises);
-        $("#paisInput").autocomplete({
-            source: paises,
-            select: function (event, ui) {
-                $("#deptoInput").prop("disabled", false);
-                cargarDepartamentos(ui.item.value);
-            }
-        });
 
-        var deptos = <%= deptoJs%>;
-        console.log(deptos);
-        $("#deptoInput").autocomplete({
-            source: deptos,
-            select: function (event, ui) {
-                $("#ciuInput").prop("disabled", false);
-                cargarCiudades(ui.item.value);
-            }
-        });
+            // Autocomplete País -> Departamento -> Ciudad
+            const paises = <%= paisesJs%>;
+            const deptos = <%= deptoJs%>;
+            const ciudades = <%= ciuJs%>;
 
-        var ciudades = <%= ciuJs%>;
-        console.log(ciudades);
-        $("#ciuInput").autocomplete({
-            source: ciudades
-        });
-
-        $("#deptoInput").prop("disabled", true);
-        $("#ciuInput").prop("disabled", true);
-
-        if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_pais()%>" !== "") {
-            $("#deptoInput").prop("disabled", false);
-        }
-        if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_departamento()%>" !== "") {
-            $("#ciuInput").prop("disabled", false);
-        }
-
-        document.getElementById("selectPais").addEventListener("change", function () {
-            const pais = this.value;
-            const otroPais = document.getElementById("otroPais");
-            const selectDepartamento = document.getElementById("selectDepartamento");
-            const otroDepartamento = document.getElementById("otroDepartamento");
-            const selectCiudad = document.getElementById("selectCiudad");
-            const otroCiudad = document.getElementById("otroCiudad");
-
-            if (pais) {
-                $("#deptoInput").prop("disabled", false);
-                selectDepartamento.classList.remove("d-none");
-                if (pais === "Colombia") {
-                    otroPais.classList.add("d-none");
-                    selectCiudad.classList.remove("d-none");
-                    otroCiudad.classList.add("d-none");
-                    cargarDepartamentos(pais);
-                } else {
-                    otroPais.classList.remove("d-none");
-                    selectDepartamento.classList.add("d-none");
-                    otroDepartamento.classList.remove("d-none");
-                    selectCiudad.classList.add("d-none");
-                    otroCiudad.classList.remove("d-none");
+            $("#paisInput").autocomplete({
+                source: paises,
+                select: function (event, ui) {
+                    $("#deptoInput").prop("disabled", false);
+                    cargarDepartamentos(ui.item.value);
                 }
-            } else {
-                $("#deptoInput").prop("disabled", true);
-                $("#ciuInput").prop("disabled", true);
-                selectDepartamento.classList.add("d-none");
-                selectCiudad.classList.add("d-none");
-            }
-        });
-
-        document.getElementById("selectDepartamento").addEventListener("change", function () {
-            const departamento = this.value;
-            const otroDepartamento = document.getElementById("otroDepartamento");
-
-            if (departamento === "Otro") {
-                otroDepartamento.classList.remove("d-none");
-            } else {
-                otroDepartamento.classList.add("d-none");
-                $("#ciuInput").prop("disabled", false);
-                cargarCiudades(departamento);
-            }
-        });
-
-        function cargarCiudades(departamento) {
-            $.getJSON("GUI/General/getCiudades.jsp", {idDepartamento: departamento}, function (data) {
-                $("#ciuInput").autocomplete({
-                    source: data
-                });
             });
-        }
 
-        document.getElementById("selectCiudad").addEventListener("change", function () {
-            const ciudad = this.value;
-            const otroCiudad = document.getElementById("otroCiudad");
+            $("#deptoInput").autocomplete({
+                source: deptos,
+                select: function (event, ui) {
+                    $("#ciuInput").prop("disabled", false);
+                    cargarCiudades(ui.item.value);
+                }
+            });
 
-            if (ciudad === "Otro") {
-                otroCiudad.classList.remove("d-none");
-            } else {
-                otroCiudad.classList.add("d-none");
+            $("#ciuInput").autocomplete({
+                source: ciudades
+            });
+
+            $("#deptoInput, #ciuInput").prop("disabled", true);
+
+            if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_pais()%>" !== "") {
+                $("#deptoInput").prop("disabled", false);
             }
-        });
-        window.addEventListener("DOMContentLoaded", () => {
-            cargarDepartamentos();
+            if ("<%= accion%>" === "Actualizar" || "<%= tercero.getTercero_departamento()%>" !== "") {
+                $("#ciuInput").prop("disabled", false);
+            }
+            $("#selectPais").on("change", function () {
+                const pais = this.value;
+                const otroPais = $("#otroPais");
+                const selectDepartamento = $("#selectDepartamento");
+                const otroDepartamento = $("#otroDepartamento");
+                const selectCiudad = $("#selectCiudad");
+                const otroCiudad = $("#otroCiudad");
+
+                if (pais) {
+                    $("#deptoInput").prop("disabled", false);
+                    selectDepartamento.removeClass("d-none");
+
+                    if (pais === "Colombia") {
+                        otroPais.addClass("d-none");
+                        selectCiudad.removeClass("d-none");
+                        otroCiudad.addClass("d-none");
+                        cargarDepartamentos(pais);
+                    } else {
+                        otroPais.removeClass("d-none");
+                        selectDepartamento.addClass("d-none");
+                        otroDepartamento.removeClass("d-none");
+                        selectCiudad.addClass("d-none");
+                        otroCiudad.removeClass("d-none");
+                    }
+                } else {
+                    $("#deptoInput, #ciuInput").prop("disabled", true);
+                    selectDepartamento.addClass("d-none");
+                    selectCiudad.addClass("d-none");
+                }
+            });
+
+            $("#selectDepartamento").on("change", function () {
+                const departamento = this.value;
+                if (departamento === "Otro") {
+                    $("#otroDepartamento").removeClass("d-none");
+                } else {
+                    $("#otroDepartamento").addClass("d-none");
+                    $("#ciuInput").prop("disabled", false);
+                    cargarCiudades(departamento);
+                }
+            });
+
+            $("#selectCiudad").on("change", function () {
+                const ciudad = this.value;
+                if (ciudad === "Otro") {
+                    $("#otroCiudad").removeClass("d-none");
+                } else {
+                    $("#otroCiudad").addClass("d-none");
+                }
+            });
+            function manejarTipoPersona() {
+                const tipo = $('input[name="tercero_tipo"]:checked').val();
+                if (tipo === 'Persona Natural') {
+                    $('.persona-natural').show();
+                    $('.persona-juridica').hide();
+                    $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', true);
+                    $('[name="tercero_razon_social"]').prop('required', false);
+                } else {
+                    $('.persona-natural').hide();
+                    $('.persona-juridica').show();
+                    $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', false);
+                    $('[name="tercero_razon_social"]').prop('required', true);
+                }
+            }
+
+            function actualizarColumnas() {
+                const tipo = $('input[name="tercero_tipo"]:checked').val();
+                if (tipo === 'Persona Natural') {
+                    $('.col-nombres, .col-apellidos').show();
+                    $('.col-razon').hide();
+                } else {
+                    $('.col-nombres, .col-apellidos').hide();
+                    $('.col-razon').show();
+                }
+            }
+
+            if ($('input[name="tercero_tipo"]:checked').length === 0) {
+                $('input[name="tercero_tipo"][value="Persona Natural"]').prop('checked', true);
+            }
+
+            manejarTipoPersona();
+            actualizarColumnas();
+
+            $('input[name="tercero_tipo"]').on('change', function () {
+                manejarTipoPersona();
+                actualizarColumnas();
+            });
+            $('#tercero_codigo').on('input', function () {
+                clearTimeout($(this).data('timeout'));
+                const input = $(this);
+                input.data('timeout', setTimeout(function () {
+                    const codigo = input.val().trim();
+                    const mensaje = $('#mensaje-codigo');
+                    if (codigo.length < 2) {
+                        mensaje.text('').removeClass('text-danger text-success text-info');
+                        $('#tercero_codigo').removeClass('is-invalid is-valid');
+                        return;
+                    }
+
+                    mensaje.html('<i class="fas fa-spinner fa-spin"></i> Validando...').addClass('text-info');
+                    validarCodigoTercero($('#id').val());
+                }, 500));
+            });
+
+            function validarCodigoTercero(idExcluir) {
+                const codigo = $('#tercero_codigo').val().trim();
+                const campo = $('#tercero_codigo');
+                const mensaje = $('#mensaje-codigo');
+
+                campo.removeClass('is-invalid is-valid');
+                mensaje.text('').removeClass('text-danger text-success text-info');
+
+                if (codigo.length < 2)
+                    return;
+
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/GUI/Terceros/tercerosActualizar.jsp',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        accion: 'validarCodigo',
+                        tercero_codigo: codigo,
+                        id: idExcluir,
+                        isAjax: true
+                    },
+                    success: function (response) {
+                        if (response.error) {
+                            campo.addClass('is-invalid');
+                            mensaje.html('<i class="fas fa-exclamation-circle"></i> ' + response.error).addClass('text-danger');
+                        } else if (response.existe) {
+                            campo.addClass('is-invalid');
+                            mensaje.html('<i class="fas fa-times-circle"></i> ¡Este tercero ya está registrado!').addClass('text-danger');
+                        } else {
+                            campo.removeClass('is-invalid');
+                            mensaje.text('').removeClass('text-danger text-success text-info');
+                        }
+                    },
+                    error: function () {
+                        campo.removeClass('is-invalid is-valid');
+                        mensaje.html('<i class="fas fa-info-circle"></i> Error al conectar con el servidor').addClass('text-info');
+                    }
+                });
+            }
+            const ciiuId = '<%= tercero.getTercero_ciiu()%>';
+            if (ciiuId && !$('#tercero_ciiu_input').val()) {
+                $.get('${pageContext.request.contextPath}/GUI/Terceros/getCIIU.jsp', {id: ciiuId}, function (data) {
+                    if (data) {
+                        $('#tercero_ciiu_input').val(data.codigo + ' - ' + data.nombre);
+                    }
+                });
+            }
+
         });
 
         function cargarDepartamentos(pais) {
@@ -655,6 +734,12 @@
                 let departamentos = '<option value="" disabled selected hidden>Seleccione un departamento</option>' + data;
                 departamentos += '<option value="Otro">Otro</option>';
                 $("#selectDepartamento").html(departamentos);
+            });
+        }
+
+        function cargarCiudades(departamento) {
+            $.getJSON("GUI/General/getCiudades.jsp", {idDepartamento: departamento}, function (data) {
+                $("#ciuInput").autocomplete({source: data});
             });
         }
 
@@ -676,9 +761,7 @@
                         class: "btn-warning",
                         click: function () {
                             $(this).dialog("close");
-                            const loading = $('<div class="loading-overlay"><div class="spinner"></div></div>');
-                            $('body').append(loading);
-
+                            $('body').append('<div class="loading-overlay"><div class="spinner"></div></div>');
                             window.location.href = 'GUI/Terceros/tercerosActualizar.jsp?accion=Desactivar&id=' + id;
                         }
                     },
@@ -704,99 +787,41 @@
 
         function abrirModalCIIU() {
             $('#modalCIIU').modal('show');
-            if (!$.fn.DataTable.isDataTable('#tablaCIIU')) {
-                $('#tablaCIIU').DataTable({
-                    paging: true,
-                    pageLength: 10,
-                    lengthMenu: [5, 10, 25, 50],
-                    language: {
-                        lengthMenu: "Mostrar _MENU_ registros por página",
-                        zeroRecords: "No se encontraron resultados",
-                        info: "Mostrando página _PAGE_ de _PAGES_",
-                        infoEmpty: "No hay registros disponibles",
-                        infoFiltered: "(filtrado de _MAX_ registros totales)",
-                        search: "Buscar:",
-                        paginate: {
-                            first: "Primero",
-                            last: "Último",
-                            next: "Siguiente",
-                            previous: "Anterior"
-                        }
-                    }
-                });
+            if ($.fn.DataTable.isDataTable('#tablaCIIU')) {
+                $('#tablaCIIU').DataTable().destroy();
             }
-
-            $('#buscarCIIU').keyup(function () {
-                $('#tablaCIIU').DataTable().search($(this).val()).draw();
+            $('#tablaCIIU').DataTable({
+                paging: true,
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                searching: true, 
+                language: {
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron resultados",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar por nombre o código:",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    }
+                }
             });
         }
-
         function seleccionarCIIU(id, texto) {
             $('#tercero_ciiu_id').val(id);
             $('#tercero_ciiu_input').val(texto);
             $('#modalCIIU').modal('hide');
         }
-
-        function inicializarCIIU() {
-            const ciiuId = '<%= tercero.getTercero_ciiu()%>';
-            if (ciiuId) {
-                if (!$('#tercero_ciiu_input').val()) {
-                    $.get('${pageContext.request.contextPath}/GUI/Terceros/getCIIU.jsp', {id: ciiuId}, function (data) {
-                        if (data) {
-                            $('#tercero_ciiu_input').val(data.codigo + ' - ' + data.nombre);
-                        }
-                    });
-                }
-            }
-        }
-
-        $(document).ready(function () {
-            inicializarCIIU();
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            function manejarTipoPersona() {
-                const tipo = $('input[name="tercero_tipo"]:checked').val();
-
-                if (tipo === 'Persona Natural') {
-                    $('.persona-natural').show();
-                    $('.persona-juridica').hide();
-                    $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', true);
-                    $('[name="tercero_razon_social"]').prop('required', false);
-                } else if (tipo === 'Persona Jurídica') {
-                    $('.persona-natural').hide();
-                    $('.persona-juridica').show();
-                    $('[name="tercero_razon_nombres"], [name="tercero_razon_apellidos"]').prop('required', false);
-                    $('[name="tercero_razon_social"]').prop('required', true);
-                }
-            }
-            $('.persona-natural').show();
-            $('.persona-juridica').hide();
-
-            manejarTipoPersona();
-            $('input[name="tercero_tipo"]').on('change', manejarTipoPersona);
-        });
-        function actualizarColumnas() {
-            const tipo = $('input[name="tercero_tipo"]:checked').val();
-            if (tipo === 'Persona Natural') {
-                $('.col-nombres, .col-apellidos').show();
-                $('.col-razon').hide();
-            } else {
-                $('.col-nombres, .col-apellidos').hide();
-                $('.col-razon').show();
-            }
-        }
-
-        $(document).ready(function () {
-            actualizarColumnas();
-            $('input[name="tercero_tipo"]').change(actualizarColumnas);
-        });
-        $(document).ready(function () {
-            if ($('input[name="tercero_tipo"]:checked').length === 0) {
-                $('input[name="tercero_tipo"][value="Persona Natural"]').prop('checked', true);
-            }
-            manejarTipoPersona();
+        $(document).on('click', '.seleccionar-ciiu', function () {
+            const id = $(this).data('id');
+            const texto = $(this).data('text');
+            $('#tercero_ciiu_id').val(id);
+            $('#tercero_ciiu_input').val(texto);
+            $('#modalCIIU').modal('hide');
         });
 
     </script>

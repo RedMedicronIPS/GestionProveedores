@@ -1,3 +1,4 @@
+<%@page import="java.sql.SQLException"%>
 <%@page import="clases.ConfiguracionGeneral.GeneralTercero"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="java.util.logging.Logger"%>
@@ -6,7 +7,6 @@
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
-//ar
     String accion = request.getParameter("accion");
     String id = request.getParameter("id");
     boolean isAjax = "true".equals(request.getParameter("isAjax"));
@@ -26,6 +26,29 @@
     }
 
     try {
+        if ("validarCodigo".equals(request.getParameter("accion"))) {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            try {
+                String codigo = request.getParameter("tercero_codigo");
+                String idExcluir = request.getParameter("id");
+
+                if (codigo == null || codigo.trim().isEmpty()) {
+                    out.print("{\"error\":\"El código no puede estar vacío\"}");
+                    return;
+                }
+                boolean existe = GeneralTercero.existeCodigoTercero(codigo, idExcluir);
+                out.print("{\"existe\":" + existe + "}");
+            } catch (SQLException e) {
+                out.print("{\"error\":\"Error al validar el código en la base de datos\"}");
+                e.printStackTrace();
+            } catch (Exception e) {
+                out.print("{\"error\":\"Error inesperado al validar el código\"}");
+                e.printStackTrace();
+            }
+            return;
+        }
         if ("Desactivar".equals(accion)) {
             if (id != null && !id.isEmpty()) {
                 GeneralTercero tercero = new GeneralTercero(id);
@@ -41,7 +64,6 @@
             if (id != null && !id.isEmpty()) {
                 tercero = new GeneralTercero(id);
             }
-
             if (!"Delete".equals(accion)) {
                 tercero.setTercero_codigo(request.getParameter("tercero_codigo"));
                 tercero.setTercero_id_tipo_identificacion(request.getParameter("tercero_id_tipo_identificacion"));
@@ -63,7 +85,6 @@
                 if (ciudad != null && !ciudad.isEmpty()) {
                     tercero.setTercero_ciudad(ciudad);
                 }
-
                 tercero.setTercero_ciiu(request.getParameter("tercero_ciiu"));
                 tercero.setTercero_proveedor(request.getParameter("tercero_proveedor"));
                 tercero.setTercero_facturar(request.getParameter("tercero_facturar"));
@@ -75,7 +96,6 @@
                     tercero.setTercero_estado(true);
                 }
             }
-
             if ("Actualizar".equals(accion)) {
                 success = tercero.update();
                 mensaje = success ? "Tercero actualizado correctamente" : "Error al actualizar tercero";
@@ -88,7 +108,6 @@
             }
         }
     } catch (Exception e) {
-        
         Throwable cause = e;
         while (cause != null) {
             if (cause instanceof SQLServerException) {
@@ -107,7 +126,6 @@
 
         Logger.getLogger("tercerosActualizar").log(Level.SEVERE, "Error al procesar acción", e);
     }
-    
     String redirectParams = "";
     if (!mensaje.isEmpty()) {
         redirectParams = "&mensaje=" + java.net.URLEncoder.encode(mensaje, "UTF-8");
@@ -115,12 +133,11 @@
     if (!error.isEmpty()) {
         redirectParams += "&error=" + java.net.URLEncoder.encode(error, "UTF-8");
     }
-    
     if (!error.isEmpty() && "Create".equals(accion)) {
         redirectParams += "&formData=1";
         redirectParams += "&tercero_codigo=" + java.net.URLEncoder.encode(request.getParameter("tercero_codigo"), "UTF-8");
         redirectParams += "&tercero_id_tipo_identificacion=" + java.net.URLEncoder.encode(request.getParameter("tercero_id_tipo_identificacion"), "UTF-8");
-        redirectParams += "&tercero_razon_nombres=" + java.net.URLEncoder.encode(request.getParameter("tercero_razon_nombres"), "UTF-8");        
+        redirectParams += "&tercero_razon_nombres=" + java.net.URLEncoder.encode(request.getParameter("tercero_razon_nombres"), "UTF-8");
     }
 
     String redirectURL = request.getContextPath() + "/main.jsp?CONTENIDO=GUI/Terceros/terceros.jsp" + redirectParams;

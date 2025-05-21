@@ -1,6 +1,8 @@
 package clases.ConfiguracionGeneral;
 //ar
+
 import clasesDataBase.ConectorBD;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,7 +59,7 @@ public class GeneralTercero {
                 this.tercero_departamento = rs.getString("tercero_departamento");
                 this.tercero_ciudad = rs.getString("tercero_ciudad");
                 this.tercero_ciiu = rs.getString("tercero_ciiu");
-                this.tercero_facturar = rs.getBoolean("tercero_facturar");            
+                this.tercero_facturar = rs.getBoolean("tercero_facturar");
                 this.tercero_proveedor = rs.getBoolean("tercero_proveedor");
                 this.tercero_tipo = rs.getString("tercero_tipo");
                 this.tercero_estado = rs.getBoolean("tercero_estado");
@@ -72,7 +74,6 @@ public class GeneralTercero {
     public String isCheckedTT(String tipo) {
         return this.tercero_tipo != null && this.tercero_tipo.equals(tipo) ? "checked" : "";
     }
-
 
     public String getId() {
         return id != null ? id : "";
@@ -180,12 +181,36 @@ public class GeneralTercero {
         this.tercero_ciudad = tercero_ciudad;
     }
 
-    public clases.ConfiguracionGeneral.GeneralCIIU getCIIU() {
-        if (this.tercero_ciiu == null || this.tercero_ciiu.trim().isEmpty()) {
-            return new GeneralCIIU();
+    public String getCIIU() {
+        if (this.tercero_ciiu == null || this.tercero_ciiu.isEmpty()) {
+            return "";
         }
-        return new GeneralCIIU(this.tercero_ciiu);
+        GeneralCIIU ciiu = new GeneralCIIU(this.tercero_ciiu);
+        return ciiu.getCodigo() + " - " + ciiu.getNombre();
+    }
 
+
+    public static boolean existeCodigoTercero(String codigo, String idExcluir) throws SQLException {
+        if (codigo == null || codigo.trim().isEmpty()) {
+            return false;
+        }
+        String sql = "SELECT COUNT(*) FROM generalTercero WHERE tercero_codigo = ? AND tercero_estado = 1";
+        if (idExcluir != null && !idExcluir.trim().isEmpty()) {
+            sql += " AND id <> ?";
+        }
+        try (Connection con = ConectorBD.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, codigo.trim());
+            if (idExcluir != null && !idExcluir.trim().isEmpty()) {
+                ps.setString(2, idExcluir.trim());
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
     }
 
     public GeneralTipoIdentificacion getTI() {
@@ -242,6 +267,7 @@ public class GeneralTercero {
         boolean isSi = "Sí".equals(valor);
         return (isSi && this.tercero_facturar) || (!isSi && !this.tercero_facturar) ? "checked" : "";
     }
+
     public String getNombreTI() {
         try {
             GeneralTipoIdentificacion ti = getTI();
@@ -254,6 +280,7 @@ public class GeneralTercero {
             return "No definido";
         }
     }
+
     public void setTercero_estado(Boolean tercero_estado) {
         this.tercero_estado = tercero_estado != null ? tercero_estado : true;
     }
@@ -266,13 +293,11 @@ public class GeneralTercero {
         return tercero_estado != null ? tercero_estado : true;
     }
 
-
     @Override
     public String toString() {
         return "GeneralTercero{"
-                + "id='" + id + '\''             
-                + ", proveedor='" + tercero_proveedor + '\''             
-
+                + "id='" + id + '\''
+                + ", proveedor='" + tercero_proveedor + '\''
                 + ", facturar='" + tercero_facturar + '\''
                 + '}';
     }
@@ -299,7 +324,7 @@ public class GeneralTercero {
             stmt.setString(11, tercero_departamento);
             stmt.setString(12, tercero_ciudad);
             stmt.setString(13, tercero_ciiu);
-            stmt.setBoolean(14, tercero_facturar);    
+            stmt.setBoolean(14, tercero_facturar);
             stmt.setBoolean(15, tercero_proveedor);
             stmt.setString(16, tercero_tipo);
             stmt.setBoolean(17, true);
@@ -377,7 +402,7 @@ public class GeneralTercero {
             return false;
         }
     }
-//ejemplo
+
     public static List<GeneralTercero> listInObjects(String filtro, String orden) {
         List<GeneralTercero> list = new ArrayList<>();
         String whereClause = "tercero_estado = 1";

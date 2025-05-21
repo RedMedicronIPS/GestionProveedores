@@ -32,24 +32,6 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
         <link rel="stylesheet" type="text/css" href="estilos/index.css?v=2">
-   <style>
-            #video-background {
-                position: fixed;
-                right: 0;
-                bottom: 0;
-                min-width: 100%;
-                min-height: 100%;
-                width: auto;
-                height: auto;
-                z-index: -100;
-                background-size: cover;
-            }
-            
-            .content-over-video {
-                position: relative;
-                z-index: 1;
-            }
-        </style>
     </head>
     <body>
         <div class="container h-100">
