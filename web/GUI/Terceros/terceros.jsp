@@ -120,7 +120,7 @@
                 <div class="col-12">
                     <div class="card border-0 rounded-4 bg-light dark:bg-dark text-dark dark:text-white" style="max-width: 100%;">                      
                         <div class="card-header bg-white border-bottom d-flex justify-content-center align-items-center py-3 px-4">
-                            <h6 class="mb-0 text-dark fw-semibold text-uppercase" style="letter-spacing: 1px;">
+                            <h6 class="mb-0 text-dark fw-semibold text-uppercase fw-bold" style="letter-spacing: 1px;">
                                 <%= accion != null ? accion.toUpperCase() : ""%> TERCEROS
                             </h6>
                         </div>
@@ -143,17 +143,17 @@
                                             <div class="form-check me-2">
                                                 <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Natural" 
                                                        <%= (tercero.getId() == null || "Persona Natural".equals(tercero.getTercero_tipo())) ? "checked" : ""%>>
-                                                <label class="form-check-label">Persona Natural</label>
+                                                <label class="form-check-label small">Persona Natural</label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="tercero_tipo" value="Persona Jurídica" 
                                                        <%= "Persona Jurídica".equals(tercero.getTercero_tipo()) ? "checked" : ""%>>
-                                                <label class="form-check-label">Persona Jurídica</label>
+                                                <label class="form-check-label small">Persona Jurídica</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
-                                        <label for="tercero_codigo">Código/NIT del Tercero</label>
+                                        <label class="form-label small text-secondary" for="tercero_codigo">Código/NIT</label>
                                         <input type="text" class="form-control" id="tercero_codigo" name="tercero_codigo" 
                                                value="<%= tercero.getTercero_codigo() != null ? tercero.getTercero_codigo() : (request.getParameter("tercero_codigo") != null ? request.getParameter("tercero_codigo") : "")%>"
                                                style="height: 30px; padding: 3px 10px; margin-top: 8px;" required>
@@ -276,7 +276,7 @@
     <center>
         <div class="container-wrapper mt-4">
             <div class="container-card">               
-                <h6 class="mb-0 fw-bold">LISTA DE TERCEROS</h6> 
+                <h6 class="mb-0">LISTA DE TERCEROS</h6> 
 
                 <ul class="nav nav-tabs" id="tercerosTabs" role="tablist">
                     <li class="nav-item" role="presentation">

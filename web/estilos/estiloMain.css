@@ -1,8 +1,9 @@
 /* ================== GLOBAL ================== */
 * {
-    font-family: 'Segoe UI', 'Work Sans', sans-serif;
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
     font-weight: 400;
-    box-sizing: border-box;
+    font-style: normal;
 }
 
 html, body {
